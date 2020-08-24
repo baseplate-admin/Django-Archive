@@ -1,0 +1,33 @@
+{% extends 'back/master.html' %}
+{% load static %}
+{% block pageblock %}
+<!-- Datatables Header -->
+                       <div class="content-header">
+                           <div class="header-section">
+                               <h1>
+                                   <i class="fa fa-table"></i>News List<br><small>Managing news was never so much easier!!</small>
+                               </h1>
+                           </div>
+                       </div>
+                       <ul class="breadcrumb breadcrumb-top">
+                           <li>News</li>
+                           <li><a href="panel/news/list/">List</a></li>
+                       </ul>
+                       <!-- END Datatables Header -->
+
+                       <!-- Datatables Content -->
+                       <!-- END Datatables Content -->
+{% endblock %}
+
+{% block javascript %}
+
+        <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
+        <script src="{% static 'back/js/vendor/jquery.min.js' %}"></script>
+        <script src="{% static 'back/js/vendor/bootstrap.min.js' %}"></script>
+        <script src="{% static 'back/js/plugins.js' %}"></script>
+        <script src="{% static 'back/js/app.js' %}"></script>
+
+        <!-- Load and execute javascript code used only in this page -->
+        <script src="{% static 'back/js/pages/tablesDatatables.js' %}"></script>
+        <script>$(function(){ TablesDatatables.init(); });</script>
+{% endblock %}

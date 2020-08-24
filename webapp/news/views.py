@@ -15,9 +15,19 @@ def news_details(request, word):
                 "site": site
     })
 
-    
+
 def news_list(request):
     site = site_info.objects.filter(pk=8)
+    news = News.objects.all()
     return render(request, "back/news_list.html", {
-        "site": site
+        "site": site,
+        "news": news
+    })
+
+
+def news_add(request):
+    site = site_info.objects.filter(pk=8)
+
+    return render(request, "back/news_add.html", {
+        "site": site,
     })
