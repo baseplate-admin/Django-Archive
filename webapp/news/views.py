@@ -28,6 +28,30 @@ def news_list(request):
 def news_add(request):
     site = site_info.objects.filter(pk=8)
 
+    if request.method == 'POST':
+
+        newstitle = request.POST.get("newstitle")
+        newscategory = request.POST.get("newscategory")
+        shorttext = request.POST.get("shorttext")
+        bodytext = request.POST.get("bodytext")
+
+        if newstitle == "" or shorttext == "" or bodytext == "" or newscategory == "":
+
+            error = "All Fields Required!!"
+
+            return render(request, "back/error.html", {
+                "error": error
+            })
+
+            b = News(name=newstitle,
+                     card_description=shorttext,
+                     body_content=bodytext,
+                     date="2020",
+                     writer="admin",
+                     category_name=newscategory,
+                     show=0,
+                     category_id=0)
+            b.save()
     return render(request, "back/news_add.html", {
         "site": site,
     })

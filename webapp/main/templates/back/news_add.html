@@ -30,21 +30,34 @@
                                    <!-- END Form Elements Title -->
 
                                    <!-- Basic Form Elements Content -->
-                                   <form action="page_forms_general.html" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
+                                   <form action="{%url 'news_add' %}" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered" >
+                                     {% csrf_token %}
                                         <div class="form-group">
-                                        <div class="col-md-7">
-                                      <input type="text" class="form-control" placeholder=".col-md-7">
+                                        <div class="col-md-6">
+                                      <input type="text" id="newstitle" name="newstitle" class="form-control" placeholder="Name">
                                             </div>
-                                           <div class="col-md-5">
-                                     <input type="text" class="form-control" placeholder=".col-md-5">
-                                       </div>
+                                                <div class="col-md-6">
+                                                    <select id="newscategory" name="newscategory" class="select-chosen" data-placeholder="Choose a Category" style="width: 250px;">
+                                                        <option></option><!-- Required for data-placeholder attribute to work with Chosen plugin -->
+                                                        <option value="cat1">Cat 1</option>
+                                                        <option value="cat2">Cat 2</option>
+                                                        <option value="cat3">Cat 3</option>
+                                                    </select>
+                                                </div>
                                             <div class="col-md-12">
-                                      <textarea type="text" rows="5" class="form-control" placeholder=".col-md-5"></textarea>
+                                      <textarea type="text" id="shorttext" name="shorttext" rows="5" class="form-control" placeholder="Short Text"></textarea>
                                         </div>
                                       </div>
                                            <div class="col-md-12">
-                                     <textarea type="text" rows="5" class="form-control" placeholder=".col-md-5"></textarea>
+                                     <textarea type="text" id="bodytext" name="bodytext" rows="5"  class="form-control" placeholder="Body Text"></textarea>
                                        </div>
+                                       <div class="form-group">
+                                         <div class="col-md-12">
+                                           <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Submit</button>
+                                         </div>
+
+
+
                                    </form>
                                    <!-- END Basic Form Elements Content -->
                                </div>

@@ -1,0 +1,24 @@
+{% extends "back/master.html" %}
+{% load static %}
+
+{% block pageblock %}
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Error<br><small>{{error}}</small>
+        </h1>
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+
+        <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
+        <script src="{% static 'back/js/vendor/jquery.min.js' %}"></script>
+        <script src="{% static 'back/js/vendor/bootstrap.min.js' %}"></script>
+        <script src="{% static 'back/js/plugins.js' %}"></script>
+        <script src="{% static 'back/js/app.js' %}"></script>
+
+        <!-- Load and execute javascript code used only in this page -->
+        <script src="{% static 'back/js/pages/tablesDatatables.js' %}"></script>
+        <script>$(function(){ TablesDatatables.init(); });</script>
+{% endblock %}
