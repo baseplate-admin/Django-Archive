@@ -28,13 +28,13 @@ def news_list(request):
 
 
 def news_add(request):
-    site = site_info.objects.filter(pk=8)
+    zad_site = site_info.objects.filter(pk=8)
 
-    date_time = datetime.datetime.now()
+    zad_time = datetime.datetime.now()
 
-    year = date_time.year
-    month = date_time.month
-    day = date_time.day
+    year = zad_time.year
+    month = zad_time.month
+    day = zad_time.day
 
     day_string = str(day)
     month_string = str(month)
@@ -100,5 +100,5 @@ def news_add(request):
             })
 
     return render(request, "back/news_add.html", {
-        "site": site,
+        "site": zad_site,
     })
