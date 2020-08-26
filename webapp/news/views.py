@@ -29,7 +29,6 @@ def news_list(request):
 
 def news_add(request):
     zad_site = site_info.objects.filter(pk=8)
-
     zad_time = datetime.datetime.now()
 
     year = zad_time.year
@@ -38,14 +37,14 @@ def news_add(request):
 
     day_string = str(day)
     month_string = str(month)
-    year_string = str(year)
 
     if len(day_string) == 1:
         day = "0" + day_string
     if len(month_string) == 1:
         month = "0" + month_string
-    if len(year_string) == 1:
-        year = "0" + year_string
+
+    zad_day = str(year) + "/" + str(month) + "/" + str(day)
+    zad_time_form = str(zad_time.hour) + ":" + str(zad_time.minute)
 
     if (request.method == "POST"):
         newstitle = request.POST.get('newstitle')
@@ -64,6 +63,7 @@ def news_add(request):
             return render(request, "back/error.html", {
                 "error": error,
             })
+
         try:
             up_file = request.FILES['uploaded_file']
             fs = FileSystemStorage()
@@ -74,7 +74,8 @@ def news_add(request):
                     zad = News(name=newstitle,
                                card_description=shorttext,
                                body_content=bodytext,
-                               date="2020",
+                               date=zad_day,
+                               time=zad_time_form,
                                picname=fname,
                                picurl=fname_url,
                                writer="-",
@@ -93,7 +94,7 @@ def news_add(request):
                 return render(request, "back/error.html", {
                     "error": error,
                 })
-        except Exception:
+        except:
             error = "Please Upload Images"
             return render(request, "back/error.html", {
                 "error": error,
