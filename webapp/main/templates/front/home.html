@@ -238,7 +238,7 @@
         {% for i in news %}
         <div class="col-sm-6 col-md-4">
           <a href="{% url "news_details" zad=i.name %}" class="wrap-pic-w hov1 trans-03">
-            <img src="{% static 'front/images/latest-01.jpg' %}" alt="IMG">
+            <img src="{{i.picurl}}" alt="{{i.picname}}">
           </a>
 
           <div class="p-t-16">
