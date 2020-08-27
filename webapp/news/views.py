@@ -94,7 +94,7 @@ def news_add(request):
                 return render(request, "back/error.html", {
                     "error": error,
                 })
-        except:
+        except Exception:
             error = "Please Upload Images"
             return render(request, "back/error.html", {
                 "error": error,
