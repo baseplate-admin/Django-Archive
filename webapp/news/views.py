@@ -85,11 +85,15 @@ def news_add(request):
                     zad.save()
                     return redirect("news_list")
                 else:
+                    zad_pic = FileSystemStorage()
+                    zad_pic.delete(fname)
                     error = "Your file must be under 5MB."
                     return render(request, "back/error.html", {
                         "error": error,
                     })
             else:
+                zad_pic = FileSystemStorage()
+                zad_pic.delete(fname)
                 error = "Your uploaded File is not an Image."
                 return render(request, "back/error.html", {
                     "error": error,
@@ -103,3 +107,21 @@ def news_add(request):
     return render(request, "back/news_add.html", {
         "site": zad_site,
     })
+
+
+def news_delete(request, pk):
+
+    try:
+        zad_news = News.objects.get(pk=pk)
+        zad_news.delete()
+
+        zad_pic = FileSystemStorage()
+        zad_pic.delete(zad_news.picname)
+
+        return redirect(news_list)
+
+    except Exception:
+        error = "Something Wrong with Deleting Picture"
+        return render(request, "back/error.html", {
+            "error": error,
+        })
