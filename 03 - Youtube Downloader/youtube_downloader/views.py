@@ -16,7 +16,7 @@ def home_redirect(request):
 
 
 def home_youtube_video(request):
-    return render(request, "front/home.html")
+    return render(request, "front/youtube_download_home.html")
 
 
 def download_video(request):
@@ -59,7 +59,10 @@ def download_video(request):
         info_dict = ydl.extract_info(form, download=False)
         ydl.prepare_filename(info_dict)
         title = info_dict['title']
-        title = title.replace('/', "_")
+        unsupported_characters = ["<",">",":",'"',"/","\\","|","?","*"]
+        for characters in unsupported_characters:
+            if characters in title:
+                title = title.replace(characters, "_")
         ydl.download([form])
 
     # download_link = f"media/{time}/{bs4_title}"
@@ -78,7 +81,7 @@ def download_template(request):
     global time
     link = Youtube.objects.get(time=time).file_location
     return render(request, "front/download.html", {
-        "link":link
+        "link": link,
     })
 
 
