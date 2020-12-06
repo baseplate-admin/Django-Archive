@@ -1,0 +1,16 @@
+{% extends "front/base.html" %}
+{% block title %} Url Shortener {% endblock %}
+{% block contentblock %}
+<main role="main" class="inner cover">
+        <h1 class="cover-heading">Bitrate Calculator</h1>
+        <p class="lead">This project is powered by Django and Bootstrap</p>
+        <p class="lead">
+            <form method="post">
+            {% csrf_token %}
+            {{ form.as_ul }}
+            <input type="submit" value="Submit" class="btn btn-dark">
+        </form>
+      </main>
+
+
+{% endblock %}
