@@ -1,0 +1,16 @@
+{% extends "front/base.html" %}
+{% block title %}Short URL{% endblock %}
+
+{% block contentblock %}
+    <main role="main" class="inner cover">
+        <p class="lead">
+            <p class="lead">
+                Here is your URL:
+            </p>
+            <h1>
+                <a href="http://127.0.0.1:8000/urlshortener/{{ url }}">
+                    http://127.0.0.1:8000/urlshortener/{{ url }}
+                </a>
+            </h1>
+    </main>
+{% endblock %}
