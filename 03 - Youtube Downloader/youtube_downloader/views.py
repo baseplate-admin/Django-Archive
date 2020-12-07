@@ -100,7 +100,7 @@ def download_template(request):
     print(link)
     return render(
         request,
-        "front/download.html",
+        "front/youtube_download_download.html",
         {
             "link": link,
         },
