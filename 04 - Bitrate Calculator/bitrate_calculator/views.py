@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
-from .forms import ModelBitrate
+from .models import ModelBitrate
 from .models import Bitrate
 
 
