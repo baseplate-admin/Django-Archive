@@ -7,7 +7,21 @@
         <p class="lead">
             <form method="post">
             {% csrf_token %}
-            {{ form.as_ul }}
+                  <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroup-sizing-default">Hours:</span>
+                              {{ form.hour }}
+                          <span class="input-group-text" id="inputGroup-sizing-default">Minutes:</span>
+                              {{ form.minute }}
+                          <span class="input-group-text" id="inputGroup-sizing-default">Seconds:</span>
+                              {{ form.second }}
+                  </div>
+                   <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Size limit(In GB):</span>
+                       {{ form.size }}
+                       <span class="input-group-text" id="inputGroup-sizing-default">Episode Numbers:</span>
+                       {{ form.episode }}
+                   </div>
+
             <input type="submit" value="Submit" class="btn btn-dark">
         </form>
       </main>
