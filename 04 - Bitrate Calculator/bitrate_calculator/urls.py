@@ -3,6 +3,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.home_redirection, name='Redirects to home'),
-    path('bitrate/', views.bitrate, name='Shows the Homepage'),
+    path("", views.home_redirection, name="Redirects to home"),
+    path("bitrate/", views.bitrate, name="Shows the Homepage"),
 ]
