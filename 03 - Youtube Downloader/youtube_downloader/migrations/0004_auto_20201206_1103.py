@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('youtube_downloader', '0003_youtube_short_url'),
+        ("youtube_downloader", "0003_youtube_short_url"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='youtube',
-            name='short_url',
+            model_name="youtube",
+            name="short_url",
         ),
         migrations.AddField(
-            model_name='youtube',
-            name='time',
+            model_name="youtube",
+            name="time",
             field=models.CharField(default=None, max_length=100),
         ),
     ]

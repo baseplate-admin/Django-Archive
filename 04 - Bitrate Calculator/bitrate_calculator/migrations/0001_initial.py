@@ -7,18 +7,25 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Bitrate',
+            name="Bitrate",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('hour', models.IntegerField()),
-                ('minute', models.IntegerField()),
-                ('second', models.IntegerField()),
-                ('size', models.IntegerField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("hour", models.IntegerField()),
+                ("minute", models.IntegerField()),
+                ("second", models.IntegerField()),
+                ("size", models.IntegerField()),
             ],
         ),
     ]

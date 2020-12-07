@@ -6,15 +6,15 @@ from django.db import models
 
 class News(models.Model):
 
-    name = models.CharField(default=' ', max_length=50)
-    card_description = models.TextField(default=' ')
-    body_content = models.TextField(default=' ')
+    name = models.CharField(default=" ", max_length=50)
+    card_description = models.TextField(default=" ")
+    body_content = models.TextField(default=" ")
     date = models.CharField(default="0", max_length=9)
     time = models.CharField(default="00:00", max_length=5)
     picurl = models.TextField(default="0")
     picname = models.TextField(default="0")
-    writer = models.CharField(default=' ', max_length=20)
-    category_name = models.CharField(max_length=50, default='-')
+    writer = models.CharField(default=" ", max_length=20)
+    category_name = models.CharField(max_length=50, default="-")
     category_id = models.IntegerField(default=0)
     show = models.IntegerField(default=0)
 

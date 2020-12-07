@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0019_auto_20200809_0904'),
+        ("main", "0019_auto_20200809_0904"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='main_start',
-            name='copyright',
-            field=models.CharField(default=' ', max_length=4),
+            model_name="main_start",
+            name="copyright",
+            field=models.CharField(default=" ", max_length=4),
         ),
     ]

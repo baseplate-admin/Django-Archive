@@ -6,38 +6,38 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0017_auto_20200809_0849'),
+        ("main", "0017_auto_20200809_0849"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='main_start',
-            name='facebook',
-            field=models.CharField(default=' ', max_length=50),
+            model_name="main_start",
+            name="facebook",
+            field=models.CharField(default=" ", max_length=50),
         ),
         migrations.AlterField(
-            model_name='main_start',
-            name='github',
-            field=models.CharField(default=' ', max_length=50),
+            model_name="main_start",
+            name="github",
+            field=models.CharField(default=" ", max_length=50),
         ),
         migrations.AlterField(
-            model_name='main_start',
-            name='link',
-            field=models.CharField(default=' ', max_length=50),
+            model_name="main_start",
+            name="link",
+            field=models.CharField(default=" ", max_length=50),
         ),
         migrations.AlterField(
-            model_name='main_start',
-            name='site_creator',
-            field=models.CharField(default=' ', max_length=15),
+            model_name="main_start",
+            name="site_creator",
+            field=models.CharField(default=" ", max_length=15),
         ),
         migrations.AlterField(
-            model_name='main_start',
-            name='twitter',
-            field=models.CharField(default=' ', max_length=50),
+            model_name="main_start",
+            name="twitter",
+            field=models.CharField(default=" ", max_length=50),
         ),
         migrations.AlterField(
-            model_name='main_start',
-            name='youtube',
-            field=models.CharField(default=' ', max_length=50),
+            model_name="main_start",
+            name="youtube",
+            field=models.CharField(default=" ", max_length=50),
         ),
     ]

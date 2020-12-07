@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0006_main_start_twitter'),
+        ("main", "0006_main_start_twitter"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='main_start',
-            name='twitter',
+            model_name="main_start",
+            name="twitter",
             field=models.TextField(),
         ),
     ]

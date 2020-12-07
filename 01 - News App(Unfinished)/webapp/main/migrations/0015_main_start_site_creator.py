@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0014_main_start_link'),
+        ("main", "0014_main_start_link"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='main_start',
-            name='site_creator',
-            field=models.TextField(default=' '),
+            model_name="main_start",
+            name="site_creator",
+            field=models.TextField(default=" "),
         ),
     ]

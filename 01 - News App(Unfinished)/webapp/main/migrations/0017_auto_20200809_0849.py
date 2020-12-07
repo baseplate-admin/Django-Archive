@@ -6,48 +6,48 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0016_remove_main_start_site_creator'),
+        ("main", "0016_remove_main_start_site_creator"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='main_start',
-            name='site_creator',
-            field=models.TextField(default=' '),
+            model_name="main_start",
+            name="site_creator",
+            field=models.TextField(default=" "),
         ),
         migrations.AlterField(
-            model_name='main_start',
-            name='facebook',
-            field=models.CharField(default=' ', max_length=20),
+            model_name="main_start",
+            name="facebook",
+            field=models.CharField(default=" ", max_length=20),
         ),
         migrations.AlterField(
-            model_name='main_start',
-            name='github',
-            field=models.CharField(default=' ', max_length=20),
+            model_name="main_start",
+            name="github",
+            field=models.CharField(default=" ", max_length=20),
         ),
         migrations.AlterField(
-            model_name='main_start',
-            name='link',
-            field=models.CharField(default=' ', max_length=20),
+            model_name="main_start",
+            name="link",
+            field=models.CharField(default=" ", max_length=20),
         ),
         migrations.AlterField(
-            model_name='main_start',
-            name='name',
-            field=models.CharField(default=' ', max_length=12),
+            model_name="main_start",
+            name="name",
+            field=models.CharField(default=" ", max_length=12),
         ),
         migrations.AlterField(
-            model_name='main_start',
-            name='number',
-            field=models.CharField(default=' ', max_length=18),
+            model_name="main_start",
+            name="number",
+            field=models.CharField(default=" ", max_length=18),
         ),
         migrations.AlterField(
-            model_name='main_start',
-            name='twitter',
-            field=models.CharField(default=' ', max_length=20),
+            model_name="main_start",
+            name="twitter",
+            field=models.CharField(default=" ", max_length=20),
         ),
         migrations.AlterField(
-            model_name='main_start',
-            name='youtube',
-            field=models.CharField(default=' ', max_length=20),
+            model_name="main_start",
+            name="youtube",
+            field=models.CharField(default=" ", max_length=20),
         ),
     ]

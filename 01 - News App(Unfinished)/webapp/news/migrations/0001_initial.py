@@ -7,20 +7,27 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='news',
+            name="news",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(default=' ', max_length=50)),
-                ('card_description', models.TextField(default=' ')),
-                ('body_contect', models.TextField(default=' ')),
-                ('date', models.DateTimeField()),
-                ('pic', models.ImageField(upload_to='')),
-                ('writer', models.CharField(default=' ', max_length=20)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(default=" ", max_length=50)),
+                ("card_description", models.TextField(default=" ")),
+                ("body_contect", models.TextField(default=" ")),
+                ("date", models.DateTimeField()),
+                ("pic", models.ImageField(upload_to="")),
+                ("writer", models.CharField(default=" ", max_length=20)),
             ],
         ),
     ]

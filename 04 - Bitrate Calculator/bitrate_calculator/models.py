@@ -18,10 +18,12 @@ class Bitrate(models.Model):
 
 
 class ModelBitrate(forms.Form):
-    hour = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    minute = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    second = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    hour = forms.IntegerField(widget=forms.TextInput(attrs={"class": "form-control"}))
+    minute = forms.IntegerField(widget=forms.TextInput(attrs={"class": "form-control"}))
+    second = forms.IntegerField(widget=forms.TextInput(attrs={"class": "form-control"}))
     size = forms.DecimalField(
-        decimal_places=2, widget=forms.TextInput(attrs={'class': 'form-control'})
+        decimal_places=2, widget=forms.TextInput(attrs={"class": "form-control"})
     )
-    episode = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    episode = forms.IntegerField(
+        widget=forms.TextInput(attrs={"class": "form-control"})
+    )

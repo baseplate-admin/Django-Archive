@@ -6,28 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bitrate_calculator', '0001_initial'),
+        ("bitrate_calculator", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='bitrate',
-            name='bitrate',
-            field=models.CharField(default='--', max_length=2000),
+            model_name="bitrate",
+            name="bitrate",
+            field=models.CharField(default="--", max_length=2000),
         ),
         migrations.AddField(
-            model_name='bitrate',
-            name='episode',
-            field=models.CharField(default='-', max_length=20),
+            model_name="bitrate",
+            name="episode",
+            field=models.CharField(default="-", max_length=20),
         ),
         migrations.AddField(
-            model_name='bitrate',
-            name='time',
-            field=models.CharField(default='-', max_length=200, unique=True),
+            model_name="bitrate",
+            name="time",
+            field=models.CharField(default="-", max_length=200, unique=True),
         ),
         migrations.AlterField(
-            model_name='bitrate',
-            name='size',
+            model_name="bitrate",
+            name="size",
             field=models.DecimalField(decimal_places=2, max_digits=6),
         ),
     ]

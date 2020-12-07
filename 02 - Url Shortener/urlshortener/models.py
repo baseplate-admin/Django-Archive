@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from django import forms
+
 # Create your models here.
 
 
@@ -15,4 +16,4 @@ class Url(models.Model):
 
 class FormUrl(forms.Form):
     long = forms.URLField(label="Enter Url:")
-    #widget = forms.TextInput(attrs={'class': "btn btn-dark"})
+    # widget = forms.TextInput(attrs={'class': "btn btn-dark"})
