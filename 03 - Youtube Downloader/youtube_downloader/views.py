@@ -5,6 +5,7 @@ from .models import Youtube
 import os
 from .models import FormYoutube
 from datetime import datetime
+
 # Create your views here.
 
 time = None
@@ -19,7 +20,7 @@ def home_youtube_video(request):
     if request.method == "POST":
         form_data = FormYoutube(request.POST)
         if form_data.is_valid():
-            form = form_data.cleaned_data['url']
+            form = form_data.cleaned_data["url"]
 
             from datetime import date
 
@@ -38,27 +39,30 @@ def home_youtube_video(request):
             if not bool(mediatimedirexists):
                 os.mkdir(f"./media/{time}/")
 
-
             # page = urllib.request.urlopen(form)
             # html = BeautifulSoup(page.read(), "html.parser")
             # bs4_title = html.title.string
 
-            media_dir = os.path.abspath(os.path.realpath(f"media/{time}/%(title)s.%(ext)s"))
+            media_dir = os.path.abspath(
+                os.path.realpath(f"media/{time}/%(title)s.%(ext)s")
+            )
 
             ydl_options = {
                 "format": "bestaudio/best",
                 "outtmpl": media_dir,
-                "postprocessors": [{
-                    "key": "FFmpegExtractAudio",
-                    "preferredcodec": "mp3",
-                    "preferredquality": "320",
-                }],
+                "postprocessors": [
+                    {
+                        "key": "FFmpegExtractAudio",
+                        "preferredcodec": "mp3",
+                        "preferredquality": "320",
+                    }
+                ],
             }
             global title
             with youtube_dl.YoutubeDL(ydl_options) as ydl:
                 info_dict = ydl.extract_info(form, download=False)
                 ydl.prepare_filename(info_dict)
-                title = info_dict['title']
+                title = info_dict["title"]
                 unsupported_characters = ["<", ">", ":", '"', "/", "\\", "|", "*"]
                 for characters in unsupported_characters:
                     if characters in title:
@@ -78,9 +82,13 @@ def home_youtube_video(request):
             return redirect("/download_create/")
 
     form = FormYoutube()
-    return render(request, "front/youtube_download_home.html", {
-        "form": form,
-    })
+    return render(
+        request,
+        "front/youtube_download_home.html",
+        {
+            "form": form,
+        },
+    )
 
 
 # def download_video(request):
@@ -90,9 +98,13 @@ def download_template(request):
     global time
     link = Youtube.objects.get(time=time).file_location
     print(link)
-    return render(request, "front/download.html", {
-        "link": link,
-    })
+    return render(
+        request,
+        "front/download.html",
+        {
+            "link": link,
+        },
+    )
 
 
 # def media_downloader(request, time_value, title):
