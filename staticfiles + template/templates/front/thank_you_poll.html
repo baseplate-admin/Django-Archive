@@ -1,0 +1,11 @@
+{% extends "front/polls_base.html" %}
+{% block title %}Short URL{% endblock %}
+
+{% block contentblock %}
+    <main role="main" class="inner cover">
+        <p class="lead">
+            <p class="lead">
+            Thank you for Voting. Would you like to see the <a href="/poll_result/{{ pk }}/">results?</a>
+        </p>
+    </main>
+{% endblock %}
