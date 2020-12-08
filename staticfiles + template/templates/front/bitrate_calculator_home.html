@@ -8,17 +8,17 @@
             <form method="post">
             {% csrf_token %}
                   <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroup-sizing-default">Hours:</span>
+                          <span class="input-group-text">Hours:</span>
                               {{ form.hour }}
-                          <span class="input-group-text" id="inputGroup-sizing-default">Minutes:</span>
+                          <span class="input-group-text" >Minutes:</span>
                               {{ form.minute }}
-                          <span class="input-group-text" id="inputGroup-sizing-default">Seconds:</span>
+                          <span class="input-group-text">Seconds:</span>
                               {{ form.second }}
                   </div>
                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Size limit(In GB):</span>
+                        <span class="input-group-text">Size limit(In GB):</span>
                        {{ form.size }}
-                       <span class="input-group-text" id="inputGroup-sizing-default">Episode Numbers:</span>
+                       <span class="input-group-text">Episode Numbers:</span>
                        {{ form.episode }}
                    </div>
 

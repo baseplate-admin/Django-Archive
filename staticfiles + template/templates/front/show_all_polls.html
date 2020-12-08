@@ -1,0 +1,20 @@
+{% extends "front/polls_base.html" %}
+{% block title %}Short URL{% endblock %}
+
+{% block contentblock %}
+    {% for poll in polls %}
+    <main role="main" class="inner cover card">
+        <p class="lead">
+            <p class="lead">
+        <strong>
+                {{ poll.question }}
+            </strong>
+        </p>
+
+        <span class="pull-right"><a href="/polls/{{ poll.pk }}/">Vote</a></span>
+
+
+    </main>
+        <br>
+    {% endfor %}
+{% endblock %}
