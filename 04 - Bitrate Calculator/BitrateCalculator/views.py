@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
-from .models import ModelBitrate
 from .models import Bitrate
 
 
@@ -53,49 +52,50 @@ def home_redirection(request):
 
 def bitrate(request):
     if request.method == "POST":
-        form = ModelBitrate(request.POST)
-        if form.is_valid():
-            minute = form.cleaned_data["minute"]
-            hour = form.cleaned_data["hour"]
-            seconds = form.cleaned_data["second"]
-            size = form.cleaned_data["size"]
-            episodes = form.cleaned_data["episode"]
-            # print(size)
-            # print(minute)
-            # print(hour)
-            # print(seconds)
-            # Time Gen Function
+        # minute = form.cleaned_data["minute"]
+        # hour = form.cleaned_data["hour"]
+        # seconds = form.cleaned_data["second"]
+        # size = form.cleaned_data["size"]
+        # episodes = form.cleaned_data["episode"]
+        # print(size)
+        # print(minute)
+        # print(hour)
+        # print(seconds)
+        # Time Gen Function
+        hour = int(request.POST.get("hour"))
+        minute = int(request.POST.get("minute"))
+        seconds = int(request.POST.get("seconds"))
+        size = float(request.POST.get("size"))
+        episodes = int(request.POST.get('count'))
 
-            import datetime
+        import datetime
 
-            datetime_object = datetime.datetime.now()
+        datetime_object = datetime.datetime.now()
 
-            __bitrate = _Bitrate().input(minute, hour, size, episodes, seconds)
+        __bitrate = _Bitrate().input(minute, hour, size, episodes, seconds)
 
-            database = Bitrate.objects.create(
-                minute=minute,
-                hour=hour,
-                second=seconds,
-                size=size,
-                episode=episodes,
-                time=datetime_object,
-                bitrate=__bitrate,
-            )
-            database.save()
-            return render(
-                request,
-                "front/bitrate_result.html",
-                {
-                    "result": __bitrate,
-                },
-            )
+        database = Bitrate.objects.create(
+            minute=minute,
+            hour=hour,
+            second=seconds,
+            size=size,
+            episode=episodes,
+            time=datetime_object,
+            bitrate=__bitrate,
+        )
+        database.save()
+        return render(
+            request,
+            "front/bitrate_result.html",
+            {
+                "result": __bitrate,
+            },
+        )
 
-    form = ModelBitrate()
 
     return render(
         request,
         "front/bitrate_calculator_home.html",
-        {
-            "form": form,
-        },
     )
+
+

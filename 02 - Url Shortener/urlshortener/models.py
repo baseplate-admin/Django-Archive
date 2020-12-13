@@ -14,6 +14,6 @@ class Url(models.Model):
         return self.long
 
 
-class FormUrl(forms.Form):
-    long = forms.URLField(label="Enter Url:")
+# class FormUrl(forms.Form):
+#     long = forms.URLField(label="Enter Url:")
     # widget = forms.TextInput(attrs={'class': "btn btn-dark"})

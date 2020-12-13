@@ -2,7 +2,7 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
-    path("", views.index, name="Redirects to Home"),
+    # path("", views.index, name="Redirects to Home"),
     path("polls/<pk>/", views.poll_vote, name="Poll Vote"),
     path("all_poll/", views.all_polls, name="All Polls"),
     path("create_poll/", views.create_poll, name="Create Poll"),

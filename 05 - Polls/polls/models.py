@@ -56,13 +56,3 @@ class CreatePollForm(forms.Form):
     )
 
 
-class HomePollForm(forms.Form):
-    QUESTION_TO_RADIO = [
-        ("choice1", "option1"),
-        ("choice1", "option_2"),
-        ("choice1", "option_3"),
-        ("choice1", "option_4"),
-    ]
-    question = forms.CharField(
-        label="Question", widget=forms.RadioSelect(choices=QUESTION_TO_RADIO)
-    )

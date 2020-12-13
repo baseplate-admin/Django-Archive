@@ -1,0 +1,42 @@
+{% extends "front/base.html" %}
+
+
+{% block heroblock %}
+    <section class="hero is-medium">
+        <div class="hero-body" style="text-align: center">
+            <div class="container">
+                <h1 class="title">
+                    Thanks for using our service.
+                </h1>
+                <h2 class="subtitle">
+                    See you soon!!
+                </h2>
+            </div>
+        </div>
+    </section>
+    <section class="hero  is-large">
+        <div class="hero-body" style="text-align: center">
+            <div class="container">
+                <h1 class="title">
+                    Here is your shortened URL:
+                </h1>
+                <h2 class="subtitle">
+                    <a href="http://127.0.0.1:8000/urlshortener/{{ url }}">
+                        http://127.0.0.1:8000/urlshortener/{{ url }}
+                    </a>
+                </h2>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{#    <main role="main" class="inner cover">#}
+{#        <p class="lead">#}
+{#            <p class="lead">#}
+{#                Here is your URL:#}
+{#            </p>#}
+{#            <h1>#}
+{#<a href="http://127.0.0.1:8000/urlshortener/{{ url }}">#}
+{#    http://127.0.0.1:8000/urlshortener/{{ url }}#}
+{#</a>#}
+{#            </h1>#}
+{#    </main>#}

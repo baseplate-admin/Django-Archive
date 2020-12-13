@@ -1,0 +1,21 @@
+{% extends "front/base.html" %}
+{% block title %}Short URL{% endblock %}
+
+{% block heroblock %}
+    {% for poll in polls %}
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">
+                        {{ poll.question }}
+                    </h1>
+                    <h2 class="subtitle">
+                        <a href="/polls/{{ poll.pk }}/">Vote</a>
+                    </h2>
+                </div>
+            </div>
+        </section>
+
+        <br>
+    {% endfor %}
+{% endblock %}

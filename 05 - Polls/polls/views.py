@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
-from .models import CreatePollForm
 from .models import Poll
 from django.db.models import F
 from .models import IpTable
@@ -43,7 +42,7 @@ def poll_vote(request, pk):
         if bool(does_ip_exist):
             return redirect(f"/thank_you_poll/{pk}/")
 
-        question = request.POST['poll']
+        question = request.POST['question']
         if question == "option2":
             poll.option_1_count = F('option_1_count') + 1
             poll.save()
@@ -83,39 +82,39 @@ def poll_vote(request, pk):
 
 def create_poll(request):
     if request.method == "POST":
-        form = CreatePollForm(request.POST)
-        if form.is_valid():
-            question = form.cleaned_data["question"]
-            option1 = form.cleaned_data["option_1"]
-            option2 = form.cleaned_data["option_2"]
-            option3 = form.cleaned_data["option_3"]
-            option4 = form.cleaned_data["option_4"]
-            import datetime
+        # question = form.cleaned_data["question"]
+        # option1 = form.cleaned_data["option_1"]
+        # option2 = form.cleaned_data["option_2"]
+        # option3 = form.cleaned_data["option_3"]
+        # option4 = form.cleaned_data["option_4"]
 
-            time = datetime.datetime.now()
-            database = Poll.objects.create(
-                question=question,
-                option_1=option1,
-                option_2=option2,
-                option_3=option3,
-                option_4=option4,
-                time=time,
-            )
-            database.save()
-            query = Poll.objects.get(time=time).pk
-            return redirect(f"/polls/{query}/")
-    form = CreatePollForm()
+        question = (request.POST.get("question"))
+        option1 = (request.POST.get("option1"))
+        option2 = (request.POST.get('option2'))
+        option3 = (request.POST.get("option3"))
+        option4 = (request.POST.get('option4'))
+        import datetime
+
+        time = datetime.datetime.now()
+        database = Poll.objects.create(
+            question=question,
+            option_1=option1,
+            option_2=option2,
+            option_3=option3,
+            option_4=option4,
+            time=time,
+        )
+        database.save()
+        query = Poll.objects.get(time=time).pk
+        return redirect(f"/polls/{query}/")
     return render(
         request,
         "front/create_poll.html",
-        {
-            "form": form,
-        },
     )
 
 
 def all_polls(request):
-    polls = Poll.objects.all()
+    polls = Poll.objects.order_by('-id')[:5]
     return render(request, "front/show_all_polls.html", {
         "polls": polls,
     })
@@ -161,7 +160,7 @@ def poll_result(request, pk):
 def thank_you_poll(request, pk):
 
     ip = get_ip(request)
-    does_ip_exist = IpTable.objects.filter(ip=ip).exists()
+    does_ip_exist = IpTable.objects.filter(pk=pk).exists()
 
     if not bool(does_ip_exist):
         return HttpResponse("You're not allowed to be here.")

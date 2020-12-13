@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("bitrate_calculator", "0001_initial"),
+        ("BitrateCalculator", "0001_initial"),
     ]
 
     operations = [

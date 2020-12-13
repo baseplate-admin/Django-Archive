@@ -1,0 +1,89 @@
+{% extends "front/base.html" %}
+{% block heroblock %}
+    <section class="hero">
+        <div class="hero-body" style='text-align: center'>
+            <div class="container">
+                <h1 class="title">
+                    {{ question }}
+                </h1>
+                <h2 class="subtitle">
+                    Total Vote Count: {{ all }}
+                </h2>
+            </div>
+        </div>
+    </section>
+    <section class="hero  is-medium">
+        <div class="hero-body">
+            <div class="container">
+                <div id="canvas-holder">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript">
+        let labels1 = [];
+        let data1 = [];
+        let option1 = "{{option_one | safe}}";
+        let option2 = "{{option_two | safe}}";
+        let option3 = "{{option_three | safe}}";
+        let option4 = "{{option_four | safe}}";
+        console.log(option1)
+        console.log(option2)
+        console.log(option3)
+        console.log(option4)
+        labels1.push(option1)
+        labels1.push(option2)
+        labels1.push(option3)
+        labels1.push(option4)
+        let option1_count = "{{ option_one_count | safe }}"
+        let option2_count = "{{ option_two_count | safe }}"
+        let option3_count = "{{ option_three_count | safe }}"
+        let option4_count = "{{ option_four_count | safe }}"
+        data1.push(option1_count)
+        data1.push(option2_count)
+        data1.push(option3_count)
+        data1.push(option4_count)
+
+        let colors1 = ['#49A9EA', '#36CAAB', '#534275', '#c9ae9f'];
+        let myChart = document.getElementById('myChart').getContext('2d');
+        let chart1 = new Chart(myChart, {
+            type: 'doughnut',
+            data: {
+                labels: labels1,
+                datasets: [{
+                    data: data1,
+                    backgroundColor: colors1,
+                }]
+            },
+            options: {
+                title: {
+                    text: "Do you like doughnuts?",
+                    display: "True",
+                }
+            }
+        });
+    </script>
+
+{% endblock %}
+
+
+{#<script src="{% static "front/js/Chart.bundle.js" %}"></script>#}
+{#    <link rel="stylesheet" href="{% static 'front/css/Chart.css' %}">#}
+{#    <main role="main" class="inner cover card">#}
+{#        <p class="lead">#}
+{#            <p class="lead"><strong>#}
+{#            {{ question }}#}
+{#        </strong>#}
+{#        </p>#}
+{#        <hr>#}
+{#        <p>All Votes Count: {{ all }}</p>#}
+{#    <div id="canvas-holder">#}
+{#    <canvas id="myChart"></canvas>#}
+{#        </div>#}
+{#        <script>#}
+{##}
+{#</script>#}
+
+{#    </main>#}
+{#        <br>#}

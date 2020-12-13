@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import Url
-from .models import FormUrl
+# from .models import FormUrl
 
 # Create your views here.
 import string
@@ -22,59 +22,55 @@ def shorten_url():
 
 def url_shortener_home(request):
     if request.method == "POST":
-        form_data = FormUrl(request.POST)
-        if form_data.is_valid():
-            form = form_data.cleaned_data["long"]
+        # form_data = FormUrl(request.POST)
+        # if form_data.is_valid():
+        form = request.POST.get("long")
 
-            database_data = Url.objects.filter(long=form).exists()
-            short = shorten_url()
+        database_data = Url.objects.filter(long=form).exists()
+        short = shorten_url()
 
-            import datetime
+        import datetime
 
-            datetime_object = datetime.datetime.now()
+        datetime_object = datetime.datetime.now()
 
-            if database_data:
-                url = Url.objects.get(long=form).short
-                #       Add redirect to a box.
-                return render(
-                    request,
-                    "front/urlshortener_showaddedurl.html",
-                    {
-                        "url": url,
-                    },
-                )
+        if database_data:
+            url = Url.objects.get(long=form).short
+            #       Add redirect to a box.
+            return render(
+                request,
+                "front/urlshortener_showaddedurl.html",
+                {
+                    "url": url,
+                },
+            )
 
-            elif not database_data:
-                database = Url.objects.create(
-                    long=form, short=short, time=datetime_object
-                )
-                database.save()
-                url = Url.objects.get(long=form).short
-                #       Add redirect to a box.
-                return render(
-                    request,
-                    "front/urlshortener_showaddedurl.html",
-                    {
-                        "url": url,
-                    },
-                )
+        elif not database_data:
+            database = Url.objects.create(
+                long=form, short=short, time=datetime_object
+            )
+            database.save()
+            url = Url.objects.get(long=form).short
+            #       Add redirect to a box.
+            return render(
+                request,
+                "front/urlshortener_showaddedurl.html",
+                {
+                    "url": url,
+                },
+            )
 
-            else:
-                print("Error")
+        else:
+            print("Error")
 
     elif request.method == "GET":
-        form = FormUrl()
         return render(
             request,
             "front/urlshortener_home.html",
-            {
-                "form": form,
-            },
         )
 
 
 def redirect_to_home(request):
-    return redirect("/urlshortener/")
+    return render(request, "front/base.html")
 
 
 # def create_form(request):
