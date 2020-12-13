@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+
 import os
 from pathlib import Path
 
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "#w636s1xjci=)x51&)8zxy96z-q(t@02akc-r9pdo0p9_psr^*"
+SECRET_KEY = "(b!a#z7f8eg@+6!yu05p_5@s)iisl^c^lmt#n%3sbh*rt1c06n"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,7 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "polls",
+    "YoutubeDownloader",
+    "Polls",
+    "BitrateCalculator",
+    "UrlShortener",
 ]
 
 MIDDLEWARE = [
@@ -55,7 +59,8 @@ ROOT_URLCONF = "djangoProject.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [BASE_DIR / 'templates']
+        ,
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -117,7 +122,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+
+STATIC_URL = "/static/"
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATIC_URL = "/static/"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")

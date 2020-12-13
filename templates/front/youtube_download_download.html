@@ -1,25 +1,72 @@
 {% extends "front/base.html" %}
-{% load static %}
-{% block title %}Short URL{% endblock %}
 
-{% block contentblock %}
-    <main role="main" class="inner cover">
-        <p class="lead">
-            <p class="lead">
-                Here is your Download link:
-            </p>
-        <form action="{{ link }}">
-            <p>
-                If your download doesn't start, <input type="submit" id="submit" value="Click Here" class="btn btn-dark">
-            </p>
-        </form>
+{% block heroblock %}
+    <section class="hero" style="text-align: center">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Your Download is ready!!
+                </h1>
+                <h2 class="subtitle">
 
-    </main>
+                </h2>
+            </div>
+        </div>
+    </section>
+    <div class="container" style="text-align: center">
+        <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTEyIDUxMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPGc+DQoJCTxwYXRoIGQ9Ik00NzIsMzEzdjEzOWMwLDExLjAyOC04Ljk3MiwyMC0yMCwyMEg2MGMtMTEuMDI4LDAtMjAtOC45NzItMjAtMjBWMzEzSDB2MTM5YzAsMzMuMDg0LDI2LjkxNiw2MCw2MCw2MGgzOTINCgkJCWMzMy4wODQsMCw2MC0yNi45MTYsNjAtNjBWMzEzSDQ3MnoiLz4NCgk8L2c+DQo8L2c+DQo8Zz4NCgk8Zz4NCgkJPHBvbHlnb24gcG9pbnRzPSIzNTIsMjM1LjcxNiAyNzYsMzExLjcxNiAyNzYsMCAyMzYsMCAyMzYsMzExLjcxNiAxNjAsMjM1LjcxNiAxMzEuNzE2LDI2NCAyNTYsMzg4LjI4NCAzODAuMjg0LDI2NCAJCSIvPg0KCTwvZz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjwvc3ZnPg0K"
+             width="75px" height="75px">
+    </div>
+    <section class="hero is-medium">
+        <div class="hero-body" style="text-align: center">
+            <div class="container">
+                <h1 class="title">
 
+                </h1>
+                <h2 class="subtitle">
+                    <form action="{{ link }}">
+                        <p>
+                            If your download doesn't start,
+                            <br>
+                            <input type="submit" id="submit" value="Click Here"
+                                                                   class="button is-primary">
+                        </p>
+                    </form>
+
+                </h2>
+            </div>
+        </div>
+    </section>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <script>
-    window.onload = function(){
-      document.getElementById('submit').click();
-    }
+        window.onload = function () {
+            document.getElementById('submit').click();
+        }
     </script>
-
 {% endblock %}
+
+{#    <main role="main" class="inner cover">#}
+{#        <p class="lead">#}
+{#            <p class="lead">#}
+{#                Here is your Download link:#}
+{#            </p>#}
+{#<form action="{{ link }}">#}
+{#    <p>#}
+{#        If your download doesn't start, <input type="submit" id="submit" value="Click Here" class="btn btn-dark">#}
+{#    </p>#}
+{#</form>#}
+
+{#    </main>#}
+
+
+<script>
+    window.onload = function () {
+        document.getElementById('submit').click();
+    }
+</script>

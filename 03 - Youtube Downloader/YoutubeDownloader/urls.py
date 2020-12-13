@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("", views.home_redirect, name="Redirects to home"),
+    # path("", views.home_redirect, name="Redirects to home"),
     path(
         "youtube_video/", views.home_youtube_video, name="Youtube mp3 video Downloader"
     ),

@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("youtube_downloader", "0002_auto_20201206_0841"),
+        ("YoutubeDownloader", "0002_auto_20201206_0841"),
     ]
 
     operations = [

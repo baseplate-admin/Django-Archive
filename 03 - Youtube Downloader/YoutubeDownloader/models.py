@@ -1,5 +1,5 @@
 from django.db import models
-from django import forms
+# from django import forms
 
 # Create your models here.
 
@@ -14,5 +14,5 @@ class Youtube(models.Model):
         return self.title
 
 
-class FormYoutube(forms.Form):
-    url = forms.URLField(label="Enter Url:")
+# class FormYoutube(forms.Form):
+#     url = forms.URLField(label="Enter Url:")
