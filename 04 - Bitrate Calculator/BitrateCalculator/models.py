@@ -9,9 +9,9 @@ class Bitrate(models.Model):
     minute = models.IntegerField()
     second = models.IntegerField()
     size = models.DecimalField(decimal_places=2, max_digits=6)
-    episode = models.CharField(default="-", max_length=20)
+    episode = models.IntegerField(default="-")
     time = models.CharField(max_length=200, unique=True, default="-")
-    bitrate = models.CharField(max_length=2000, default="--")
+    bitrate = models.IntegerField(default="--")
 
     def __str__(self):
         return self.id

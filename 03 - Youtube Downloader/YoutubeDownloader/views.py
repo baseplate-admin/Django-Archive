@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 import youtube_dl
 from .models import Youtube
 import os
+
 # from .models import FormYoutube
 from datetime import datetime
 
@@ -43,9 +44,7 @@ def home_youtube_video(request):
         # html = BeautifulSoup(page.read(), "html.parser")
         # bs4_title = html.title.string
 
-        media_dir = os.path.abspath(
-            os.path.realpath(f"media/{time}/%(title)s.%(ext)s")
-        )
+        media_dir = os.path.abspath(os.path.realpath(f"media/{time}/%(title)s.%(ext)s"))
 
         ydl_options = {
             "format": "bestaudio/best",
@@ -81,7 +80,7 @@ def home_youtube_video(request):
         database.save()
         return redirect("/download_create/")
     else:
-    # form = FormYoutube()
+        # form = FormYoutube()
         return render(
             request,
             "front/youtube_download_home.html",

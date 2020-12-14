@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import Url
+
 # from .models import FormUrl
 
 # Create your views here.
@@ -45,9 +46,7 @@ def url_shortener_home(request):
             )
 
         elif not database_data:
-            database = Url.objects.create(
-                long=form, short=short, time=datetime_object
-            )
+            database = Url.objects.create(long=form, short=short, time=datetime_object)
             database.save()
             url = Url.objects.get(long=form).short
             #       Add redirect to a box.
