@@ -5,7 +5,7 @@ from django.db.models import F
 from .models import IpTable
 from django.http import HttpResponse
 # Create your views here.
-
+from django.core.exceptions import ObjectDoesNotExist
 
 def get_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -35,19 +35,20 @@ def poll_vote(request, pk):
     poll = Poll.objects.get(pk=pk)
     if request.method == "POST":
         # Add IP to IpTables
-
-        ip = get_ip(request)
-        does_ip_exist = IpTable.objects.filter(ip=ip).exists()
-
-        if bool(does_ip_exist):
-            return redirect(f"/thank_you_poll/{pk}/")
-
+        try:
+            ip = get_ip(request)
+            does_entry_exist = IpTable.objects.get(entry_id=pk)
+            does_ip_exist = does_entry_exist.ip
+            if does_ip_exist == ip:
+                return redirect(f"/thank_you_poll/{pk}/")
+        except ObjectDoesNotExist:
+            pass
         question = request.POST['question']
-        if question == "option2":
-            poll.option_1_count = F('option_1_count') + 1
+        if question == "option1":
+            poll.option_1_count = F('option_2_count') + 1
             poll.save()
-        elif question == "option1":
-            poll.option_2_count = F('option_2_count') + 1
+        elif question == "option2":
+            poll.option_2_count = F('option_1_count') + 1
             poll.save()
         elif question == 'option3':
             poll.option_3_count = F('option_3_count') + 1
@@ -121,8 +122,7 @@ def all_polls(request):
 
 
 def poll_result(request, pk):
-    ip = get_ip(request)
-    does_ip_exist = IpTable.objects.filter(ip=ip).exists()
+    does_ip_exist = IpTable.objects.filter(entry_id=pk).exists()
 
     if not bool(does_ip_exist):
         return HttpResponse("You're not allowed to be here.")
@@ -159,11 +159,12 @@ def poll_result(request, pk):
 
 def thank_you_poll(request, pk):
 
-    ip = get_ip(request)
-    does_ip_exist = IpTable.objects.filter(pk=pk).exists()
+    does_ip_exist = IpTable.objects.filter(entry_id=pk).exists()
 
     if not bool(does_ip_exist):
         return HttpResponse("You're not allowed to be here.")
     primary_key = Poll.objects.get(pk=pk).pk
     context = {"pk": primary_key}
     return render(request, 'front/thank_you_poll.html', context=context)
+
+
