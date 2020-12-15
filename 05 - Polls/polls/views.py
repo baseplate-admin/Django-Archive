@@ -4,19 +4,17 @@ from .models import Poll
 from django.db.models import F
 from .models import IpTable
 from django.http import HttpResponse
-
 # Create your views here.
 from django.core.exceptions import ObjectDoesNotExist
 
 
 def get_ip(request):
-    x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
-        ip = x_forwarded_for.split(",")[0]
+        ip = x_forwarded_for.split(',')[0]
     else:
-        ip = request.META.get("REMOTE_ADDR")
+        ip = request.META.get('REMOTE_ADDR')
     import socket
-
     try:
         socket.inet_aton(ip)
         ip_valid = True
@@ -46,18 +44,18 @@ def poll_vote(request, pk):
                 return redirect(f"/thank_you_poll/{pk}/")
         except ObjectDoesNotExist:
             pass
-        question = request.POST["question"]
+        question = request.POST['question']
         if question == "option1":
-            poll.option_1_count = F("option_2_count") + 1
+            poll.option_1_count = F('option_2_count') + 1
             poll.save()
         elif question == "option2":
-            poll.option_2_count = F("option_1_count") + 1
+            poll.option_2_count = F('option_1_count') + 1
             poll.save()
-        elif question == "option3":
-            poll.option_3_count = F("option_3_count") + 1
+        elif question == 'option3':
+            poll.option_3_count = F('option_3_count') + 1
             poll.save()
-        elif question == "option4":
-            poll.option_4_count = F("option_4_count") + 1
+        elif question == 'option4':
+            poll.option_4_count = F('option_4_count') + 1
             poll.save()
 
         ip_table = IpTable.objects.create(ip=ip, entry_id=pk)
@@ -92,11 +90,11 @@ def create_poll(request):
         # option3 = form.cleaned_data["option_3"]
         # option4 = form.cleaned_data["option_4"]
 
-        question = request.POST.get("question")
-        option1 = request.POST.get("option1")
-        option2 = request.POST.get("option2")
-        option3 = request.POST.get("option3")
-        option4 = request.POST.get("option4")
+        question = (request.POST.get("question"))
+        option1 = (request.POST.get("option1"))
+        option2 = (request.POST.get('option2'))
+        option3 = (request.POST.get("option3"))
+        option4 = (request.POST.get('option4'))
         import datetime
 
         time = datetime.datetime.now()
@@ -118,14 +116,10 @@ def create_poll(request):
 
 
 def all_polls(request):
-    polls = Poll.objects.order_by("-id")[:5]
-    return render(
-        request,
-        "front/show_all_polls.html",
-        {
-            "polls": polls,
-        },
-    )
+    polls = Poll.objects.order_by('-id')[:5]
+    return render(request, "front/show_all_polls.html", {
+        "polls": polls,
+    })
 
 
 def poll_result(request, pk):
@@ -146,9 +140,7 @@ def poll_result(request, pk):
     option_three_count = poll.option_3_count
     option_four_count = poll.option_4_count
 
-    all_vote = (
-        option_one_count + option_two_count + option_three_count + option_four_count
-    )
+    all_vote = option_one_count + option_two_count + option_three_count + option_four_count
 
     context = {
         "all": all_vote,
@@ -161,13 +153,9 @@ def poll_result(request, pk):
         "option_two_count": option_two_count,
         "option_three_count": option_three_count,
         "option_four_count": option_four_count,
-    }
+        }
     # print(context)
-    return render(
-        request,
-        "front/poll_result.html",
-        context=context,
-    )
+    return render(request, "front/poll_result.html", context=context,)
 
 
 def thank_you_poll(request, pk):
@@ -178,9 +166,6 @@ def thank_you_poll(request, pk):
         return HttpResponse("You're not allowed to be here.")
     primary_key = Poll.objects.get(pk=pk).pk
     context = {"pk": primary_key}
-    return render(request, "front/thank_you_poll.html", context=context)
+    return render(request, 'front/thank_you_poll.html', context=context)
 
 
-# TODO
-
-# OPTION 1 And Option 2 are reversed

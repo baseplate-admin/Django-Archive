@@ -26,7 +26,7 @@ class _Bitrate:
     def calculate(self):
         filesize = (float(self.size) / int(self.episodes)) * (1024 * 1024) * 8
         time = self.seconds
-        self.bitrate = filesize / time
+        self.bitrate = (filesize / time)
         return self.bitrate
 
     def input(self, minute, hour, size, episodes, seconds):
@@ -62,11 +62,11 @@ def bitrate(request):
         # print(hour)
         # print(seconds)
         # Time Gen Function
-        hour = request.POST.get("hour")
-        minute = request.POST.get("minute")
-        seconds = request.POST.get("seconds")
-        size = request.POST.get("size")
-        episodes = request.POST.get("count")
+        hour = (request.POST.get("hour"))
+        minute = (request.POST.get("minute"))
+        seconds = (request.POST.get("seconds"))
+        size = (request.POST.get("size"))
+        episodes = (request.POST.get('count'))
 
         import datetime
 
@@ -93,7 +93,10 @@ def bitrate(request):
             },
         )
 
+
     return render(
         request,
         "front/bitrate_calculator_home.html",
     )
+
+

@@ -1,21 +1,27 @@
 {% extends "front/base.html" %}
-{% block title %}Short URL{% endblock %}
+
 
 {% block heroblock %}
-    {% for poll in polls %}
-        <section class="hero">
-            <div class="hero-body">
-                <div class="container">
-                    <h1 class="title">
-                        {{ poll.question }}
-                    </h1>
-                    <h2 class="subtitle">
-                        <a href="/polls/{{ poll.pk }}/">Vote</a>
-                    </h2>
-                </div>
-            </div>
-        </section>
 
-        <br>
-    {% endfor %}
+    <div class="ajaxReloadCall">
+        {% for poll in polls %}
+            <div class="pollNo{{ poll.pk }}">
+            <section class="card hero" style="text-align: center">
+                <div class="hero-body">
+                    <div class="container">
+                        <h1 class="title">
+                            {{ poll.question }}
+                        </h1>
+                        <h2 class="subtitle">
+                            <a href="/polls/{{ poll.pk }}/">Vote</a>
+                        </h2>
+                    </div>
+                </div>
+            </section>
+            </div>
+
+            <br>
+        {% endfor %}
+    </div>
+
 {% endblock %}
