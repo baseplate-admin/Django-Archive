@@ -8,16 +8,42 @@ import string
 import random
 
 
-def shorten_url():
-    letters = string.ascii_lowercase + string.ascii_uppercase
-    while True:
+# def shorten_url():
+#     letters = string.ascii_lowercase + string.ascii_uppercase
+#     while True:
+#         rand_letters = random.choices(letters, k=5)
+#         rand_letters = "".join(rand_letters)
+#         short_url = Url.objects.filter(short=rand_letters)
+#         if not short_url:
+#             return rand_letters
+#         else:
+#             continue
+
+class ShortUrl:
+    def __init__(self):
+        self.short_letter = self._short_letter()
+
+    def _short_letter(self):
+        letters = string.ascii_lowercase + string.ascii_uppercase
         rand_letters = random.choices(letters, k=5)
         rand_letters = "".join(rand_letters)
-        short_url = Url.objects.filter(short=rand_letters)
-        if not short_url:
-            return rand_letters
-        else:
-            continue
+        self.short_letter = rand_letters
+        return self.short_letter
+
+    def _does_short_exists(self):
+        is_true_or_false = Url.objects.filter(short=self.short_letter).exists()
+        if is_true_or_false:
+            return True
+        elif not is_true_or_false:
+            return False
+
+    def logic(self):
+        if not self._does_short_exists():
+            return self.short_letter
+        elif self._does_short_exists():
+            self._short_letter()
+
+
 
 
 def url_shortener_home(request):
@@ -27,7 +53,7 @@ def url_shortener_home(request):
         form = request.POST.get("long")
 
         database_data = Url.objects.filter(long=form).exists()
-        short = shorten_url()
+        short = ShortUrl().logic()
 
         import datetime
 
