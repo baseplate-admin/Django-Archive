@@ -53,10 +53,11 @@ def home_youtube_video(request):
         date = date.today()
         global time
         time = f"{date}-{month}-{year}--{hour}-{minute}-{second}-{microsecond}"
-        # mediatimedirexists = os.path.isdir(f"/media/{time}")
-        #
-        # if not bool(mediatimedirexists):
-        #     os.mkdir(f"./media/{time}/")
+
+        mediaTimeDirExists = os.path.isdir(f"./media/")
+        print(mediaTimeDirExists)
+        if not mediaTimeDirExists:
+            os.mkdir(f"./media/")
 
         # page = urllib.request.urlopen(form)
         # html = BeautifulSoup(page.read(), "html.parser")
@@ -140,5 +141,3 @@ def download_button(request, secret):
         response['Content-Disposition'] = 'attachment; filename={}'.format(youtube_download_name)
         return response
 
-# TODO
-# Media dir creation doesn't work
