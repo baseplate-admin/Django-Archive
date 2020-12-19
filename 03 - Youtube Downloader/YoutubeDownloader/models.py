@@ -9,6 +9,7 @@ class Youtube(models.Model):
     url = models.URLField()
     file_location = models.TextField()
     time = models.CharField(max_length=100, default=None)
+    secret = models.BinaryField(default=b"0")
 
     def __str__(self):
         return self.title

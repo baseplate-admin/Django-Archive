@@ -24,14 +24,10 @@
 
                 </h1>
                 <h2 class="subtitle">
-                    <form action="{{ link }}">
-                        <p>
-                            If your download doesn't start,
-                            <br>
-                            <input type="submit" id="submit" value="Click Here"
-                                                                   class="button is-primary">
-                        </p>
-                    </form>
+
+                    If your download doesn't start,
+                    <br>
+                    <a  id="submit" href="/download_button/{{ secret }}/">Click me</a>
 
                 </h2>
             </div>
@@ -65,8 +61,3 @@
 {#    </main>#}
 
 
-<script>
-    window.onload = function () {
-        document.getElementById('submit').click();
-    }
-</script>
