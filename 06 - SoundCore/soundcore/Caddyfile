@@ -1,0 +1,5 @@
+zarif-ahnaf.duckdns.org {
+    reverse_proxy localhost:8001
+}
+
+

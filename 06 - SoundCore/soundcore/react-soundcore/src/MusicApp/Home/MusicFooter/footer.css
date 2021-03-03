@@ -1,0 +1,96 @@
+.footer__player {
+    background: #202020;
+    /* background: white; */
+    position: fixed;
+    border-top: 1px solid gray;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 6em;
+    overflow: hidden;
+}
+.progress__bar {
+    width: 100%;
+    margin-left: 30%;
+    margin-right: 30%;
+    padding: 0.5em;
+    position: sticky;
+    display: grid;
+    color: black;
+}
+
+.author__name__and__song__title {
+    width: 25%;
+    position: absolute;
+}
+.playback__div {
+    width: 100%;
+}
+.progress__focus {
+    position: absolute;
+}
+.progress__control__slider {
+    position: absolute;
+    height: 100%;
+    margin: auto;
+}
+.progress__div__with__slider {
+    position: relative;
+    height: 100%;
+    margin: auto;
+    width: 100%;
+}
+.icon__container {
+    width: 25%;
+    margin: auto;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+    gap: 1px;
+}
+
+.extra__padding {
+    padding-bottom: 1.375em;
+    padding-top: 0.5em;
+}
+
+.icon__item {
+    font-size: 30px;
+    vertical-align: middle;
+}
+.volume__bar {
+    margin-top: 2%;
+    margin-right: 0.5%;
+    position: relative;
+}
+.volume__icons {
+    margin-top: 1.6%;
+    margin-right: 0.9%;
+}
+.volume__progress__level {
+    position: absolute;
+}
+.volume__progress__slider {
+    position: sticky;
+}
+
+.playback__value {
+    float: left;
+}
+.total__playback__value {
+    float: right;
+}
+.playback__value__div {
+    margin-left: 20%;
+    position: absolute;
+    width: calc(60% - 20em);
+}
+.playback__grid__item {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    position: relative;
+}
+
+.playback__grid__container {
+    margin: auto;
+}

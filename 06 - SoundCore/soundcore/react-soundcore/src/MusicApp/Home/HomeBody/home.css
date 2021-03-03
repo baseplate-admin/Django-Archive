@@ -1,0 +1,23 @@
+#home_body {
+    margin-left: 12.5em;
+    /* background-image: linear-gradient(to bottom, #434343 0%, black 100%); */
+    background-color: #3f3f3f;
+}
+.grid__container {
+    box-sizing: border-box;
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    padding: 2em;
+    gap: 10em;
+    margin-right: 6.25em;
+    margin-bottom: 8em;
+}
+
+.grid__item {
+    padding: 20px;
+    font-size: 30px;
+    height: 12em;
+    width: 10em;
+    vertical-align: middle;
+}
