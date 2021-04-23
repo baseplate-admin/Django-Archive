@@ -1,0 +1,75 @@
+@media screen and ( max-width: 767px )
+    html
+        overflow-x: hidden
+        overflow-y: hidden
+        body
+            overflow: hidden
+            #root
+                .columns
+                    margin-top: 0px
+            .navbar
+                border-bottom: 1px solid gray
+            .main-column
+                margin-bottom: 0rem
+                &:last-child
+                    margin-bottom: 1rem
+
+                // Making the left column responsive
+                #left-menu
+                    padding-top: 0px
+                    flex: none
+                    width: 140px
+                    .left-menu-fullheight
+                        width: 140px
+                        .menu
+                            position: relative
+
+                            hr
+                                display: flex
+                                margin-top: 1.5em
+                                margin-left: 20.5px
+                            .media
+                                margin-left: 1.55em
+                                .media-content
+                                    p
+                                        .reply
+                                            display: none
+                                        span
+                                            position: absolute
+                                            top: 90px
+                                            left: 35px
+
+                #middle-menu
+                    padding-top: 0px
+                    .hero
+                        #up
+                            .column
+                                .media
+                                    position: relative
+                                    .media-left
+                                        position: absolute
+                                        display: flex
+                                        align-items: center
+                                        justify-content: center
+                                    .media-content
+                                        .content
+                                            span
+                                                strong
+                                                    position: absolute
+                                                    width: 10px
+                                                    left: 80px
+                                                    top: 10px
+                                    .media-right
+                                        position: absolute
+                                        right: 12px
+                        #last
+                            transform: translateY(-20px)
+                            .columns
+                                .column
+                                    .control
+                                        transform: translateX(10px)
+                // Making the right column responsive
+                #right-menu
+                    padding-top: 0px
+
+                    width: 0

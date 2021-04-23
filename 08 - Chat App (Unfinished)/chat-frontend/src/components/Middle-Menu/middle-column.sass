@@ -1,0 +1,137 @@
+
+$primary-nav-color: #1a1c20
+$submit-input-color: #2f323a
+
+$top-items-color: #2f323a// Controls the top call icon button color
+
+$scrollbar-color: #1e2025 // The scrollbar Color.I added this as a variable to make the thing look similiar on both Chrome and Firefox
+
+@mixin placeholder
+    &::-webkit-input-placeholder
+        @content
+
+    &:-moz-placeholder
+        @content
+
+    &::-moz-placeholder
+        @content
+
+    &:-ms-input-placeholder
+        @content
+
+.middle-menu-fullheight
+
+    background-color: $primary-nav-color
+
+    border-top: 1px solid gray
+    #up
+        max-height: 6em
+        .column
+            margin-left: .79em
+            margin-top: .79em
+            margin-right: .79em
+            border-bottom: 2px solid #31353b
+            height: 5.5em
+            .media
+                margin-left: 1.5em
+                .media-content
+                    .content
+                        span
+                            display: flex
+                            align-items: center
+
+                            margin-top: 1em
+                            margin-left: 1em
+
+                            strong
+                                font-family: 'roboto-regular'
+                                font-weight: 450
+
+                                color: white
+                .media-right
+                    display: flex
+                    margin-top: 1em
+                    margin-right: 1em
+
+                    .item
+                        margin-right: .8em
+
+                        .phone-icon-wrapper
+                            background-color: $top-items-color
+                            border: none
+                            width: 35px
+                            height: 35px
+                            border-radius: 290486px
+
+                        .video-icon-wrapper
+                            background-color: $top-items-color
+                            border: none
+                            width: 35px
+                            height: 35px
+                            border-radius: 290486px
+    #middle
+        .box
+            min-height: 10vh
+            max-height: 70vh
+            margin-bottom: 0px
+            background-color: transparent
+            box-shadow: None
+            overflow-x: hidden
+            overflow-y: scroll
+
+            scrollbar-width: thin // Firefox specific implementation
+            scrollbar-color: $scrollbar-color // Firefox specific implementation
+
+            // Chrome specific Implementations
+
+            &::-webkit-scrollbar
+                width: 10px
+                height: 30px
+            &::-webkit-scrollbar-thumb
+                background: #76777a
+            &::-webkit-scrollbar-track
+                background: $scrollbar-color
+
+    #last
+        .columns
+            .input-column
+                padding-bottom: 2em
+                .control
+                    .input
+                        background-color: $submit-input-color
+                        border: none
+                        color: white
+
+                        &::placeholder
+                            color: white
+                            opacity: .5
+            .send-icon
+                display: flex
+                justify-content: center
+                align-items: center
+                margin-right: 2.2em
+                margin-left: 2em
+                margin-bottom: 2em
+
+                .button
+                    height: 40px
+                    width: 40px
+                    background: $submit-input-color
+                    border: none
+
+                    .send-icon-main
+                        transform: translateX(2px) translateY(1px)
+
+            .column
+                .control
+                    .input
+                        width: 100%
+                    .is-right
+                        pointer-events: initial
+
+                        .emoji-picker
+                            transform: translateY(3px)
+                    .is-left
+                        pointer-events: initial
+                        .add-icon
+                            transform: translateY(3px)
