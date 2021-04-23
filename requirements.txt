@@ -1,10 +1,10 @@
 asgiref==3.3.1
-Django==3.1.4
+Django==3.2
 pytz==2020.4
 sqlparse==0.4.1
 youtube-dl==2020.12.14
 cffi==1.14.4
-cryptography==3.3.1
+cryptography==3.3.2
 pycparser==2.20
 six==1.15.0
 waitress==1.4.4
