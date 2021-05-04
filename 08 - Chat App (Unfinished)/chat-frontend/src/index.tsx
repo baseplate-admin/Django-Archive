@@ -1,17 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "./assets/Bulma/bulma.sass"
+import 'bulma/bulma.sass' // Bundled Bulma
+
+import "@fontsource/nunito-sans" // NPM Nunito
 import './assets/Roboto/roboto.sass'
 
-import App from "./components/App";
+import App from "./components";
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+    <React.StrictMode>
+        <App/>
+    </React.StrictMode>,
+    document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

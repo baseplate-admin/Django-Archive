@@ -11,6 +11,7 @@ import os
 
 from django.urls import path
 
+import api.routing
 from api.consumers import WSConsumer
 
 from channels.routing import ProtocolTypeRouter
@@ -25,7 +26,9 @@ application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
         "websocket": AuthMiddlewareStack(
-            URLRouter([path("api/v1/front/", WSConsumer.as_asgi())])
+            URLRouter(
+                api.routing.websocket_urlpatterns
+            )
         ),
     }
 )

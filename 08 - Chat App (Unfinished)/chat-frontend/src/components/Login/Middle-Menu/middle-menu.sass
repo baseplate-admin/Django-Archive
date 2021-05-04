@@ -1,0 +1,47 @@
+$font-color: white
+$box-color: #191b1f
+$input-color: #2f323a
+
+html
+  body
+    .login-hero
+      background-color: #060606
+
+      .hero-body
+        .container
+          transform: translateY(-3.25rem)
+          // Used for removing the top border
+          .columns
+            .column
+              .icon-box
+                background-color: transparent
+
+              .login-box
+                background-color: $box-color
+
+                .items
+                  padding: .4em
+
+                .field
+                  .field-label
+                    .label
+                      color: $font-color
+                      font-family: 'Nunito Sans', sans-serif
+                      font-weight: 100
+
+                  .field-body
+                    .field
+                      .control
+                        .input
+                          background-color: $input-color
+                          border: none
+                          color: white
+
+                          &::placeholder
+                            color: white
+                            opacity: .3
+
+                .button
+                  background-color: $input-color
+                  border: none
+                  color: $font-color
