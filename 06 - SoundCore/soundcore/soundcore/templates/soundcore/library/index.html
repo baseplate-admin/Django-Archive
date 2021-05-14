@@ -1,0 +1,401 @@
+{% extends 'base.html' %}
+{% block fontblock %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-nunito@1.1.13/index.min.css">
+{% endblock %}
+{% block head %}
+    <style>
+        @media screen and ( max-width: 767px) {
+            .search_input_wrapper {
+                display: none;
+            }
+
+            .library_item_wrapper {
+                transform: translateX(-12px);
+            }
+
+            .item_image > img {
+                width: 100px;
+                height: 100px
+            }
+        }
+    </style>
+    <style>
+        html {
+            background-color: black;
+            -ms-overflow-style: none; /* IE  and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        html::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            height: 100vh;
+            overflow-y: hidden;
+            overflow-x: hidden;
+        }
+
+        .login_button {
+            color: #eaeaea;
+            background-color: transparent;
+            border-color: #3b3838;
+            border-width: 1px;
+            transition: 0.4s;
+        }
+
+        .login_button:hover {
+            color: #a5a4a4;
+            background-color: #101010;
+            border-color: #3b3838;
+            border-width: 1px;
+        }
+
+        .left_menu_wrapper {
+            transform: translateY(-12px);
+        }
+
+        .left-menu {
+            background-color: #161616;
+            height: 100vh;
+        }
+
+        .top-navbar {
+            background-color: #161616;
+            color: white
+        }
+
+        .right-column {
+            background-color: #060606;
+            transform: translateX(-12px);
+            height: 100vh;
+        }
+
+
+        .login_button_wrapper {
+            transform: translateY(10px);
+        }
+
+        .brand_image > img {
+            transform: translateY(.6em) translateX(30px);
+        }
+
+        .user_image {
+            transform: translateY(10px) translateX(-10px);
+        }
+
+        .search_input_div {
+            display: flex;
+            justify-content: center;
+        }
+
+        .search_input_wrapper {
+            flex-grow: .4;
+            transform: translateY(5px);
+        }
+
+        .search_input {
+            background-color: #060606;
+            border: transparent;
+            color: white;
+            border-radius: 0;
+        }
+
+        .search_input::placeholder {
+            color: white;
+            opacity: 0.6;
+        }
+
+        .search_input_box_right {
+            background-color: #323232;
+            border-radius: 0;
+        }
+
+        .search_input_box_right_wrapper {
+            overflow: hidden;
+        }
+
+        .icon_box {
+            width: 240px;
+            background-color: transparent;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            height: 10px;
+            border-radius: 0;
+        }
+
+        .icon_box_column {
+            transform: translateY(-12px);
+        }
+
+        .icon_box:hover {
+            background-color: #404040;
+        }
+
+        .icons {
+            border-bottom: 1px solid #313131;
+            padding-bottom: .5em;
+        }
+
+        .icon_text {
+            color: #e0e0ec
+        }
+
+        .is_icon_active {
+            background-color: #242424;
+        }
+
+        .library-hero {
+            background-color: transparent;
+            text-align: center;
+        }
+
+
+        .user-name {
+            color: white;
+            opacity: .9;
+        }
+
+        .title_column {
+            display: flex;
+            justify-content: center;
+        }
+
+        .item_hero_body {
+            padding: .6em
+        }
+
+        .library_item_box {
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        .library_item_box:hover {
+            background-color: #292a33;
+        }
+
+        .library_item_wrapper {
+            background-color: #191b1f;
+            height: 81vh;
+            overflow-y: scroll;
+        }
+
+        .library_hero {
+            background-color: transparent;
+        }
+
+        .item_title {
+            color: white;
+            opacity: .9;
+            transform: translateY(-4px);
+            max-height: 50px;
+            height: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-family: "Nunito", sans-serif;
+            font-weight: 400;
+            font-size: 19px;
+        }
+
+        .item_subtitle {
+            color: white;
+            opacity: .7;
+        }
+
+        .item_image > img {
+            width: 100px;
+            height: 100px
+        }
+
+        .item_subtitle > strong {
+            color: white;
+
+        }
+
+        .item_hr {
+            background-color: #32363e;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+    <div class="columns is-mobile top-navbar">
+        <div id="hamburger_icon_wrapper_id" class="column is-narrow">
+            <ion-icon class="hamburger_icon" name="menu-sharp"></ion-icon>
+            <script async>
+                anime({
+                    targets: '.hamburger_icon',
+                    scale: 1.6,
+                    translateY: 10,
+                    translateX: 15,
+                    color: '#FFFFFF',
+                    duration: 0,
+                    easing: 'linear'
+                })
+            </script>
+        </div>
+        <div class="column is-narrow brand_image">
+            <img src="https://cdn.emk.dev/templates/bulma-logo-light.png" width="120"
+                 height="40">
+        </div>
+        <div class="column">
+            <div class="field search_input_div">
+                <div class="control has-icons-right search_input_wrapper">
+                    <input class="input search_input" type="text" placeholder="Search">
+                    <span class="icon is-small is-right search_input_box_right_wrapper">
+                        <div class="box search_input_box_right">
+                            <ion-icon class="search_icon" name="search-outline"></ion-icon>
+                            <script async>
+                                anime({
+                                    targets: '.search_icon',
+                                    color: '#FFFFFF',
+                                    scale: 1.4
+                                })
+                            </script>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="column is-narrow ">
+            {% if not user.is_authenticated %}
+                <div class="login_button_wrapper">
+                    <a class="button is-rounded login_button"
+                       href="{% url 'login_form' %}?next={{ request.get_full_path }}">
+                        <p style="margin-bottom:5px">Login</p>
+                    </a>
+                </div>
+            {% elif user.is_authenticated %}
+                <figure class="image is-32x32 user_image">
+                    <img alt=""
+                         src="https://bulma.io/images/placeholders/128x128.png"
+                         class="is-rounded"/>
+                </figure>
+            {% endif %}
+        </div>
+    </div>
+    <div class="columns is-mobile ">
+    <div class="column is-narrow left_menu_wrapper">
+        <aside class="menu left-menu">
+            <div class="icons">
+                <a href="{% url 'home' %}">
+                    <div class="box icon_box ">
+                        <div class="columns is-mobile icon_box_column">
+                            <div class="column is-2 is-offset-1">
+                                <ion-icon class="home__icon" name="home-outline"></ion-icon>
+                                <script async>
+                                    anime({
+                                        targets: '.home__icon',
+                                        color: '#FFFFFF',
+                                        scale: 1.4
+                                    })
+                                </script>
+                            </div>
+
+                            <div class="column icon_text">
+                                Home
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="{% url 'library_home' %}">
+                    <div class="box icon_box is_icon_active">
+                        <div class="columns is-mobile icon_box_column">
+                            <div class="column is-2 is-offset-1">
+                                <ion-icon class="library__icon" name="library-outline"></ion-icon>
+                                <script async>
+                                    anime({
+                                        targets: '.library__icon',
+                                        color: '#FFFFFF',
+                                        scale: 1.4,
+                                    })
+                                </script>
+                            </div>
+                            <div class="column icon_text">
+                                Library
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+    </div>
+    <div class="column right-column">
+    <section class="hero library-hero">
+        <div class="hero-body">
+            <div class="title user-name">
+                <div class="columns">
+                    <div class="column title_column" style="width:350px;height:100px">
+                        Primary hero
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="box library_item_wrapper">
+        <div>
+            <section class="hero library_hero ">
+                <div class="item_hero_body">
+                    <p class="item_title has-text-centered">Hello world</p>
+                    <p class="item_subtitle has-text-centered">
+                        <strong>Songs:</strong>
+                        <small>1</small>
+                        |
+                        <strong>Time:</strong>
+                        <small>2</small>
+                    </p>
+                </div>
+            </section>
+            <hr class="item_hr"/>
+        </div>
+        {#            <hr style="	background-color: #32363e"/>#}
+    </div>
+
+{% endblock %}
+{% block afterbody %}
+    <script defer>
+        const hamburgerElement = document.getElementById('hamburger_icon_wrapper_id')
+        const leftMenuElement = document.getElementsByClassName('left-menu')[0]
+        hamburgerElement.addEventListener('click', () => {
+            if (leftMenuElement.classList.contains('left-menu-hidden')) {
+                anime({
+                    targets: '.left-menu',
+                    translateX: 0,
+                    duration: 500,
+                    easing: 'easeOutSine',
+                    complete: () => {
+                        leftMenuElement.classList.remove('left-menu-hidden')
+                    }
+                })
+                anime({
+                    targets: '.left-menu',
+                    width: '240',
+                    duration: 400,
+                    easing: 'easeOutSine',
+                })
+
+            } else if (!leftMenuElement.classList.contains('left-menu-hidden')) {
+                anime({
+                    targets: '.left-menu',
+                    translateX: -500,
+                    duration: 500,
+                    easing: 'easeOutSine',
+                    complete: () => {
+                        leftMenuElement.classList.add('left-menu-hidden')
+                    }
+                })
+                anime({
+                    targets: '.left-menu',
+                    width: '0',
+                    duration: 400,
+                    easing: 'easeOutSine',
+                })
+            }
+        })
+    </script>
+{% endblock %}

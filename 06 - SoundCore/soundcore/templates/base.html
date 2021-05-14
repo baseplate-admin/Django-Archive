@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block fontblock %} {% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Icon Import Before Everything -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@5.5.1/dist/ionicons/ionicons.esm.js"></script>
+    <!-- AnimeJS import for resizing Everything :) -->
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"
+            integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+    <!-- We need Bulma For Everything. So a global import is good -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"
+          integrity="sha256-O8SsQwDg1R10WnKJNyYgd9J3rlom+YSVcGbEF5RmfFk=" crossorigin="anonymous">
+    {% block head %}{% endblock %}
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+</head>
+<body>
+{% block body %} {% endblock %}
+{% block afterbody %} {% endblock %}
+</body>
+</html>
