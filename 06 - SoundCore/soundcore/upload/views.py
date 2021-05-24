@@ -16,30 +16,9 @@ from upload.models import MusicList
 # Create Your Views Here
 
 @login_required()
-@async_to_sync
-async def file_upload_form(request):
-    @sync_to_async()
-    def save_music_to_database(_title, _song_file, _artist, _album, _album_art, _date, _lyricist, _composer, _bitrate,
-                               _length, _music_extension, _sample_rate, _mime_type):
-        database_object = MusicList.objects.create(
-            song_name=_title,
-            song_file=_song_file,
-            artist=_artist,
-            album=_album,
-            album_art=_album_art,
-            date=_date,
-            lyricist=_lyricist,
-            composer=_composer,
-            bitrate=_bitrate,
-            length=_length,
-            music_extension=_music_extension,
-            sample_rate=_sample_rate,
-            mime_type=_mime_type
-        )
-        database_object.save()
-
+@sync_to_async()
+def file_upload_form(request):
     form = FileFieldForm(request.POST, request.FILES or None)
-
     if request.method == "POST":
         if form.is_valid():
             files = request.FILES.getlist('file_field')
@@ -90,22 +69,21 @@ async def file_upload_form(request):
                     bitrate = flac_dict.info.bitrate
                     length = flac_dict.info.length
                     sample_rate = flac_dict.info.sample_rate
-                    await save_music_to_database(
-                        _song_file=file,
-                        _title=title,
-                        _artist=artist,
-                        _bitrate=bitrate,
-                        _length=length,
-                        _album=album,
-                        _date=date,
-                        _lyricist=lyricist,
-                        _composer=composer,
-                        _album_art=image,
-                        _music_extension="FLAC",
-                        _sample_rate=sample_rate,
-                        _mime_type='flac'
+                    database_object = MusicList.objects.create(
+                        song_name=title,
+                        song_file=file,
+                        artist=artist,
+                        album=album,
+                        album_art=image,
+                        date=date,
+                        lyricist=lyricist,
+                        composer=composer,
+                        bitrate=bitrate,
+                        length=length,
+                        sample_rate=sample_rate,
+                        mime_type='flac'
                     )
-
+                    database_object.save()
                 elif file.name.endswith('mp3'):
                     pass
         return render(request, 'upload/successful/index.html')

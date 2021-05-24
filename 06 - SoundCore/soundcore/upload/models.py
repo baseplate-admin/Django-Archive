@@ -15,7 +15,6 @@ class MusicList(models.Model):
     lyricist = models.CharField(max_length=1024, default='', null=True)
     bitrate = models.IntegerField(default=0, null=True)
     length = models.CharField(default='', max_length=10, null=True)
-    music_extension = models.CharField(default='', max_length=5)
     sample_rate = models.IntegerField(default=0, null=False)
     mime_type = models.CharField(max_length=15, default='', null=False)
 
