@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load humanize soundcore_tags %}
+
 {% block fontblock %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-nunito@1.1.13/index.min.css">
 {% endblock %}
@@ -9,14 +11,10 @@
                 display: none;
             }
 
-            .library_item_wrapper {
-                transform: translateX(-12px);
+            .item_image {
+                transform: translateX(-3.6em);
             }
 
-            .item_image > img {
-                width: 100px;
-                height: 100px
-            }
         }
     </style>
     <style>
@@ -55,10 +53,6 @@
             transform: translateY(-12px);
         }
 
-        .left-menu {
-            background-color: #161616;
-            height: 100vh;
-        }
 
         .top-navbar {
             background-color: #161616;
@@ -115,37 +109,6 @@
             overflow: hidden;
         }
 
-        .icon_box {
-            width: 240px;
-            background-color: transparent;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            height: 10px;
-            border-radius: 0;
-        }
-
-        .icon_box_column {
-            transform: translateY(-12px);
-        }
-
-        .icon_box:hover {
-            background-color: #404040;
-        }
-
-        .icons {
-            border-bottom: 1px solid #313131;
-            padding-bottom: .5em;
-        }
-
-        .icon_text {
-            color: #e0e0ec
-        }
-
-        .is_icon_active {
-            background-color: #242424;
-        }
 
         .library-hero {
             background-color: transparent;
@@ -167,14 +130,6 @@
             padding: .6em
         }
 
-        .library_item_box {
-            background-color: transparent;
-            box-shadow: none;
-        }
-
-        .library_item_box:hover {
-            background-color: #292a33;
-        }
 
         .library_item_wrapper {
             background-color: #191b1f;
@@ -189,8 +144,8 @@
         .item_title {
             color: white;
             opacity: .9;
-            transform: translateY(-4px);
-            max-height: 50px;
+            transform: translateY(5px);
+            max-height: 60px;
             height: 100px;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -207,7 +162,9 @@
 
         .item_image > img {
             width: 100px;
-            height: 100px
+            height: 100px;
+            transform: translateX(3.6em) translateY(.5em);
+
         }
 
         .item_subtitle > strong {
@@ -215,8 +172,41 @@
 
         }
 
+        .music-selected {
+            background-color: #282c32;
+        }
+
         .item_hr {
             background-color: #32363e;
+        }
+
+        #send-icon-wrapper {
+            position: absolute;
+            bottom: 65px;
+            right: 50px;
+            cursor: pointer;
+        }
+
+        .name_input {
+            background-color: transparent;
+            border: none;
+            color: white;
+            opacity: 1;
+        }
+
+        .name_input::placeholder {
+            color: white;
+            opacity: 0.9;
+            text-align: center;
+        }
+
+        .name_input:focus {
+            border: none;
+            box-shadow: none;
+        }
+
+        .name_input:focus::placeholder {
+            opacity: 0
         }
     </style>
 {% endblock %}
@@ -280,51 +270,7 @@
     </div>
     <div class="columns is-mobile ">
     <div class="column is-narrow left_menu_wrapper">
-        <aside class="menu left-menu">
-            <div class="icons">
-                <a href="{% url 'home' %}">
-                    <div class="box icon_box ">
-                        <div class="columns is-mobile icon_box_column">
-                            <div class="column is-2 is-offset-1">
-                                <ion-icon class="home__icon" name="home-outline"></ion-icon>
-                                <script async>
-                                    anime({
-                                        targets: '.home__icon',
-                                        color: '#FFFFFF',
-                                        scale: 1.4
-                                    })
-                                </script>
-                            </div>
-
-                            <div class="column icon_text">
-                                Home
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="{% url 'library_home' %}">
-                    <div class="box icon_box is_icon_active">
-                        <div class="columns is-mobile icon_box_column">
-                            <div class="column is-2 is-offset-1">
-                                <ion-icon class="library__icon" name="library-outline"></ion-icon>
-                                <script async>
-                                    anime({
-                                        targets: '.library__icon',
-                                        color: '#FFFFFF',
-                                        scale: 1.4,
-                                    })
-                                </script>
-                            </div>
-                            <div class="column icon_text">
-                                Library
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </aside>
-
+        {% include 'left-sidebar.html' %}
     </div>
     <div class="column right-column">
     <section class="hero library-hero">
@@ -332,90 +278,102 @@
             <div class="title user-name">
                 <div class="columns">
                     <div class="column title_column" style="width:350px;height:100px">
-                        Primary hero
+                        <input type="text" class="name_input input" id='name_input' style="width: 80%"
+                               placeholder="Library Name"/>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <div class="box library_item_wrapper">
-        <div>
-            <section class="hero library_hero ">
-                <div class="item_hero_body">
-                    <div class="columns is-mobile">
-                        <div class="column is-one-fifth-desktop is-two-fifths-mobile">
-                            <figure class="image item_image">
-                                <img src="https://bulma.io/images/placeholders/128x128.png">
-                            </figure>
-                        </div>
-                        <div class="column  is-three-fifths-mobile is-four-fifths-desktop">
-                            <div class="item_title">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut
-                                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                ullamco
-                                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                                in
-                                voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        {% for i in musics %}
+            <div onclick="handleClick({{ i.id }})" id="music_item_{{ i.id }}">
+                <section class="hero library_hero ">
+                    <div class="item_hero_body">
+                        <div class="columns is-mobile">
+                            <div class="column is-one-fifth-desktop is-two-fifths-mobile">
+                                <figure class="image item_image">
+                                    <img src="{% url 'image_generator' %}?id={{ i.id }}">
+                                </figure>
                             </div>
-                            <div class="item_subtitle">
-                                <strong>Artist</strong> | <small>bitrate</small> | <small>seconds</small>
+                            <div class="column  is-three-fifths-mobile is-four-fifths-desktop">
+                                <div class="item_title">
+                                    {{ i.song_name }}
+                                </div>
+                                <div class="item_subtitle">
+                                    <strong>{{ i.artist }}</strong> | <small class="bitrate">{{ i.sample_rate|intcomma }}k</small> |
+                                    <small>{{ i.length|to_two_decimal }}</small>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-            </section>
-            <hr class="item_hr"/>
+                </section>
+                <hr class="item_hr"/>
+            </div>
+            {% comment %}
+            <!--<hr style="	background-color: #32363e"/>-->
+            {% endcomment %}
+        {% endfor %}
+        <div id="send-icon-wrapper">
+            <ion-icon class="send__icon" name="chevron-forward-circle-outline"></ion-icon>
         </div>
-        {#            <hr style="	background-color: #32363e"/>#}
+        <script>
+            anime({
+                targets: '.send__icon',
+                scale: 2,
+                color: '#00d1b2',
+            })
+        </script>
     </div>
 
 {% endblock %}
 {% block afterbody %}
-    <script>
-    let data = `{{ form }}`
-    console.log(data)
-    </script>
-    <script defer>
-        const hamburgerElement = document.getElementById('hamburger_icon_wrapper_id')
-        const leftMenuElement = document.getElementsByClassName('left-menu')[0]
-        hamburgerElement.addEventListener('click', () => {
-            if (leftMenuElement.classList.contains('left-menu-hidden')) {
-                anime({
-                    targets: '.left-menu',
-                    translateX: 0,
-                    duration: 500,
-                    easing: 'easeOutSine',
-                    complete: () => {
-                        leftMenuElement.classList.remove('left-menu-hidden')
-                    }
-                })
-                anime({
-                    targets: '.left-menu',
-                    width: '240',
-                    duration: 400,
-                    easing: 'easeOutSine',
-                })
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"
+            integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"
+            integrity="sha256-JLmknTdUZeZZ267LP9qB+/DT7tvxOOKctSKeUC2KT6E=" crossorigin="anonymous"></script>
+    <script >
+        const arr = []
 
-            } else if (!leftMenuElement.classList.contains('left-menu-hidden')) {
-                anime({
-                    targets: '.left-menu',
-                    translateX: -500,
-                    duration: 500,
-                    easing: 'easeOutSine',
-                    complete: () => {
-                        leftMenuElement.classList.add('left-menu-hidden')
+        const addOrRemove = (arr, val) => {
+            if (!_.includes(arr, val)) {
+                arr.push(val);
+            } else {
+                _.remove(arr, item => item === val);
+            }
+            //  console.log(arr);
+        }
+        const url = '{% url 'library_generator' %}'
+
+
+        const handleClick = (id) => {
+            const element = document.getElementById(`music_item_${id}`)
+            if (element.classList.contains('music-selected')) {
+                element.classList.remove('music-selected')
+                addOrRemove(arr, parseInt(id))
+            } else if (!element.classList.contains('music-selected')) {
+                element.classList.add('music-selected')
+                addOrRemove(arr, parseInt(id))
+            }
+        }
+
+        const sendIcon = document.getElementById('send-icon-wrapper')
+        sendIcon.addEventListener("click", async () => {
+            const inputData = document.getElementById('name_input').value
+
+            if (inputData) {
+                const jsonData = JSON.stringify({'array': arr, "name": inputData})
+
+                const res = await axios.post(url, jsonData, {
+                    headers: {
+                        "X-CSRFToken": '{{ csrf_token }}',
                     }
                 })
-                anime({
-                    targets: '.left-menu',
-                    width: '0',
-                    duration: 400,
-                    easing: 'easeOutSine',
-                })
+                if (res.status === 200) {
+                    location.reload(true)
+                }
             }
         })
+
     </script>
 {% endblock %}

@@ -30,16 +30,26 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Core django imports
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Extra import
+    'django.contrib.humanize',
+
+    # Main apps
     'user',
     'upload',
     'soundcore',
+    'player',
+
+    # Helper Functions
     'image_generator',
+    'music_generator',
 ]
 
 MIDDLEWARE = [

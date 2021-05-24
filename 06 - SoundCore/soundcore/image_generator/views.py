@@ -3,12 +3,14 @@ import io
 from asgiref.sync import async_to_sync, sync_to_async
 from django.http import Http404
 from django.http import HttpResponse
-from upload.models import MusicList
 from django.conf import settings
 from django.views.decorators.cache import cache_page
 
+from upload.models import MusicList
 
 # Create your views here.
+
+
 @cache_page(60 * 60)
 @async_to_sync
 async def image_gen(request):
