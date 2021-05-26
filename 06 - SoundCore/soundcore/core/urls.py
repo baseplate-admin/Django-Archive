@@ -21,6 +21,5 @@ urlpatterns = [
     path("accounts/", include("user.urls")),
     path('upload/', include("upload.urls")),
     path('soundcore/', include('soundcore.urls')),
-    path('helper/image/', include('image_generator.urls')),
-    path('helper/song/', include('music_generator.urls'))
+    path('helper/', include('generator_apps.urls')),
 ]

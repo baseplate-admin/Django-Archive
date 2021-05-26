@@ -215,9 +215,9 @@
     </div>
     <div class="columns is-mobile ">
         <div class="column is-narrow left_menu_wrapper">
-            {% include 'left-sidebar.html' with active="home" %}
+            {% include 'left-sidebar.html' with active="home" class='is_footer_active' %}
         </div>
-        <div class="column right-column">
+        <div class="column right-column is_footer_active">
             <div class="grid-container">
                 {% for i in musics %}
                     <div class="grid-item">
@@ -238,6 +238,7 @@
             </div>
         </div>
     </div>
+    {% include "footer-player.html" %}
 {% endblock %}
 
 {% block afterbody %}

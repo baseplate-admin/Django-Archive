@@ -45,11 +45,9 @@ INSTALLED_APPS = [
     'user',
     'upload',
     'soundcore',
-    'player',
 
     # Helper Functions
-    'image_generator',
-    'music_generator',
+    'generator_apps',
 ]
 
 MIDDLEWARE = [

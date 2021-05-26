@@ -72,3 +72,4 @@ def library_generator(request):
     elif request.method == "GET":
         musics = MusicList.objects.all()
         return render(request, 'soundcore/library/create/index.html', {'musics': musics})
+
