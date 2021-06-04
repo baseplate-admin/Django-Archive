@@ -7,19 +7,21 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Cache',
+            name="Cache",
             fields=[
-                ('cache_key', models.TextField(primary_key=True, serialize=False, unique=True)),
-                ('value', models.TextField()),
-                ('expires', models.TextField()),
+                (
+                    "cache_key",
+                    models.TextField(primary_key=True, serialize=False, unique=True),
+                ),
+                ("value", models.TextField()),
+                ("expires", models.TextField()),
             ],
             options={
-                'db_table': 'django_cache',
+                "db_table": "django_cache",
             },
         ),
     ]

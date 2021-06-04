@@ -45,20 +45,20 @@ import asyncio
 
 async def mp4_to_gif(url: str, buffer: BinaryIO) -> None:
     """
-        Converts a mp4 to a gif.
-            Input:
-                binary: Byte like object
+    Converts a mp4 to a gif.
+        Input:
+            binary: Byte like object
 
     """
 
     async def youtube_downloader(link: Optional[str], binary: BinaryIO) -> None:
         """
-            Downloads the youtube file and writes it to a BytesIO object.
-                Input:
-                    link    <-- Str / Youtube link
-                    binary  <-- Io Object / io.BytesIO()
-                Output:
-                    Bytes written to binary object
+        Downloads the youtube file and writes it to a BytesIO object.
+            Input:
+                link    <-- Str / Youtube link
+                binary  <-- Io Object / io.BytesIO()
+            Output:
+                Bytes written to binary object
         """
         yt = YouTube(link)  # Query youtube
         stream = yt.streams.get_by_itag(137)  # Get 1080p/mp4
@@ -66,32 +66,33 @@ async def mp4_to_gif(url: str, buffer: BinaryIO) -> None:
 
     async def add_files_to_delete(file_location: str):
         """
-            File delete helper function.
-                Input:
-                    file_location <-- String / Path
-                Output:
-                    Deleted File
+        File delete helper function.
+            Input:
+                file_location <-- String / Path
+            Output:
+                Deleted File
         """
-        await asyncio.sleep(.01)
+        await asyncio.sleep(0.01)
         os.remove(file_location)
 
     async def get_temp_file_location(file_type: str) -> str:
 
         """
-            Random File Name generator Helper Function
-                Input:
-                    file_type  <-- File MIME Type eg: '.mp4, .mp3
-                Output:
-                    random file name generated.
-                    if input if ('.mp4) it may return C:\\Programming\\Social Media\\core\\temp\\fmfvbnsjmdfdsoue.mp4
+        Random File Name generator Helper Function
+            Input:
+                file_type  <-- File MIME Type eg: '.mp4, .mp3
+            Output:
+                random file name generated.
+                if input if ('.mp4) it may return C:\\Programming\\Social Media\\core\\temp\\fmfvbnsjmdfdsoue.mp4
         """
         # Check if theres a temp dir.
-        if not os.path.isdir(f'{os.getcwd()}/temp'):
-            os.mkdir(f'{os.getcwd()}/temp')  # Make a temp dir.
-        file_name = ''.join(random.choice(string.ascii_lowercase) for _ in
-                            range(16))  # Generate a random string consisting of 16 characters.
+        if not os.path.isdir(f"{os.getcwd()}/temp"):
+            os.mkdir(f"{os.getcwd()}/temp")  # Make a temp dir.
+        file_name = "".join(
+            random.choice(string.ascii_lowercase) for _ in range(16)
+        )  # Generate a random string consisting of 16 characters.
 
-        file_path = f'{os.getcwd()}/temp/{file_name}.{file_type}'  # Combine Current Dir and file_type
+        file_path = f"{os.getcwd()}/temp/{file_name}.{file_type}"  # Combine Current Dir and file_type
 
         # Check if file exists.
         #   if file is there, execute the function again. If no file is there return the path
@@ -107,20 +108,22 @@ async def mp4_to_gif(url: str, buffer: BinaryIO) -> None:
     await youtube_downloader(url, in_memory)
 
     # Generate a random .mp4 file in 'currentdir/temp/'
-    binary_to_mp4_location = await get_temp_file_location('mp4')
+    binary_to_mp4_location = await get_temp_file_location("mp4")
 
-    f = open(binary_to_mp4_location, 'wb')  # Open the file for write binary operation
+    f = open(binary_to_mp4_location, "wb")  # Open the file for write binary operation
     f.write(in_memory.getvalue())  # Write Binary content to file generated above
     f.close()  # Close the file so we can delete this
 
     in_memory.truncate(0)  # Remove the unnecessary bytes
     in_memory.seek(0)  # set Cursor POS to 0
 
-    reader = imageio.get_reader(binary_to_mp4_location)  # Read the content of files from the .mp4 file
-    fps = reader.get_meta_data()['fps']  # Get FPS data
+    reader = imageio.get_reader(
+        binary_to_mp4_location
+    )  # Read the content of files from the .mp4 file
+    fps = reader.get_meta_data()["fps"]  # Get FPS data
 
     # Generate a random .gif file in currentdir/temp/
-    save_location = await get_temp_file_location('gif')
+    save_location = await get_temp_file_location("gif")
     # Save the modified GIF binary data to the file
     writer = imageio.get_writer(save_location, fps=fps)
 
@@ -132,7 +135,7 @@ async def mp4_to_gif(url: str, buffer: BinaryIO) -> None:
     writer.close()
 
     # Open the file again so that we can flush binary to buffer
-    f = open(save_location, 'rb')  # Open as read binary mode.
+    f = open(save_location, "rb")  # Open as read binary mode.
     buffer.write(f.read())  # Flush binary content from file to buffer
     f.close()  # Close the file for delete
 
@@ -145,15 +148,15 @@ async def mp4_to_gif(url: str, buffer: BinaryIO) -> None:
 @async_to_sync
 async def youtube_to_gif(request):
     """
-        Converts a youtube video to gif.
-            Accepts:
-                GET
-            Returns:
-                'image/gif'
+    Converts a youtube video to gif.
+        Accepts:
+            GET
+        Returns:
+            'image/gif'
     """
     if request.method == "GET":
         # Get the url from query
-        url = request.GET['url']
+        url = request.GET["url"]
 
         # if theres no url return HTTP404
         if not url:
@@ -172,6 +175,6 @@ async def youtube_to_gif(request):
         in_memory_gif.truncate(0)
         in_memory_gif.seek(0)
 
-        return HttpResponse(data, content_type='image/gif')
+        return HttpResponse(data, content_type="image/gif")
     elif request.method == "POST":
         return Http404

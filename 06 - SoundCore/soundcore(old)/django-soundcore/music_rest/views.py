@@ -11,4 +11,3 @@ def all_songs(request):
     data = SoundCoreModel.objects.all()
     serializer = SoundCoreModelSerializer(data, many=True)
     return Response(serializer.data)
-

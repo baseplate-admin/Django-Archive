@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import Url
+
 # from .models import FormUrl
 
 # Create your views here.
@@ -18,6 +19,7 @@ import random
 #             return rand_letters
 #         else:
 #             continue
+
 
 class ShortUrl:
     def __init__(self):
@@ -42,8 +44,6 @@ class ShortUrl:
             return self.short_letter
         elif self._does_short_exists():
             self._short_letter()
-
-
 
 
 def url_shortener_home(request):
@@ -71,9 +71,7 @@ def url_shortener_home(request):
             )
 
         elif not database_data:
-            database = Url.objects.create(
-                long=form, short=short, time=datetime_object
-            )
+            database = Url.objects.create(long=form, short=short, time=datetime_object)
             database.save()
             url = Url.objects.get(long=form).short
             #       Add redirect to a box.

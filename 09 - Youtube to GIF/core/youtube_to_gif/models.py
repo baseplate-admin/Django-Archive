@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Cache(models.Model):
     cache_key = models.TextField(primary_key=True, unique=True)
     value = models.TextField()
@@ -12,4 +13,4 @@ class Cache(models.Model):
         return str(self.expires)
 
     class Meta:
-        db_table = 'django_cache'
+        db_table = "django_cache"

@@ -3,9 +3,11 @@ from django.shortcuts import redirect
 import youtube_dl
 from .models import Youtube
 import os
+
 # from .models import FormYoutube
 from datetime import datetime
 from django.http import HttpResponse
+
 # Create your views here.
 
 time = None
@@ -20,6 +22,7 @@ class GenerateKey:
 
     def gen_key(self):
         from cryptography.fernet import Fernet
+
         self.key = Fernet.generate_key()
         return self.key
 
@@ -63,9 +66,7 @@ def home_youtube_video(request):
         # html = BeautifulSoup(page.read(), "html.parser")
         # bs4_title = html.title.string
         secret = GenerateKey().does_key_exist()
-        media_dir = os.path.abspath(
-            os.path.realpath(f"media/{time}/%(title)s.%(ext)s")
-        )
+        media_dir = os.path.abspath(os.path.realpath(f"media/{time}/%(title)s.%(ext)s"))
 
         ydl_options = {
             "format": "bestaudio/best",
@@ -135,9 +136,10 @@ def download_button(request, secret):
 
     youtube_download_location = Youtube.objects.get(secret=secret).file_location
     youtube_download_name = f"{Youtube.objects.get(secret=secret).title}.mp3"
-    with open(youtube_download_location, 'rb') as file:
-        response = HttpResponse(file.read(), content_type='audio/mpeg')
+    with open(youtube_download_location, "rb") as file:
+        response = HttpResponse(file.read(), content_type="audio/mpeg")
         print(youtube_download_name)
-        response['Content-Disposition'] = 'attachment; filename={}'.format(youtube_download_name)
+        response["Content-Disposition"] = "attachment; filename={}".format(
+            youtube_download_name
+        )
         return response
-

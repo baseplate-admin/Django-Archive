@@ -10,7 +10,11 @@ urlpatterns = [
     ),
     # path("download/", views.download_video, name="Youtube Download"),
     path("download_create/<pk>/", views.download_template, name="Youtube Download"),
-    path("download_button/<secret>/", views.download_button, name="Youtube_Download_Button"),
+    path(
+        "download_button/<secret>/",
+        views.download_button,
+        name="Youtube_Download_Button",
+    ),
     # path("download_media/<time>/<bs4_title>", views.media_downloader, name="Manual Video Downloader"),
 ]
 if settings.DEBUG:

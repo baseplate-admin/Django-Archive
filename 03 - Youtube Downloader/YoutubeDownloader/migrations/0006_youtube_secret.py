@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('YoutubeDownloader', '0005_auto_20201206_1121'),
+        ("YoutubeDownloader", "0005_auto_20201206_1121"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='youtube',
-            name='secret',
-            field=models.BinaryField(default=b'0'),
+            model_name="youtube",
+            name="secret",
+            field=models.BinaryField(default=b"0"),
         ),
     ]

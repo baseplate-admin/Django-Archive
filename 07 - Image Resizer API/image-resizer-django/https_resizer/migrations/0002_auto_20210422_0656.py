@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('https_resizer', '0001_initial'),
+        ("https_resizer", "0001_initial"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='Telementry',
-            new_name='HttpsModel',
+            old_name="Telementry",
+            new_name="HttpsModel",
         ),
         migrations.AlterModelOptions(
-            name='httpsmodel',
-            options={'verbose_name': 'Telementry'},
+            name="httpsmodel",
+            options={"verbose_name": "Telementry"},
         ),
     ]

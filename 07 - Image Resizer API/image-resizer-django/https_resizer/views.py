@@ -54,11 +54,11 @@ def database(raw_data_length: int) -> None:
 @async_to_sync
 async def https_image_resizer_px_based(request):
     """
-        Resizes Http Query
-        Accepts: 
-            Http(Query),
-            Size(Query) <-- Not required
-            
+    Resizes Http Query
+    Accepts:
+        Http(Query),
+        Size(Query) <-- Not required
+
     """
     if request.method == "GET":
         # Get data from request query param

@@ -54,5 +54,3 @@ class CreatePollForm(forms.Form):
             attrs={"class": "form-control", "placeholder": "FreeBSD"}
         ),
     )
-
-

@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('BitrateCalculator', '0002_auto_20201206_2347'),
+        ("BitrateCalculator", "0002_auto_20201206_2347"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='bitrate',
-            name='bitrate',
-            field=models.IntegerField(default='--', max_length=2000),
+            model_name="bitrate",
+            name="bitrate",
+            field=models.IntegerField(default="--", max_length=2000),
         ),
         migrations.AlterField(
-            model_name='bitrate',
-            name='episode',
-            field=models.IntegerField(default='-'),
+            model_name="bitrate",
+            name="episode",
+            field=models.IntegerField(default="-"),
         ),
     ]

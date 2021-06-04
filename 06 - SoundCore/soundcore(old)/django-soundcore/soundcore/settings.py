@@ -28,8 +28,8 @@ DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
 
 ALLOWED_HOSTS = []
-ALLOWED_HOSTS.append('zarif-ahnaf.duckdns.org')
-ALLOWED_HOSTS.append('127.0.0.1')
+ALLOWED_HOSTS.append("zarif-ahnaf.duckdns.org")
+ALLOWED_HOSTS.append("127.0.0.1")
 
 # Application definition
 

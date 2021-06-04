@@ -11,7 +11,7 @@ import jwt
 # from django.core import serializers
 async def validate(token):
     secret = settings.SECRET_KEY
-    return_object = jwt.decode(str(token), secret, algorithms='HS256')
+    return_object = jwt.decode(str(token), secret, algorithms="HS256")
     return return_object
 
 
@@ -31,9 +31,9 @@ class WSConsumer(AsyncWebsocketConsumer):
         data = json.loads(event["text"])
         # data['input'] <- Input data
         # data['jwt']['access'] <- JWT access key
-        input_data = data['input']
-        access_key = data['jwt']['access']
-        x = (await validate(access_key))
+        input_data = data["input"]
+        access_key = data["jwt"]["access"]
+        x = await validate(access_key)
         print(x)
 
     @database_sync_to_async

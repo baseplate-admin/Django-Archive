@@ -7,20 +7,27 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='SoundCoreModel',
+            name="SoundCoreModel",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('author', models.CharField(max_length=50)),
-                ('album', models.CharField(max_length=50)),
-                ('title', models.CharField(max_length=50)),
-                ('album_art', models.CharField(default='-', max_length=100)),
-                ('music_file', models.CharField(default='-', max_length=100)),
-                ('release_date', models.CharField(default='-', max_length=10)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("author", models.CharField(max_length=50)),
+                ("album", models.CharField(max_length=50)),
+                ("title", models.CharField(max_length=50)),
+                ("album_art", models.CharField(default="-", max_length=100)),
+                ("music_file", models.CharField(default="-", max_length=100)),
+                ("release_date", models.CharField(default="-", max_length=10)),
             ],
         ),
     ]

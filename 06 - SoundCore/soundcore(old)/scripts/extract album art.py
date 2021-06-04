@@ -15,5 +15,3 @@ for root, dirs, files in os.walk(path, topdown=False):
             f"ffprobe -v quiet -print_format json -show_format -show_streams '{filename}' > '{jpg_name}.json'"
         )
         os.system(f"ffmpeg -i '{filename}' -c:v copy '{jpg_name}.jpg'")
-
-
