@@ -214,9 +214,9 @@
             {% endif %}
         </div>
     </div>
-    <div class="columns is-mobile ">
+    <div class="columns is-mobile is_footer_active">
         <div class="column is-narrow left_menu_wrapper">
-            {% include 'left-sidebar.html' with active="home" class='is_footer_active' %}
+            {% include 'left-sidebar.html' with active="home"  %}
         </div>
         <div class="column right-column is_footer_active">
             <div class="grid-container">
@@ -226,7 +226,7 @@
                             <div class="box grid-box">
                                 <figure class="image song-image-figure ">
                                     <img height="273px" class="song-image" id="song-image-{{ i.id }}" alt="song-image"
-                                         src="{% url 'image_generator' %}?id={{ i.id }}">
+                                         src="{% url 'full_image_generator' %}?id={{ i.id }}">
                                 </figure>
                                 <div class="box song-description">
                                     <p class="title is-size-5 song-title"
@@ -238,6 +238,7 @@
                         </a>
                     </div>
                     <div class="is-hidden" id="song-sample-rate-{{ i.id }}">{{ i.sample_rate }}</div>
+                    <div class="is-hidden" id="song-file-format-{{ i.id }}">{{ i.mime_type }}</div>
                 {% endfor %}
             </div>
         </div>

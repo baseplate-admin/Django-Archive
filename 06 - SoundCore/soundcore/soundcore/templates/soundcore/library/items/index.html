@@ -52,10 +52,6 @@
             transform: translateY(-12px);
         }
 
-        .left-menu {
-            background-color: #161616;
-            height: 100vh;
-        }
 
         .top-navbar {
             background-color: #161616;
@@ -147,7 +143,7 @@
         .item_title {
             color: white;
             opacity: .9;
-            transform: translateY(-4px);
+            transform: translateY(5px);
             max-height: 60px;
             height: 100px;
             overflow: hidden;
@@ -166,7 +162,8 @@
         .item_image > img {
             width: 100px;
             height: 100px;
-            transform: translateX(3.6em);
+            transform: translateX(3.6em) translateY(.5em);
+
         }
 
         .item_subtitle > strong {
@@ -174,11 +171,15 @@
 
         }
 
+        .music-selected {
+            background-color: #282c32;
+        }
 
         .item_hr {
             background-color: #32363e;
         }
-    </style>
+
+        </style>
 {% endblock %}
 
 
@@ -263,7 +264,7 @@
                         <div class="columns is-mobile">
                             <div class="column is-one-fifth-desktop is-two-fifths-mobile">
                                 <figure class="image item_image">
-                                    <img src="{% url 'image_generator' %}?id={{ i.id }}">
+                                    <img src="{% url 'full_image_generator' %}?id={{ i.id }}">
                                 </figure>
                             </div>
                             <div class="column  is-three-fifths-mobile is-four-fifths-desktop">
@@ -271,7 +272,7 @@
                                     {{ i.song_name }}
                                 </div>
                                 <div class="item_subtitle">
-                                    <strong>{{ i.artist }}</strong> | <small>{{ i.sample_rate|intcomma }}k</small> |
+                                    <strong>{{ i.artist }}</strong> | <small>{{ i.sample_rate|intcomma }}KHz</small> |
                                     <small>{{ i.length|to_two_decimal }}</small>
                                 </div>
                             </div>
