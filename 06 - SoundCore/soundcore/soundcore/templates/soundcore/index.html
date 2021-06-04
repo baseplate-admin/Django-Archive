@@ -92,6 +92,7 @@
         .song-title {
             white-space: nowrap;
             width: 8em;
+            height: 1.3em;
             color: #e0e0ec;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -111,7 +112,7 @@
         }
 
         .login_button_wrapper {
-            transform: translateY(10px);
+            transform: translateY(5px) translateX(-5px);
         }
 
         .brand_image > img {
@@ -221,19 +222,22 @@
             <div class="grid-container">
                 {% for i in musics %}
                     <div class="grid-item">
-                        <a>
+                        <a onclick="handleSongItemClick({{ i.id }})">
                             <div class="box grid-box">
                                 <figure class="image song-image-figure ">
-                                    <img height="273px" class="song-image" alt="song-image"
+                                    <img height="273px" class="song-image" id="song-image-{{ i.id }}" alt="song-image"
                                          src="{% url 'image_generator' %}?id={{ i.id }}">
                                 </figure>
                                 <div class="box song-description">
-                                    <p class="title is-size-5 song-title">{{ i.song_name }}</p>
-                                    <p class="subtitle is-size-6 song-artist">{{ i.artist }}</p>
+                                    <p class="title is-size-5 song-title"
+                                       id="song-name-{{ i.id }}">{{ i.song_name }}</p>
+                                    <p class="subtitle is-size-6 song-artist"
+                                       id="song-artist-{{ i.id }}">{{ i.artist }}</p>
                                 </div>
                             </div>
                         </a>
                     </div>
+                    <div class="is-hidden" id="song-sample-rate-{{ i.id }}">{{ i.sample_rate }}</div>
                 {% endfor %}
             </div>
         </div>

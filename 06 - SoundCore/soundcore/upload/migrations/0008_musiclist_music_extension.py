@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('upload', '0007_auto_20210507_2357'),
+        ("upload", "0007_auto_20210507_2357"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='musiclist',
-            name='music_extension',
-            field=models.CharField(default='', max_length=5),
+            model_name="musiclist",
+            name="music_extension",
+            field=models.CharField(default="", max_length=5),
         ),
     ]

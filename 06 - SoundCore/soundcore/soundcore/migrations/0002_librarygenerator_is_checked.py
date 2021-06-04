@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('soundcore', '0001_initial'),
+        ("soundcore", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='librarygenerator',
-            name='is_checked',
+            model_name="librarygenerator",
+            name="is_checked",
             field=models.BooleanField(default=False),
         ),
     ]

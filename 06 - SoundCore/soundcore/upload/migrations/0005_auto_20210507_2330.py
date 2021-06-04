@@ -6,48 +6,48 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('upload', '0004_auto_20210507_2316'),
+        ("upload", "0004_auto_20210507_2316"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='musiclist',
-            name='album',
-            field=models.CharField(default='', max_length=1024, null=True),
+            model_name="musiclist",
+            name="album",
+            field=models.CharField(default="", max_length=1024, null=True),
         ),
         migrations.AlterField(
-            model_name='musiclist',
-            name='artist',
-            field=models.CharField(default='', max_length=1024, null=True),
+            model_name="musiclist",
+            name="artist",
+            field=models.CharField(default="", max_length=1024, null=True),
         ),
         migrations.AlterField(
-            model_name='musiclist',
-            name='bitrate',
+            model_name="musiclist",
+            name="bitrate",
             field=models.IntegerField(default=0, null=True),
         ),
         migrations.AlterField(
-            model_name='musiclist',
-            name='composer',
-            field=models.CharField(default='', max_length=1024, null=True),
+            model_name="musiclist",
+            name="composer",
+            field=models.CharField(default="", max_length=1024, null=True),
         ),
         migrations.AlterField(
-            model_name='musiclist',
-            name='date',
-            field=models.CharField(default='', max_length=1024, null=True),
+            model_name="musiclist",
+            name="date",
+            field=models.CharField(default="", max_length=1024, null=True),
         ),
         migrations.AlterField(
-            model_name='musiclist',
-            name='length',
-            field=models.CharField(default='', max_length=10, null=True),
+            model_name="musiclist",
+            name="length",
+            field=models.CharField(default="", max_length=10, null=True),
         ),
         migrations.AlterField(
-            model_name='musiclist',
-            name='lyricist',
-            field=models.CharField(default='', max_length=1024, null=True),
+            model_name="musiclist",
+            name="lyricist",
+            field=models.CharField(default="", max_length=1024, null=True),
         ),
         migrations.AlterField(
-            model_name='musiclist',
-            name='song_name',
-            field=models.CharField(default='', max_length=1024, null=True, unique=True),
+            model_name="musiclist",
+            name="song_name",
+            field=models.CharField(default="", max_length=1024, null=True, unique=True),
         ),
     ]

@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('upload', '0010_alter_musiclist_id'),
+        ("upload", "0010_alter_musiclist_id"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='musiclist',
-            name='mime_type',
-            field=models.CharField(default='', max_length=15),
+            model_name="musiclist",
+            name="mime_type",
+            field=models.CharField(default="", max_length=15),
         ),
     ]

@@ -17,7 +17,9 @@ class ShortUrl:
         return self.short_letter
 
     def _does_short_exists(self) -> bool:
-        is_true_or_false = PasswordResetUrl.objects.filter(url=self.short_letter).exists()
+        is_true_or_false = PasswordResetUrl.objects.filter(
+            url=self.short_letter
+        ).exists()
         if is_true_or_false:
             return True
         elif not is_true_or_false:
@@ -31,6 +33,7 @@ class ShortUrl:
 
 
 # Create your models here.
+
 
 class PasswordResetUrl(models.Model):
     url = models.CharField(max_length=16, unique=True)

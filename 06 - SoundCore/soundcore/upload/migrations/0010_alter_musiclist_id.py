@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('upload', '0009_musiclist_sample_rate'),
+        ("upload", "0009_musiclist_sample_rate"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='musiclist',
-            name='id',
+            model_name="musiclist",
+            name="id",
             field=models.IntegerField(primary_key=True, serialize=False, unique=True),
         ),
     ]

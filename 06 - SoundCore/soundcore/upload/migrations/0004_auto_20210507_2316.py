@@ -6,35 +6,35 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('upload', '0003_auto_20210507_2217'),
+        ("upload", "0003_auto_20210507_2217"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='musiclist',
-            name='album_art',
-            field=models.FileField(default=1, upload_to='media/'),
+            model_name="musiclist",
+            name="album_art",
+            field=models.FileField(default=1, upload_to="media/"),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='musiclist',
-            name='bitrate',
+            model_name="musiclist",
+            name="bitrate",
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='musiclist',
-            name='length',
-            field=models.CharField(default='', max_length=10),
+            model_name="musiclist",
+            name="length",
+            field=models.CharField(default="", max_length=10),
         ),
         migrations.AddField(
-            model_name='musiclist',
-            name='lyricist',
-            field=models.CharField(default='', max_length=1024),
+            model_name="musiclist",
+            name="lyricist",
+            field=models.CharField(default="", max_length=1024),
         ),
         migrations.AddField(
-            model_name='musiclist',
-            name='song_file',
-            field=models.FileField(default=12, upload_to='media/'),
+            model_name="musiclist",
+            name="song_file",
+            field=models.FileField(default=12, upload_to="media/"),
             preserve_default=False,
         ),
     ]

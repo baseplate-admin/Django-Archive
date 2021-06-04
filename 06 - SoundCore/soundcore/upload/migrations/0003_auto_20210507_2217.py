@@ -6,38 +6,38 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('upload', '0002_auto_20210507_2207'),
+        ("upload", "0002_auto_20210507_2207"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='musiclist',
-            name='bitrate',
+            model_name="musiclist",
+            name="bitrate",
         ),
         migrations.AddField(
-            model_name='musiclist',
-            name='album',
-            field=models.CharField(default='', max_length=1024),
+            model_name="musiclist",
+            name="album",
+            field=models.CharField(default="", max_length=1024),
         ),
         migrations.AddField(
-            model_name='musiclist',
-            name='composer',
-            field=models.CharField(default='', max_length=1024),
+            model_name="musiclist",
+            name="composer",
+            field=models.CharField(default="", max_length=1024),
         ),
         migrations.AddField(
-            model_name='musiclist',
-            name='date',
-            field=models.CharField(default='', max_length=1024),
+            model_name="musiclist",
+            name="date",
+            field=models.CharField(default="", max_length=1024),
         ),
         migrations.AlterField(
-            model_name='musiclist',
-            name='artist',
-            field=models.CharField(default='', max_length=1024),
+            model_name="musiclist",
+            name="artist",
+            field=models.CharField(default="", max_length=1024),
         ),
         migrations.DeleteModel(
-            name='Album',
+            name="Album",
         ),
         migrations.DeleteModel(
-            name='Artist',
+            name="Artist",
         ),
     ]

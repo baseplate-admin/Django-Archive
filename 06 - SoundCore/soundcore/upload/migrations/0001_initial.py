@@ -8,25 +8,51 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Album',
+            name="Album",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('album_name', models.CharField(default='', max_length=1024, unique=True)),
-                ('artist', models.CharField(default='', max_length=1024, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "album_name",
+                    models.CharField(default="", max_length=1024, unique=True),
+                ),
+                ("artist", models.CharField(default="", max_length=1024, unique=True)),
             ],
         ),
         migrations.CreateModel(
-            name='MusicList',
+            name="MusicList",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('song_name', models.CharField(default='', max_length=1024, unique=True)),
-                ('bitrate', models.IntegerField()),
-                ('artist', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='upload.album')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "song_name",
+                    models.CharField(default="", max_length=1024, unique=True),
+                ),
+                ("bitrate", models.IntegerField()),
+                (
+                    "artist",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="upload.album"
+                    ),
+                ),
             ],
         ),
     ]

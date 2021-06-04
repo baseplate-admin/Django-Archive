@@ -7,23 +7,27 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('upload', '0008_musiclist_music_extension'),
-        ('soundcore', '0002_librarygenerator_is_checked'),
+        ("upload", "0008_musiclist_music_extension"),
+        ("soundcore", "0002_librarygenerator_is_checked"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='librarygenerator',
-            name='is_checked',
+            model_name="librarygenerator",
+            name="is_checked",
         ),
         migrations.RemoveField(
-            model_name='librarygenerator',
-            name='musics',
+            model_name="librarygenerator",
+            name="musics",
         ),
         migrations.AddField(
-            model_name='librarygenerator',
-            name='musics',
-            field=models.ForeignKey(default='1', on_delete=django.db.models.deletion.CASCADE, to='upload.musiclist'),
+            model_name="librarygenerator",
+            name="musics",
+            field=models.ForeignKey(
+                default="1",
+                on_delete=django.db.models.deletion.CASCADE,
+                to="upload.musiclist",
+            ),
             preserve_default=False,
         ),
     ]

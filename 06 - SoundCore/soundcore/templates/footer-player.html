@@ -1,3 +1,8 @@
+<script src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.min.js"
+        integrity="sha256-Z6YgsC4qiy8o007mNQmCgSXEmS8CGtzwXi6rzyP/ZiE=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"
+        integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>
+
 <style>
     /* This is active in outer scope */
     .is_footer_active {
@@ -43,6 +48,11 @@
         cursor: pointer;
     }
 
+    #slider_progress {
+        width: 99%;
+        transform: translateX(1%);
+    }
+
     .footer_input_anchor {
         position: relative;
     }
@@ -59,13 +69,48 @@
     .footer_column {
         transform: translateY(-1em);
     }
+
+    .pre_input {
+        transform: translateY(-6.5px);
+        color: white;
+        opacity: .4;
+    }
+
+    .post_input {
+        transform: translateY(-7px) translateX(1em);
+        color: white;
+        opacity: .4;
+    }
+
+    .footer_info_column {
+        transform: translateY(-1.6em);
+    }
 </style>
+
 <footer class="footer is_translated_minus_fifty_pixels">
-    <div class="columns footer_column">
-        <div class="column"></div>
+    <div class="columns is-mobile footer_column">
+        <div class="column footer_info_column">
+            <article class="media">
+                <figure class="media-left">
+                    <p class="image is-64x64">
+                        <img id="footer-song-image" alt="" src="https://bulma.io/images/placeholders/128x128.png">
+                    </p>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        <p class="is-hidden-mobile">
+                            <strong id="footer-song-name">Song Name</strong> | <small
+                                id="footer-song-artist">Artist</small> | <small id="footer-song-sample-rate"> Sample
+                            Rate </small>
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+        </div>
         <div class="column ">
             <div class="columns is-mobile">
-                <div class="column is-narrow">
+                <div class="column is-narrow pre_input">
                     0:00
                 </div>
                 <div class="column footer_input_anchor">
@@ -76,12 +121,16 @@
                            type="range">
 
                 </div>
+                <div class="column is-narrow post_input">
+                    1:00
+                </div>
             </div>
         </div>
         <div class="column"></div>
     </div>
 </footer>
 <script async>
+    // jQuery to modern JS
 
     const onDomLoadFunction = (fn) => {
         if (document.readyState != 'loading') {
@@ -94,14 +143,98 @@
         const transparentSliderInputDiv = document.getElementById('transparent_slider')
         transparentSliderInputDiv.value = 0;
     }
-
     onDomLoadFunction(resetValue)
-
 </script>
+
 <script>
     const handleSliderInputChange = async () => {
         const transparentSliderInputDiv = document.getElementById('transparent_slider')
         const sliderProgressBar = document.getElementById('slider_progress')
         sliderProgressBar.value = transparentSliderInputDiv.value
+    }
+</script>
+
+<script>
+    // Some useful Lodash scripts
+
+    const addOrRemove = async (arr, val) => {
+        if (!_.includes(arr, val)) {
+            arr.push(val);
+        } else {
+            _.remove(arr, item => item === val);
+        }
+        //  console.log(arr);
+    }
+
+
+</script>
+
+<script>
+    /*
+        Howler JS functions
+        Powered by lodash
+     */
+    let howlerArray = []
+
+    const howlerJsPlay = async (id) => {
+        let sound;
+        const url = `{% url 'song_generator' %}?id=${id}`
+
+        if (_.size(howlerArray) === 0) {
+            soundObject = new Howl({
+                src: [`${url}`],
+                html5: true,
+            })
+            await addOrRemove(howlerArray, soundObject)
+        } else if (_.size(howlerArray) >= 0) {
+            playingSound = howlerArray.shift()
+            playingSound.stop()
+
+            soundObject = new Howl({
+                src: [`${url}`],
+                html5: true,
+            })
+            await addOrRemove(howlerArray, soundObject)
+        }
+        // console.log(howlerArray)  <- Got this working :D
+
+        sound = _.first(howlerArray)
+        sound.play()
+    }
+</script>
+
+<script>
+    const updateFooterBoilerPlate = async (id) => {
+        const previousSongImage = `song-image-${id}`
+        const previousSongName = `song-name-${id}`
+        const previousSongArtist = `song-artist-${id}`
+        const previousSongSampleRate = `song-sample-rate-${id}`
+
+        const previousSongImageDiv = document.getElementById(previousSongImage)
+        const previousSongNameDiv = document.getElementById(previousSongName)
+        const previousSongArtistDiv = document.getElementById(previousSongArtist)
+        const previousSongSampleRateDiv = document.getElementById(previousSongSampleRate)
+
+        const newSongImage = 'footer-song-image'
+        const newSongName = 'footer-song-name'
+        const newSongArtist = 'footer-song-artist'
+        const newSongSampleRate = 'footer-song-sample-rate'
+
+        const newSongImageDiv = document.getElementById(newSongImage)
+        const newSongNameDiv = document.getElementById(newSongName)
+        const newSongArtistDiv = document.getElementById(newSongArtist)
+        const newSongSampleRateDiv = document.getElementById(newSongSampleRate)
+
+        newSongImageDiv.src = previousSongImageDiv.src
+        newSongNameDiv.innerText = previousSongNameDiv.innerText
+        newSongArtistDiv.innerText = previousSongArtistDiv.innerText
+        newSongSampleRateDiv.innerText = `${previousSongSampleRateDiv.innerText} hz`
+    }
+</script>
+
+<script defer>
+    const handleSongItemClick = async (id) => {
+        await howlerJsPlay(id)
+        await updateFooterBoilerPlate(id)
     }
 </script>

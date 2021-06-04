@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('upload', '0006_alter_musiclist_song_name'),
+        ("upload", "0006_alter_musiclist_song_name"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='musiclist',
-            name='album_art',
-            field=models.FileField(upload_to='album_arts/'),
+            model_name="musiclist",
+            name="album_art",
+            field=models.FileField(upload_to="album_arts/"),
         ),
         migrations.AlterField(
-            model_name='musiclist',
-            name='song_file',
-            field=models.FileField(upload_to='songs/'),
+            model_name="musiclist",
+            name="song_file",
+            field=models.FileField(upload_to="songs/"),
         ),
     ]

@@ -21,12 +21,12 @@ async def image_gen(request):
     def get_image(_id: int):
         _image = MusicList.objects.get(id=_id).album_art
         media_path = settings.MEDIA_ROOT
-        file_location = f'{media_path}/{_image}'
+        file_location = f"{media_path}/{_image}"
         return file_location
 
     @sync_to_async()
     def get_binary_from_image(path: str):
-        with open(path, 'rb') as f:
+        with open(path, "rb") as f:
             _in_memory = io.BytesIO(f.read())
         return _in_memory.getvalue()
 
@@ -36,9 +36,9 @@ async def image_gen(request):
             raise Http404
         image = await get_image(image_id)
         binary = await get_binary_from_image(image)
-        return HttpResponse(binary, content_type='image/png')
+        return HttpResponse(binary, content_type="image/png")
 
-    elif request.method == 'POST':
+    elif request.method == "POST":
         raise Http404
 
 
@@ -53,10 +53,10 @@ async def get_song(request):
     async def _get_data(_id: int, _database):
         __data = __database.song_file
         _media_path = settings.MEDIA_ROOT
-        _file_location = f'{_media_path}/{__data}'
+        _file_location = f"{_media_path}/{__data}"
 
         try:
-            with open(_file_location, 'rb') as f:
+            with open(_file_location, "rb") as f:
                 __binary_data = io.BytesIO(f.read())
 
         except ObjectDoesNotExist:
@@ -65,14 +65,14 @@ async def get_song(request):
         return __binary_data.getvalue()
 
     if request.method == "GET":
-        __id = request.GET['id']
+        __id = request.GET["id"]
         __database = await database(__id)
         _mime_type = __database.mime_type
 
         _data = io.BytesIO(await _get_data(_id=__id, _database=__database)).getvalue()
 
-        if _mime_type == 'flac':
-            return HttpResponse(_data, content_type='audio/flac')
+        if _mime_type == "flac":
+            return HttpResponse(_data, content_type="audio/flac")
         else:
             raise Http404
 

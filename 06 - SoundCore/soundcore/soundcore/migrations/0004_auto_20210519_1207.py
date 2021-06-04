@@ -6,24 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('upload', '0008_musiclist_music_extension'),
-        ('soundcore', '0003_auto_20210518_2338'),
+        ("upload", "0008_musiclist_music_extension"),
+        ("soundcore", "0003_auto_20210518_2338"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='librarygenerator',
-            name='short_form',
+            model_name="librarygenerator",
+            name="short_form",
             field=models.CharField(default=1, max_length=100),
             preserve_default=False,
         ),
         migrations.RemoveField(
-            model_name='librarygenerator',
-            name='musics',
+            model_name="librarygenerator",
+            name="musics",
         ),
         migrations.AddField(
-            model_name='librarygenerator',
-            name='musics',
-            field=models.ManyToManyField(to='upload.MusicList'),
+            model_name="librarygenerator",
+            name="musics",
+            field=models.ManyToManyField(to="upload.MusicList"),
         ),
     ]

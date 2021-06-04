@@ -6,16 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('soundcore', '0006_auto_20210519_1851'),
+        ("soundcore", "0006_auto_20210519_1851"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='librarygenerator',
-            name='name',
+            model_name="librarygenerator",
+            name="name",
             field=models.CharField(max_length=50),
         ),
         migrations.DeleteModel(
-            name='LibraryName',
+            name="LibraryName",
         ),
     ]

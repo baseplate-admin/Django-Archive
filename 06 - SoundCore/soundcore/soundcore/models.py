@@ -10,6 +10,7 @@ from upload.models import MusicList
 
 # Create your models here.
 
+
 class ShortUrl:
     def __init__(self):
         self.short_letter = self.__short_letter()
@@ -22,7 +23,9 @@ class ShortUrl:
         return self.short_letter
 
     def __does_short_exists(self) -> bool:
-        is_true_or_false = LibraryGenerator.objects.filter(short_form=self.short_letter).exists()
+        is_true_or_false = LibraryGenerator.objects.filter(
+            short_form=self.short_letter
+        ).exists()
         if is_true_or_false:
             return True
         elif not is_true_or_false:
@@ -44,9 +47,9 @@ class LibraryGenerator(models.Model):
     @staticmethod
     def count_total_number():
         """
-            Anchored to 'soundcore/library/index.html'
+        Anchored to 'soundcore/library/index.html'
         """
-        _data = LibraryGenerator.objects.values_list('musics__length')
+        _data = LibraryGenerator.objects.values_list("musics__length")
         _total_number = 0
 
         for i in _data:
@@ -56,7 +59,7 @@ class LibraryGenerator(models.Model):
             except TypeError:
                 pass
 
-        return f'{_total_number}s'
+        return f"{_total_number}s"
 
     # Modify the save option
     def save(self, *args, **kwargs) -> None:
