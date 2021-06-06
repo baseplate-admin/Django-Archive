@@ -7,20 +7,22 @@
 <!-- HowlerJS for Playing cross browser audio -->
 <script src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.min.js"
         integrity="sha256-Z6YgsC4qiy8o007mNQmCgSXEmS8CGtzwXi6rzyP/ZiE=" crossorigin="anonymous"></script>
-<!-- Lodash for state management and superpower -->
-<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"
-        integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>
-
+<style>
+    @media screen and ( max-width: 767px) {
+        .footer_info_column {
+            transform: translateY(-3.4vh) !important;
+        }
+    }
+</style>
 <style>
     /* This is active in outer scope */
     .is_footer_active {
-        max-height: 85vh;
+        max-height: 84vh;
     }
 
 
-    .footer {
+    .footer_item {
         background-color: #161616;
-        transform: translateY(-12px);
     }
 
 
@@ -72,7 +74,7 @@
     }
 
     .footer_column {
-        transform: translateY(-1em);
+        transform: translateY(2.5vh);
     }
 
     .pre_input {
@@ -88,96 +90,114 @@
     }
 
     .footer_info_column {
-        transform: translateY(-1.6em);
+        transform: translateY(-2.4vh);
+        margin-left: 3vw;
+    }
+
+    .footer_info_column > .media > .media-left > p > img {
+        height: 60px;
+        width: 60px;
     }
 
     .footer_control_column {
         transform: translateY(-2em);
     }
+
+    #footer-song-name, #footer-song-artist, #footer-song-sample-rate, .pre_input, .post_input {
+        color: white;
+        opacity: 0.85;
+    }
 </style>
 
-<footer class="footer ">
-    <div class="columns is-mobile footer_column">
-        <div class="column footer_info_column">
-            <article class="media">
-                <figure class="media-left">
-                    <p class="image is-64x64">
-                        <img id="footer-song-image" alt="" src="https://bulma.io/images/placeholders/128x128.png">
-                    </p>
-                </figure>
-                <div class="media-content">
-                    <div class="content">
-                        <p class="is-hidden-mobile">
-                            <strong id="footer-song-name">Song Name</strong> | <small
-                                id="footer-song-artist">Artist</small> | <small id="footer-song-sample-rate"> Sample
-                            Rate </small>
+<footer class="footer_item">
+    <div>
+        <div class="columns is-mobile footer_column">
+            <div class="column footer_info_column">
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img id="footer-song-image" alt="" src="https://bulma.io/images/placeholders/128x128.png">
                         </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="is-hidden-mobile">
+                                <strong id="footer-song-name">Song Name</strong> | <small
+                                    id="footer-song-artist">Artist</small> | <small id="footer-song-sample-rate"> Sample
+                                Rate </small>
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </article>
+                </article>
 
-        </div>
-        <div class="column footer_control_column">
-            <div class="columns is-mobile is-centered">
-                <div class="column is-2 has-text-centered">
-                    <ion-icon class="previous_icon" name="play-skip-back-circle-outline"></ion-icon>
-                    <script async>
-                        anime({
-                            targets: '.previous_icon',
-                            scale: 2,
-                            color: "#FFFFFF",
-                            duration: 1,
-                            translateY: 5,
-                            easing: 'linear',
-                        })
-                    </script>
-                </div>
-                <div class="column is-2 has-text-centered">
-                    <ion-icon class="play_icon" id="play-icon" name="play-circle-outline"></ion-icon>
-                    <script async>
-                        anime({
-                            targets: '.play_icon',
-                            scale: 2,
-                            color: "#FFFFFF",
-                            duration: 1,
-                            translateY: 5,
-                            easing: 'linear',
-                        })
-                    </script>
-                </div>
-                <div class="column is-2 has-text-centered">
-                    <ion-icon class="skip_icon" name="play-skip-forward-circle-outline"></ion-icon>
-                    <script async>
-                        anime({
-                            targets: '.skip_icon',
-                            scale: 2,
-                            color: "#FFFFFF",
-                            duration: 1,
-                            translateY: 5,
-                            easing: 'linear',
-                        })
-                    </script>
-                </div>
             </div>
-            <div class="columns is-mobile">
-                <div class="column is-narrow pre_input">
-                    0:00
-                </div>
-                <div class="column ">
-                    <div class="footer_input_anchor">
-                        <progress id='slider_progress' class="progress is-small" value="0" max="100"></progress>
-                        <input onchange="handleSliderInputChange()" id="transparent_slider"
-                               class="slider" step=".01"
-                               min="0" max="100" value="0"
-                               type="range">
+            <div class="column footer_control_column">
+                <div class="columns is-mobile is-centered">
+                    <div class="column is-2 has-text-centered">
+                        <ion-icon class="previous_icon" name="play-skip-back-circle-outline"></ion-icon>
+                        <script async>
+                            anime({
+                                targets: '.previous_icon',
+                                scale: 2,
+                                color: "#FFFFFF",
+                                duration: 1,
+                                translateY: 5,
+                                easing: 'linear',
+                            })
+                        </script>
+                    </div>
+                    <div class="column is-2 has-text-centered">
+                        <ion-icon class="play_icon" onclick="howlerJsPause()" id="play_icon"
+                                  name="play-circle-outline"></ion-icon>
+                        <ion-icon name="pause-circle-outline" onclick="howlerJsPause()" id="pause_icon"
+                                  class="pause_icon"></ion-icon>
+                        <script async>
+                            anime({
+                                targets: '.play_icon, .pause_icon',
+                                scale: 2,
+                                color: "#FFFFFF",
+                                duration: 1,
+                                translateY: 5,
+                                easing: 'linear',
+                            })
+                        </script>
+                    </div>
+                    <div class="column is-2 has-text-centered">
+                        <ion-icon class="skip_icon" name="play-skip-forward-circle-outline"></ion-icon>
+                        <script async>
+                            anime({
+                                targets: '.skip_icon',
+                                scale: 2,
+                                color: "#FFFFFF",
+                                duration: 1,
+                                translateY: 5,
+                                easing: 'linear',
+                            })
+                        </script>
                     </div>
                 </div>
-                <div class="column is-narrow post_input">
-                    1:00
+                <div class="columns is-mobile">
+                    <div class="column is-narrow pre_input">
+                        0:00
+                    </div>
+                    <div class="column ">
+                        <div class="footer_input_anchor">
+                            <progress id='slider_progress' class="progress is-small" value="0" max="100"></progress>
+                            <input id="transparent_slider"
+                                   class="slider" step=".01"
+                                   min="0" max="100" value="0"
+                                   type="range">
+                        </div>
+                    </div>
+                    <div class="column is-narrow post_input">
+                        1:00
+                    </div>
                 </div>
             </div>
+            <div class="column">
+
+            </div>
         </div>
-        <div class="column"></div>
     </div>
 </footer>
 <script async>
@@ -192,6 +212,7 @@
     }
     const resetValue = () => {
         const transparentSliderInputDiv = document.getElementById('transparent_slider')
+        document.getElementById('pause_icon').classList.add('is-hidden')
         transparentSliderInputDiv.value = 0;
     }
     onDomLoadFunction(resetValue)
@@ -204,7 +225,13 @@
         sliderProgressBar.value = transparentSliderInputDiv.value
     }
 </script>
+<script>
+    // Event Listeners
+    onDomLoadFunction(() => {
+        document.getElementById('transparent_slider').addEventListener("change", handleSliderInputChange)
+    })
 
+</script>
 <script>
     // Some useful Lodash scripts
 
@@ -224,13 +251,13 @@
         Howler JS functions
         Powered by lodash
      */
-    let howlerArray = []
+    const howlerArray = [];
 
     const howlerJsPlay = async (id) => {
         /* Handles the play.
             So if you call sound.play(). This function should handle that
        */
-        const srcArray = []
+        const srcArray = [];
         const fileFormatArray = [];
         let sound;
 
@@ -247,6 +274,7 @@
                 html5: true,
                 format: fileFormatArray,
             })
+
             await addOrRemove(howlerArray, soundObject)
         } else if (_.size(howlerArray) >= 0) {
             playingSound = howlerArray.shift()
@@ -257,16 +285,41 @@
                 html5: true,
                 format: fileFormatArray,
             })
+
             await addOrRemove(howlerArray, soundObject)
         }
-        // console.log(howlerArray)  <- Got this working :D
+
+        document.getElementById('play_icon').classList.add('is-hidden')
+        document.getElementById('pause_icon').classList.remove('is-hidden')
 
         sound = _.first(howlerArray)
         sound.play()
     }
+
+    const howlerJsPause = async () => {
+        if (_.size(howlerArray) >= 1) {
+            sound = _.first(howlerArray)
+            if (sound.playing()) {
+                // Song is playing
+                document.getElementById('play_icon').classList.remove('is-hidden')
+                document.getElementById('pause_icon').classList.add('is-hidden')
+
+                sound.pause()
+            } else if (!sound.playing()) {
+                // Song is not playing
+                document.getElementById('play_icon').classList.add('is-hidden')
+                document.getElementById('pause_icon').classList.remove('is-hidden')
+
+                sound.play()
+            }
+        } else if (_.size(howlerArray) < 1) {
+            console.log("No Song Playing")
+        }
+    }
 </script>
 
 <script>
+
     const updateFooterBoilerPlate = async (id) => {
         const previousSongImage = `song-image-${id}`
         const previousSongName = `song-name-${id}`
@@ -291,8 +344,9 @@
         newSongImageDiv.src = previousSongImageDiv.src
         newSongNameDiv.innerText = previousSongNameDiv.innerText
         newSongArtistDiv.innerText = previousSongArtistDiv.innerText
-        newSongSampleRateDiv.innerText = `${previousSongSampleRateDiv.innerText} hz`
+        newSongSampleRateDiv.innerText = `${previousSongSampleRateDiv.innerText} KHz`
     }
+
 </script>
 <script defer>
     const handleSongItemClick = async (id) => {

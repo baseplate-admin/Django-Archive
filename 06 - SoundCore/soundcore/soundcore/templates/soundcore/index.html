@@ -58,6 +58,7 @@
         .right-column {
             background-color: #060606;
             transform: translateX(-12px);
+            overflow-x: hidden;
             overflow-y: scroll;
             height: 100vh;
         }
@@ -81,10 +82,12 @@
             color: white
         }
 
+        /*
+        For some reason I dont want round items.
         .song-image {
             border-radius: 5px;
         }
-
+        */
         .song-description {
             background-color: transparent;
         }
@@ -216,7 +219,7 @@
     </div>
     <div class="columns is-mobile is_footer_active">
         <div class="column is-narrow left_menu_wrapper">
-            {% include 'left-sidebar.html' with active="home"  %}
+            {% include 'left-sidebar.html' with active="home" %}
         </div>
         <div class="column right-column is_footer_active">
             <div class="grid-container">
