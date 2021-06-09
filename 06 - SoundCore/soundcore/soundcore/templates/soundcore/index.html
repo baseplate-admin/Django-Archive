@@ -227,7 +227,6 @@
 
         .footer_info_column {
             margin-left: 3vw;
-            transform: translateY(2vh);
         }
 
         .footer_info_column > .media > .media-left > p > img {
@@ -367,7 +366,7 @@
                                 scale: 2,
                                 color: "#FFFFFF",
                                 duration: 1,
-                                translateY: 8,
+                                translateY: 5,
                                 easing: 'linear',
                             })
                         </script>
@@ -383,7 +382,7 @@
                                 scale: 2,
                                 color: "#FFFFFF",
                                 duration: 1,
-                                translateY: 8,
+                                translateY: 5,
                                 easing: 'linear',
                             })
                         </script>
@@ -396,14 +395,14 @@
                                 scale: 2,
                                 color: "#FFFFFF",
                                 duration: 1,
-                                translateY: 8,
+                                translateY: 5,
                                 easing: 'linear',
                             })
                         </script>
                     </div>
                 </div>
                 <div class="columns is-mobile">
-                    <div class="column is-narrow pre_input" id="pre_input">
+                    <div class="column is-narrow pre_input">
                         0:00
                     </div>
                     <div class="column ">
@@ -437,7 +436,6 @@
     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.min.js"
             integrity="sha256-Z6YgsC4qiy8o007mNQmCgSXEmS8CGtzwXi6rzyP/ZiE=" crossorigin="anonymous"></script>
 
-
     <script async>
         // jQuery to modern JS
 
@@ -456,13 +454,7 @@
         onDomLoadFunction(resetValue)
     </script>
 
-    <script>
-        const handleSliderInputChange = async () => {
-            const transparentSliderInputDiv = document.getElementById('transparent_slider')
-            const sliderProgressBar = document.getElementById('slider_progress')
-            sliderProgressBar.value = transparentSliderInputDiv.value
-        }
-    </script>
+
     <script>
         // Event Listeners
         onDomLoadFunction(() => {
@@ -507,6 +499,10 @@
             Howler JS functions
             Powered by lodash
          */
+        let duration;
+        let customInterval;
+        let sound;
+
         const howlerArray = [];
         const howlerJsPlayIntervalArray = [];
         const howlerJsDurationArray = [];
@@ -517,7 +513,6 @@
            */
             const srcArray = [];
             const fileFormatArray = [];
-            let sound;
 
             const url = `{% url 'song_generator' %}?id=${id}`
             const fileFormat = (document.getElementById(`song-file-format-${id}`).innerText).toLowerCase()
@@ -546,13 +541,30 @@
 
                 await addOrRemove(howlerArray, soundObject)
             }
+            sound = _.first(howlerArray)
+
             // Set duration
-            await howlerJsDuration()
+            sound.on('load', () => {
+                howlerJsDuration()
+            })
+            // Set Play Speed
+            sound.on('play', () => {
+                howlerJsPlayInterval()
+            })
+            // Set Player End Event
+            sound.on('end', () => {
+                howlerJsOnFinish()
+            })
+            // Play Exception Handler
+            sound.on('loaderror', () => {
+                sound.once('unlock', function () {
+                    sound.play();
+                });
+            })
             // Play button change Events
             document.getElementById('play_icon').classList.add('is-hidden')
             document.getElementById('pause_icon').classList.remove('is-hidden')
 
-            sound = _.first(howlerArray)
             sound.play()
         }
 
@@ -579,22 +591,34 @@
 
         const howlerJsDuration = async () => {
             sound = _.first(howlerArray)
-            sound.on('load', () => {
-                const element = document.getElementById('total_duration');
-                element.innerText = formatTime(sound.duration())
-            })
+            const element = document.getElementById('total_duration');
+            element.innerText = formatTime(sound.duration())
         }
-        // Borked Logic
-        const howlerJsPlayInterval = async () => {
-            sound = _.first(howlerArray)
-            sound.on('play', () => {
-                let duration = 0;
-                const element = document.getElementById('pre_input')
-                const customInterval = setInterval(() => {
 
-                },1)
-                addOrRemove(customInterval, howlerJsPlayIntervalArray)
-            })
+        const howlerJsPlayInterval = async () => {
+            const startInterval = async () => {
+                sound = _.first(howlerArray)
+                customInterval = setInterval(() => {
+                    if (sound.playing()) {
+                        updateFooterControl()
+                    }
+                }, 1000)
+            }
+            clearInterval(customInterval);
+            await startInterval()
+            duration = 0;
+        }
+        const howlerJsOnFinish = async () => {
+            sound = _.first(howlerArray)
+            duration = 0;
+            clearInterval(customInterval)
+            const preInputElement = document.querySelector('.pre_input')
+            const sliderElement = document.querySelector('#slider_progress')
+            const progressElement = document.querySelector('#transparent_slider')
+
+            sliderElement.value = 0
+            progressElement.value = 0
+            preInputElement.innerText = formatTime(0)
         }
     </script>
 
@@ -626,12 +650,41 @@
             newSongArtistDiv.innerText = previousSongArtistDiv.innerText
             newSongSampleRateDiv.innerText = `${previousSongSampleRateDiv.innerText} KHz`
         }
+        const updateFooterControl = () => {
+            sound = _.first(howlerArray)
+            duration = sound.seek();
+            const preInputElement = document.querySelector('.pre_input')
+            const sliderElement = document.querySelector('#slider_progress')
+            const progressElement = document.querySelector('#transparent_slider')
+            const convertDurationToHundred = (100 * duration) / sound.duration()
 
+            sliderElement.value = convertDurationToHundred
+            progressElement.value = convertDurationToHundred
+            preInputElement.innerText = formatTime(duration)
+        }
     </script>
     <script defer>
         const handleSongItemClick = async (id) => {
             await howlerJsPlay(id)
             await updateFooterBoilerPlate(id)
+        }
+    </script>
+    <script>
+        function calcSliderPos(e) {
+            return (e.offsetX / e.target.clientWidth) * parseInt(e.target.getAttribute('max'), 10);
+        }
+
+        document.getElementById('transparent_slider').addEventListener('mousemove', function (e) {
+            let valueHover = calcSliderPos(e).toFixed(2);
+        });
+        const handleSliderInputChange = async () => {
+            const transparentSliderInputDiv = document.getElementById('transparent_slider')
+            const sliderProgressBar = document.getElementById('slider_progress')
+            sliderProgressBar.value = transparentSliderInputDiv.value
+            sound = _.first(howlerArray)
+            const duration = (sound.duration() * sliderProgressBar.value) / 100
+            sound.seek(duration)
+            updateFooterControl()
         }
     </script>
 {% endblock %}

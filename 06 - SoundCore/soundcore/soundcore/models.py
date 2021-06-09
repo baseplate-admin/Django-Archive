@@ -49,8 +49,22 @@ class LibraryGenerator(models.Model):
         """
         Anchored to 'soundcore/library/index.html'
         """
+        import time
+
         _data = LibraryGenerator.objects.values_list("musics__length")
         _total_number = 0
+
+        def convert(seconds):
+            ty_res = time.gmtime(seconds)
+            if 3600 <= seconds:
+                res = time.strftime("%H:%M:%S", ty_res)
+            elif 3600 > seconds >= 60:
+                res = time.strftime("%M:%S", ty_res)
+            elif 60 > seconds >= 0:
+                res = time.strftime("%Ss", ty_res)
+            else:
+                res = 0
+            return res
 
         for i in _data:
             try:
@@ -59,7 +73,7 @@ class LibraryGenerator(models.Model):
             except TypeError:
                 pass
 
-        return f"{_total_number}s"
+        return convert(_total_number)
 
     # Modify the save option
     def save(self, *args, **kwargs) -> None:

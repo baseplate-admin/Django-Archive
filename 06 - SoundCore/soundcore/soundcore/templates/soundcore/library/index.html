@@ -16,6 +16,17 @@
                 width: 100px;
                 height: 100px
             }
+
+            .library_hero_right_item {
+                margin-left: 0 !important;
+            }
+
+            .library_item_wrapper {
+                transform: translateX(-12px);
+            }
+            .item_subtitle{
+                transform: translateY(5px) !important;
+            }
         }
     </style>
     <style>
@@ -177,6 +188,22 @@
         .item_hr {
             background-color: #32363e;
         }
+
+        .masonry {
+            display: grid;
+            grid-template-columns: auto auto;
+            width: 120px;
+        }
+
+        .masonry_items {
+
+        }
+
+        .masonry_items > img {
+            width: 60px;
+            height: 60px;
+        }
+
     </style>
 {% endblock %}
 
@@ -238,68 +265,106 @@
         </div>
     </div>
     <div class="columns is-mobile ">
-    <div class="column is-narrow left_menu_wrapper">
-        {% include 'left-sidebar.html' with active='library' %}
-    </div>
-    <div class="column right-column">
-    <section class="hero library-hero">
-        <div class="hero-body">
-            <div class="title user-name">
-                <div class="columns">
-                    <div class="column title_column" style="width:350px;height:100px">
-                        {% if data == None %}
-                            No libraries for {{ request.user }}
-                        {% elif data|length < 2 %}
-                            Showing library for {{ request.user }}
-                        {% elif data|length >= 2 %}
-                            Showing libraries for {{ request.user }}
-                        {% endif %}
+        <div class="column is-narrow left_menu_wrapper">
+            {% include 'left-sidebar.html' with active='library' %}
+        </div>
+        <div class="column right-column">
+            <section class="hero library-hero">
+                <div class="hero-body">
+                    <div class="title user-name">
+                        <div class="columns">
+                            <div class="column title_column" style="width:350px;height:100px">
+                                {% if data == None %}
+                                    No libraries for {{ request.user }}
+                                {% elif data|length < 2 %}
+                                    Showing library for {{ request.user }}
+                                {% elif data|length >= 2 %}
+                                    Showing libraries for {{ request.user }}
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </section>
+            <div class="box library_item_wrapper">
+                {% if data != None %}
+                    {% for i in data %}
+                        <a href="{% url 'library_item_show' short_url=i.short_form %}">
+                            <div>
+                                <section class="hero library_hero ">
+                                    <div class="columns is-mobile">
+                                        <div class="column is-narrow is-offset-1">
+                                            <div class="masonry">
+                                                {% for x in i.musics.all %}
+                                                    <div class="masonry_items">
+                                                        <img src="{% url 'full_image_generator' %}?id={{ x.id }}"
+                                                             alt="{{ x.song_name }}"/>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="column is-6 is-offset-1 library_hero_right_item">
+                                            <div class="item_hero_body">
+                                                <p class="item_title has-text-centered">{{ i.name }}</p>
+                                                <p class="item_subtitle has-text-centered">
+                                                    <strong>Songs:</strong>
+                                                    <small>{{ i.musics.all.count }}</small>
+                                                    |
+                                                    <strong>Time: </strong>
+                                                    <small>{{ i.count_total_number }}</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <hr class="item_hr"/>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% elif data == None %}
+                    <div>
+                        <section class="hero has-text-centered" style="color:white">
+                            Its Lonely Here. Click <a href="{% url 'library_generator' %}">here</a> to create a library.
+                        </section>
+                    </div>
+                {% endif %}
             </div>
         </div>
-    </section>
-    <div class="box library_item_wrapper">
-        {% if data != None %}
-            {% for i in data %}
-                <a href="{% url 'library_item_show' short_url=i.short_form %}">
-                    <div>
-                        <section class="hero library_hero ">
-                            <div class="columns is-mobile">
-                                <div class="column is-3">
-                                    <div class="masonry">
-                                        {% for x in i.musics.all %}
-                                            <div class="masonry_items">
-                                            <img src="{% url 'full_image_generator'  %}?id={{ x.id }}" alt="{{ x.song_name }}" />
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                                <div class="column">
-                                    <div class="item_hero_body">
-                                        <p class="item_title has-text-centered">{{ i.name }}</p>
-                                        <p class="item_subtitle has-text-centered">
-                                            <strong>Songs:</strong>
-                                            <small>{{ i.musics.all.count }}</small>
-                                            |
-                                            <strong>Time: </strong>
-                                            <small>{{ i.count_total_number }}</small>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <hr class="item_hr"/>
-                    </div>
-                </a>
-            {% endfor %}
-        {% elif data == None %}
-            <div>
-                <section class="hero has-text-centered" style="color:white">
-                    Its Lonely Here. Click <a href="{% url 'library_generator' %}">here</a> to create a library.
-                </section>
-            </div>
-        {% endif %}
     </div>
+{% endblock %}
+{% block afterbody %}
 
+    <script>
+        // jQuery to modern JS
+
+        const onDomLoadFunction = (fn) => {
+            if (document.readyState != 'loading') {
+                fn();
+            } else {
+                document.addEventListener('DOMContentLoaded', fn);
+            }
+        }
+    </script>
+    <script>
+        const firstN = (obj, n) => {
+            return _.chain(obj)
+                .keys()
+                .sort()
+                .take(n)
+                .reduce(function (memo, current) {
+                    memo[current] = obj[current];
+                    return memo;
+                }, {})
+                .value();
+        }
+
+    </script>
+    <script>
+        onDomLoadFunction(() => {
+            const element = document.querySelectorAll('.masonry_items')
+            if (_.size(element) >= 4) {
+                const fourElementArray = firstN(element, 2)
+            }
+        })
+    </script>
 {% endblock %}

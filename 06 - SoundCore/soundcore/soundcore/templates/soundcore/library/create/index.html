@@ -15,6 +15,12 @@
                 transform: translateX(-3.6em);
             }
 
+            .library_item_wrapper {
+                transform: translateX(-12px);
+            }
+            .item_subtitle{
+                transform: translateY(5px) !important;
+            }
         }
     </style>
     <style>
@@ -301,7 +307,8 @@
                                     {{ i.song_name }}
                                 </div>
                                 <div class="item_subtitle">
-                                    <strong>{{ i.artist }}</strong> | <small class="sample_rate">{{ i.sample_rate|intcomma }}KHz</small> |
+                                    <strong>{{ i.artist }}</strong> | <small
+                                        class="sample_rate">{{ i.sample_rate|intcomma }}KHz</small> |
                                     <small>{{ i.length|to_two_decimal }}</small>
                                 </div>
                             </div>
@@ -330,7 +337,7 @@
 {% block afterbody %}
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"
             integrity="sha256-JLmknTdUZeZZ267LP9qB+/DT7tvxOOKctSKeUC2KT6E=" crossorigin="anonymous"></script>
-    <script >
+    <script>
         const arr = []
 
         const addOrRemove = (arr, val) => {

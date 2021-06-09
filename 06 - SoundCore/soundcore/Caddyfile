@@ -1,0 +1,13 @@
+zarif-ahnaf.duckdns.org {
+    route /static/* {
+        file_server
+    }
+
+    route /media/* {
+        file_server
+    }
+
+    route /* {
+        reverse_proxy localhost:8000
+    }
+}
