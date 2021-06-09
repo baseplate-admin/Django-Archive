@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block fontblock %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/progressive-image.js/dist/progressive-image.css">
 
 {% endblock %}
 
@@ -25,9 +26,9 @@
         }
 
         body {
-            height: 100vh;
             overflow-y: hidden;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
         .login_button {
@@ -60,7 +61,6 @@
             transform: translateX(-12px);
             overflow-x: hidden;
             overflow-y: scroll;
-            height: 100vh;
         }
 
         .grid-container {
@@ -157,7 +157,93 @@
             overflow: hidden;
         }
 
+        /* This is active in outer scope */
 
+
+        .footer_item {
+            background-color: #161616;
+        }
+
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 15px;
+            border-radius: 5px;
+            background: transparent;
+            outline: none;
+        }
+
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4a4a4a;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border: black;
+            border-radius: 50%;
+            background: #4a4a4a;
+            cursor: pointer;
+        }
+
+        #slider_progress {
+            width: 99%;
+            transform: translateX(1%);
+        }
+
+        .footer_input_anchor {
+            position: relative;
+        }
+
+        .footer_input_anchor > progress {
+            position: absolute;
+        }
+
+        .footer_input_anchor > input {
+            position: absolute;
+            transform: translateY(-2px);
+        }
+
+
+        .pre_input {
+            transform: translateY(-6.5px);
+            color: white;
+            opacity: .4;
+        }
+
+        .post_input {
+            transform: translateY(-7px);
+            color: white;
+            opacity: .4;
+        }
+
+        .footer_info_column {
+            margin-left: 3vw;
+            transform: translateY(2vh);
+        }
+
+        .footer_info_column > .media > .media-left > p > img {
+            height: 60px;
+            width: 60px;
+        }
+
+
+        #footer-song-name, #footer-song-artist, #footer-song-sample-rate, .pre_input, .post_input {
+            color: white;
+            opacity: 0.85;
+        }
+
+        .left-menu {
+            height: 105% !important;
+        }
     </style>
 {% endblock %}
 
@@ -186,17 +272,17 @@
                 <div class="control has-icons-right search_input_wrapper">
                     <input class="input search_input" type="text" placeholder="Search">
                     <span class="icon is-small is-right search_input_box_right_wrapper">
-                        <div class="box search_input_box_right">
-                            <ion-icon class="search_icon" name="search-outline"></ion-icon>
-                            <script async>
-                                anime({
-                                    targets: '.search_icon',
-                                    color: '#FFFFFF',
-                                    scale: 1.4
-                                })
-                            </script>
-                        </div>
-                    </span>
+                            <div class="box search_input_box_right">
+                                <ion-icon class="search_icon" name="search-outline"></ion-icon>
+                                <script async>
+                                    anime({
+                                        targets: '.search_icon',
+                                        color: '#FFFFFF',
+                                        scale: 1.4
+                                    })
+                                </script>
+                            </div>
+                        </span>
                 </div>
             </div>
         </div>
@@ -217,18 +303,19 @@
             {% endif %}
         </div>
     </div>
-    <div class="columns is-mobile is_footer_active">
+    <div class="columns is-mobile" style="min-height:calc(100vh - 140px); margin-bottom: 0;max-height: 1vh">
         <div class="column is-narrow left_menu_wrapper">
             {% include 'left-sidebar.html' with active="home" %}
         </div>
-        <div class="column right-column is_footer_active">
+        <div class="column right-column">
             <div class="grid-container">
                 {% for i in musics %}
                     <div class="grid-item">
                         <a onclick="handleSongItemClick({{ i.id }})">
                             <div class="box grid-box">
                                 <figure class="image song-image-figure ">
-                                    <img height="273px" class="song-image" id="song-image-{{ i.id }}" alt="song-image"
+                                    <img height="273px" class="song-image" id="song-image-{{ i.id }}"
+                                         alt="song-image"
                                          src="{% url 'full_image_generator' %}?id={{ i.id }}">
                                 </figure>
                                 <div class="box song-description">
@@ -246,8 +333,307 @@
             </div>
         </div>
     </div>
-    {% include "footer-player.html" %}
+    <footer class="footer_item" style="	transform: translateY(8px);">
+        <div class="columns is-mobile footer_column">
+            <div class="column footer_info_column">
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img id="footer-song-image" alt=""
+                                 src="https://bulma.io/images/placeholders/128x128.png">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="is-hidden-mobile">
+                                <strong id="footer-song-name">Song Name</strong> | <small
+                                    id="footer-song-artist">Artist</small> | <small
+                                    id="footer-song-sample-rate">
+                                Sample
+                                Rate </small>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+            <div class="column footer_control_column">
+                <div class="columns is-mobile is-centered">
+                    <div class="column is-2 has-text-centered">
+                        <ion-icon class="previous_icon" name="play-skip-back-circle-outline"></ion-icon>
+                        <script async>
+                            anime({
+                                targets: '.previous_icon',
+                                scale: 2,
+                                color: "#FFFFFF",
+                                duration: 1,
+                                translateY: 8,
+                                easing: 'linear',
+                            })
+                        </script>
+                    </div>
+                    <div class="column is-2 has-text-centered">
+                        <ion-icon class="play_icon" onclick="howlerJsPause()" id="play_icon"
+                                  name="play-circle-outline"></ion-icon>
+                        <ion-icon name="pause-circle-outline" onclick="howlerJsPause()" id="pause_icon"
+                                  class="pause_icon"></ion-icon>
+                        <script async>
+                            anime({
+                                targets: '.play_icon, .pause_icon',
+                                scale: 2,
+                                color: "#FFFFFF",
+                                duration: 1,
+                                translateY: 8,
+                                easing: 'linear',
+                            })
+                        </script>
+                    </div>
+                    <div class="column is-2 has-text-centered">
+                        <ion-icon class="skip_icon" name="play-skip-forward-circle-outline"></ion-icon>
+                        <script async>
+                            anime({
+                                targets: '.skip_icon',
+                                scale: 2,
+                                color: "#FFFFFF",
+                                duration: 1,
+                                translateY: 8,
+                                easing: 'linear',
+                            })
+                        </script>
+                    </div>
+                </div>
+                <div class="columns is-mobile">
+                    <div class="column is-narrow pre_input" id="pre_input">
+                        0:00
+                    </div>
+                    <div class="column ">
+                        <div class="footer_input_anchor">
+                            <progress id='slider_progress' class="progress is-small" value="0"
+                                      max="100"></progress>
+                            <input id="transparent_slider"
+                                   class="slider" step=".01"
+                                   min="0" max="100" value="0"
+                                   type="range">
+                        </div>
+                    </div>
+                    <div class="column is-narrow post_input" id="total_duration">
+                        0:00
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+
+            </div>
+        </div>
+    </footer>
 {% endblock %}
 
 {% block afterbody %}
+    <!-- Progressive Image Loader for lazy loading images -->
+
+    <script src="https://cdn.jsdelivr.net/npm/progressive-image.js/dist/progressive-image.js"></script>
+
+    <!-- HowlerJS for Playing cross browser audio -->
+    <script src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.min.js"
+            integrity="sha256-Z6YgsC4qiy8o007mNQmCgSXEmS8CGtzwXi6rzyP/ZiE=" crossorigin="anonymous"></script>
+
+
+    <script async>
+        // jQuery to modern JS
+
+        const onDomLoadFunction = (fn) => {
+            if (document.readyState != 'loading') {
+                fn();
+            } else {
+                document.addEventListener('DOMContentLoaded', fn);
+            }
+        }
+        const resetValue = () => {
+            const transparentSliderInputDiv = document.getElementById('transparent_slider')
+            document.getElementById('pause_icon').classList.add('is-hidden')
+            transparentSliderInputDiv.value = 0;
+        }
+        onDomLoadFunction(resetValue)
+    </script>
+
+    <script>
+        const handleSliderInputChange = async () => {
+            const transparentSliderInputDiv = document.getElementById('transparent_slider')
+            const sliderProgressBar = document.getElementById('slider_progress')
+            sliderProgressBar.value = transparentSliderInputDiv.value
+        }
+    </script>
+    <script>
+        // Event Listeners
+        onDomLoadFunction(() => {
+            document.getElementById('transparent_slider').addEventListener("change", handleSliderInputChange)
+        })
+
+    </script>
+    <script>
+        // Some useful Lodash scripts
+
+        const addOrRemove = async (arr, val) => {
+            if (!_.includes(arr, val)) {
+                arr.push(val);
+            } else {
+                _.remove(arr, item => item === val);
+            }
+            //  console.log(arr);
+        }
+
+    </script>
+    <script>
+        const formatTime = (duration) => {
+            // Hours, minutes and seconds
+            let hrs = ~~(duration / 3600);
+            let mins = ~~((duration % 3600) / 60);
+            let secs = ~~duration % 60;
+
+            // Output like "1:01" or "4:03:59" or "123:03:59"
+            let ret = "";
+
+            if (hrs > 0) {
+                ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+            }
+
+            ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+            ret += "" + secs;
+            return ret;
+        }
+    </script>
+    <script>
+        /*
+            Howler JS functions
+            Powered by lodash
+         */
+        const howlerArray = [];
+        const howlerJsPlayIntervalArray = [];
+        const howlerJsDurationArray = [];
+
+        const howlerJsPlay = async (id) => {
+            /* Handles the play.
+                So if you call sound.play(). This function should handle that
+           */
+            const srcArray = [];
+            const fileFormatArray = [];
+            let sound;
+
+            const url = `{% url 'song_generator' %}?id=${id}`
+            const fileFormat = (document.getElementById(`song-file-format-${id}`).innerText).toLowerCase()
+
+            // Add files to Array for HowlerJS to play
+            await addOrRemove(srcArray, url)
+            await addOrRemove(fileFormatArray, fileFormat)
+
+            if (_.size(howlerArray) === 0) {
+                soundObject = new Howl({
+                    src: srcArray,
+                    html5: true,
+                    format: fileFormatArray,
+                })
+
+                await addOrRemove(howlerArray, soundObject)
+            } else if (_.size(howlerArray) >= 0) {
+                playingSound = howlerArray.shift()
+                playingSound.stop()
+
+                soundObject = new Howl({
+                    src: srcArray,
+                    html5: true,
+                    format: fileFormatArray,
+                })
+
+                await addOrRemove(howlerArray, soundObject)
+            }
+            // Set duration
+            await howlerJsDuration()
+            // Play button change Events
+            document.getElementById('play_icon').classList.add('is-hidden')
+            document.getElementById('pause_icon').classList.remove('is-hidden')
+
+            sound = _.first(howlerArray)
+            sound.play()
+        }
+
+        const howlerJsPause = async () => {
+            if (_.size(howlerArray) >= 1) {
+                sound = _.first(howlerArray)
+                if (sound.playing()) {
+                    // Song is playing
+                    document.getElementById('play_icon').classList.remove('is-hidden')
+                    document.getElementById('pause_icon').classList.add('is-hidden')
+
+                    sound.pause()
+                } else if (!sound.playing()) {
+                    // Song is not playing
+                    document.getElementById('play_icon').classList.add('is-hidden')
+                    document.getElementById('pause_icon').classList.remove('is-hidden')
+
+                    sound.play()
+                }
+            } else if (_.size(howlerArray) < 1) {
+                console.log("No Song Playing")
+            }
+        }
+
+        const howlerJsDuration = async () => {
+            sound = _.first(howlerArray)
+            sound.on('load', () => {
+                const element = document.getElementById('total_duration');
+                element.innerText = formatTime(sound.duration())
+            })
+        }
+        // Borked Logic
+        const howlerJsPlayInterval = async () => {
+            sound = _.first(howlerArray)
+            sound.on('play', () => {
+                let duration = 0;
+                const element = document.getElementById('pre_input')
+                const customInterval = setInterval(() => {
+
+                },1)
+                addOrRemove(customInterval, howlerJsPlayIntervalArray)
+            })
+        }
+    </script>
+
+    <script>
+
+        const updateFooterBoilerPlate = async (id) => {
+            const previousSongImage = `song-image-${id}`
+            const previousSongName = `song-name-${id}`
+            const previousSongArtist = `song-artist-${id}`
+            const previousSongSampleRate = `song-sample-rate-${id}`
+
+            const previousSongImageDiv = document.getElementById(previousSongImage)
+            const previousSongNameDiv = document.getElementById(previousSongName)
+            const previousSongArtistDiv = document.getElementById(previousSongArtist)
+            const previousSongSampleRateDiv = document.getElementById(previousSongSampleRate)
+
+            const newSongImage = 'footer-song-image'
+            const newSongName = 'footer-song-name'
+            const newSongArtist = 'footer-song-artist'
+            const newSongSampleRate = 'footer-song-sample-rate'
+
+            const newSongImageDiv = document.getElementById(newSongImage)
+            const newSongNameDiv = document.getElementById(newSongName)
+            const newSongArtistDiv = document.getElementById(newSongArtist)
+            const newSongSampleRateDiv = document.getElementById(newSongSampleRate)
+
+            newSongImageDiv.src = previousSongImageDiv.src
+            newSongNameDiv.innerText = previousSongNameDiv.innerText
+            newSongArtistDiv.innerText = previousSongArtistDiv.innerText
+            newSongSampleRateDiv.innerText = `${previousSongSampleRateDiv.innerText} KHz`
+        }
+
+    </script>
+    <script defer>
+        const handleSongItemClick = async (id) => {
+            await howlerJsPlay(id)
+            await updateFooterBoilerPlate(id)
+        }
+    </script>
 {% endblock %}
+
+

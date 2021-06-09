@@ -265,15 +265,28 @@
                 <a href="{% url 'library_item_show' short_url=i.short_form %}">
                     <div>
                         <section class="hero library_hero ">
-                            <div class="item_hero_body">
-                                <p class="item_title has-text-centered">{{ i.name }}</p>
-                                <p class="item_subtitle has-text-centered">
-                                    <strong>Songs:</strong>
-                                    <small>{{ i.musics.all.count }}</small>
-                                    |
-                                    <strong>Time: </strong>
-                                    <small>{{ i.count_total_number }}</small>
-                                </p>
+                            <div class="columns is-mobile">
+                                <div class="column is-3">
+                                    <div class="masonry">
+                                        {% for x in i.musics.all %}
+                                            <div class="masonry_items">
+                                            <img src="{% url 'full_image_generator'  %}?id={{ x.id }}" alt="{{ x.song_name }}" />
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="item_hero_body">
+                                        <p class="item_title has-text-centered">{{ i.name }}</p>
+                                        <p class="item_subtitle has-text-centered">
+                                            <strong>Songs:</strong>
+                                            <small>{{ i.musics.all.count }}</small>
+                                            |
+                                            <strong>Time: </strong>
+                                            <small>{{ i.count_total_number }}</small>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </section>
                         <hr class="item_hr"/>
@@ -290,4 +303,3 @@
     </div>
 
 {% endblock %}
-
