@@ -1,11 +1,12 @@
 import io
-
 from PIL import Image
+
 from django.http import Http404
 from django.http import HttpResponse
 from django.conf import settings
 from django.views.decorators.cache import cache_page
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
 
 from asgiref.sync import async_to_sync, sync_to_async
 
@@ -13,6 +14,7 @@ from upload.models import MusicList
 
 
 # Reusable Functions
+
 
 @sync_to_async()
 def get_image(_id: int):
@@ -28,10 +30,10 @@ async def get_binary_from_image(path: str):
         f.close()
         return _in_memory.getvalue()
 
+
 # Create your views here.
 
 
-@cache_page(60 * 60)
 @async_to_sync
 async def full_image_gen(request):
     if request.method == "GET":
@@ -45,7 +47,7 @@ async def full_image_gen(request):
     elif request.method == "POST":
         raise Http404
 
-@cache_page(60 * 60)
+
 @async_to_sync
 async def resized_image_gen(request):
     # Lambda Functions
@@ -65,7 +67,7 @@ async def resized_image_gen(request):
 
         _id = request.GET.get("id", None)
         ratio = request.GET.get("ratio", "16x9")
-        factor_str = request.GET.get("factor", '120')
+        factor_str = request.GET.get("factor", "120")
 
         factor = int(factor_str)
         if not _id:
@@ -78,7 +80,9 @@ async def resized_image_gen(request):
 
         im = Image.open(raw_data_to_memory)
 
-        modified_list = list(map(multiply_by_factor, await map_to_int(await list_object(ratio))))
+        modified_list = list(
+            map(multiply_by_factor, await map_to_int(await list_object(ratio)))
+        )
 
         resized = im.resize(tuple(modified_list))
 
@@ -93,7 +97,6 @@ async def resized_image_gen(request):
         raise Http404
 
 
-@cache_page(60 * 60)
 @async_to_sync
 async def get_song(request):
     @sync_to_async()

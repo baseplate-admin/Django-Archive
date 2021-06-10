@@ -3,7 +3,6 @@ import json
 from django.shortcuts import render
 from upload.models import MusicList
 from django.http import Http404, HttpResponse
-from asgiref.sync import sync_to_async
 from django.contrib.auth.decorators import login_required
 
 from soundcore.models import LibraryGenerator

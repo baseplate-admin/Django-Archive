@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-4np*o6-m2k-$k*1%941ue$-sbw$gq#t-r0l4+-8n3a-i9r4t(r
 DEBUG = True
 
 ALLOWED_HOSTS = []
-ALLOWED_HOSTS.append('zarif-ahnaf.duckdns.org')
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -56,7 +56,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-
 ]
 
 ROOT_URLCONF = "core.urls"

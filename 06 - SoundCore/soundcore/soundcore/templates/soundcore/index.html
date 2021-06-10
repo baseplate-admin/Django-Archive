@@ -243,6 +243,29 @@
         .left-menu {
             height: 105% !important;
         }
+
+        .volume_anchor {
+            position: relative;
+        }
+
+        .volume_progress {
+            position: absolute;
+            width: 98%;
+            transform: translateX(2%);
+        }
+
+        .volume_slider {
+            position: absolute;
+            transform: translateY(-2px);
+        }
+
+        .volume_anchor > .columns {
+            transform: translateY(40px)
+        }
+
+        .volume_control_column {
+            transform: translateY(40px);
+        }
     </style>
 {% endblock %}
 
@@ -334,7 +357,7 @@
     </div>
     <footer class="footer_item" style="	transform: translateY(8px);">
         <div class="columns is-mobile footer_column">
-            <div class="column footer_info_column">
+            <div class="column footer_info_column  is-narrow">
                 <article class="media">
                     <figure class="media-left">
                         <p class="image is-64x64">
@@ -420,8 +443,32 @@
                     </div>
                 </div>
             </div>
-            <div class="column">
+            <div class="column is-hidden-mobile is-3 ">
+                <div class="columns is-mobile volume_control_column">
+                    <div class="column is-2 is-offset-2">
+                        <ion-icon class="volume__icon" name="volume-high-outline"></ion-icon>
+                        <script async>
+                            anime({
+                                targets: '.volume__icon',
+                                color: '#FFFFFF',
+                                translateY: -6,
+                                translateX: 22,
+                                scale: 1.5
+                            })
+                        </script>
+                    </div>
+                    <div class="column ">
+                        <div class="volume_anchor">
+                            <progress class="progress is-small volume_progress" value="80" max="100"></progress>
+                            <input class="slider volume_slider" onchange="handleVolumeInputChange()" step="1"
+                                   min="0" max="100" value="80"
+                                   type="range">
+                        </div>
+                    </div>
+                    <div class="column is-2 is-offset-1">
 
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
@@ -429,7 +476,6 @@
 
 {% block afterbody %}
     <!-- Progressive Image Loader for lazy loading images -->
-
     <script src="https://cdn.jsdelivr.net/npm/progressive-image.js/dist/progressive-image.js"></script>
 
     <!-- HowlerJS for Playing cross browser audio -->
@@ -451,7 +497,16 @@
             document.getElementById('pause_icon').classList.add('is-hidden')
             transparentSliderInputDiv.value = 0;
         }
+        const setGlobalVolume = () => {
+            const volumeProgressElement = document.querySelector('.volume_progress')
+            const volumeSliderElement = document.querySelector('.volume_slider')
+            const volume = volumeSliderElement.value
+            volumeProgressElement.value = volume
+
+            Howler.volume(volume / 100)
+        }
         onDomLoadFunction(resetValue)
+        onDomLoadFunction(setGlobalVolume)
     </script>
 
 
@@ -677,6 +732,7 @@
         document.getElementById('transparent_slider').addEventListener('mousemove', function (e) {
             let valueHover = calcSliderPos(e).toFixed(2);
         });
+
         const handleSliderInputChange = async () => {
             const transparentSliderInputDiv = document.getElementById('transparent_slider')
             const sliderProgressBar = document.getElementById('slider_progress')
@@ -685,6 +741,9 @@
             const duration = (sound.duration() * sliderProgressBar.value) / 100
             sound.seek(duration)
             updateFooterControl()
+        }
+        const handleVolumeInputChange = () => {
+            setGlobalVolume()
         }
     </script>
 {% endblock %}
