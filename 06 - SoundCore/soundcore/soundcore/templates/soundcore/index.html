@@ -7,10 +7,22 @@
 {% block head %}
     <style>
         @media screen and ( max-width: 767px) {
+            body {
+                position: relative;
+            }
             .search_input_wrapper {
                 display: none;
             }
-
+            .footer_item {
+                position:absolute;
+                bottom:10px;
+                left:0;
+                right:0;
+                height:120px;
+            }
+            .footer_control_column {
+                margin-right: 1em !important;
+            }
         }
 
     </style>
@@ -357,7 +369,7 @@
     </div>
     <footer class="footer_item" style="	transform: translateY(8px);">
         <div class="columns is-mobile footer_column">
-            <div class="column footer_info_column  is-4">
+            <div class="column footer_info_column  is-3">
                 <article class="media">
                     <figure class="media-left">
                         <p class="image is-64x64">

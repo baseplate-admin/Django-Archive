@@ -26,7 +26,8 @@ SECRET_KEY = "django-insecure-4np*o6-m2k-$k*1%941ue$-sbw$gq#t-r0l4+-8n3a-i9r4t(r
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS.append('zarif-ahnaf.duckdns.org')
+ALLOWED_HOSTS.append('127.0.0.1')
 # Application definition
 
 INSTALLED_APPS = [
