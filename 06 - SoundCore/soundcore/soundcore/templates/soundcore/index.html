@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block fontblock %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/progressive-image.js/dist/progressive-image.css">
+    <!-- Progressive Image Loader for lazy loading images -->
+    <script src="https://cdn.jsdelivr.net/npm/progressive-image.js/dist/progressive-image.js"></script>
 
 {% endblock %}
 
@@ -9,17 +11,21 @@
         @media screen and ( max-width: 767px) {
             body {
                 position: relative;
+                overscroll-behavior: contain !important;
             }
+
             .search_input_wrapper {
                 display: none;
             }
+
             .footer_item {
-                position:absolute;
-                bottom:10px;
-                left:0;
-                right:0;
-                height:120px;
+                position: absolute;
+                bottom: 10px;
+                left: 0;
+                right: 0;
+                height: 120px;
             }
+
             .footer_control_column {
                 margin-right: 1em !important;
             }
@@ -31,6 +37,8 @@
             background-color: black;
             -ms-overflow-style: none; /* IE and Edge */
             scrollbar-width: none; /* Firefox */
+            overflow: hidden;
+            height: 100%;
         }
 
         html::-webkit-scrollbar {
@@ -38,8 +46,7 @@
         }
 
         body {
-            overflow-y: hidden;
-            overflow-x: hidden;
+            overflow: hidden;
             min-height: 100vh;
         }
 
@@ -73,6 +80,8 @@
             transform: translateX(-12px);
             overflow-x: hidden;
             overflow-y: scroll;
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
         }
 
         .grid-container {
@@ -278,6 +287,10 @@
         .volume_control_column {
             transform: translateY(40px);
         }
+
+        .disabled_link {
+            pointer-events: none;
+        }
     </style>
 {% endblock %}
 
@@ -345,21 +358,24 @@
             <div class="grid-container">
                 {% for i in musics %}
                     <div class="grid-item">
-                        <a onclick="handleSongItemClick({{ i.id }})">
-                            <div class="box grid-box">
-                                <figure class="image song-image-figure ">
-                                    <img height="273px" class="song-image" id="song-image-{{ i.id }}"
+                        <div class="box grid-box">
+                            <figure class="image song-image-figure " onclick="handleSongItemClick({{ i.id }})">
+                                <a id="song-image-{{ i.id }}"
+                                   href="{% url 'full_image_generator' %}?id={{ i.id }}"
+                                   class="progressive replace disabled_link">
+                                    <img height="273px" class="song-image preview"
                                          alt="song-image"
-                                         src="{% url 'full_image_generator' %}?id={{ i.id }}">
-                                </figure>
-                                <div class="box song-description">
-                                    <p class="title is-size-5 song-title"
-                                       id="song-name-{{ i.id }}">{{ i.song_name }}</p>
-                                    <p class="subtitle is-size-6 song-artist"
-                                       id="song-artist-{{ i.id }}">{{ i.artist }}</p>
-                                </div>
+                                         src="{% url 'resized_image_generator' %}?id={{ i.id }}&factor=20&ratio=1x1">
+                                </a>
+                            </figure>
+                            <div class="box song-description">
+                                <p class="title is-size-5 song-title"
+                                   id="song-name-{{ i.id }}">{{ i.song_name }}</p>
+                                <p class="subtitle is-size-6 song-artist"
+                                   id="song-artist-{{ i.id }}">{{ i.artist }}</p>
                             </div>
-                        </a>
+                        </div>
+
                     </div>
                     <div class="is-hidden" id="song-sample-rate-{{ i.id }}">{{ i.sample_rate }}</div>
                     <div class="is-hidden" id="song-file-format-{{ i.id }}">{{ i.mime_type }}</div>
@@ -487,13 +503,10 @@
 {% endblock %}
 
 {% block afterbody %}
-    <!-- Progressive Image Loader for lazy loading images -->
-    <script src="https://cdn.jsdelivr.net/npm/progressive-image.js/dist/progressive-image.js"></script>
 
     <!-- HowlerJS for Playing cross browser audio -->
     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.min.js"
             integrity="sha256-Z6YgsC4qiy8o007mNQmCgSXEmS8CGtzwXi6rzyP/ZiE=" crossorigin="anonymous"></script>
-
     <script async>
         // jQuery to modern JS
 
@@ -509,13 +522,8 @@
             document.getElementById('pause_icon').classList.add('is-hidden')
             transparentSliderInputDiv.value = 0;
         }
-        const setGlobalVolume = () => {
-            const volumeProgressElement = document.querySelector('.volume_progress')
-            const volumeSliderElement = document.querySelector('.volume_slider')
-            const volume = volumeSliderElement.value
-            volumeProgressElement.value = volume
-
-            Howler.volume(volume / 100)
+        const setGlobalVolume = (input) => {
+            Howler.volume(input / 100)
         }
         onDomLoadFunction(resetValue)
         onDomLoadFunction(setGlobalVolume)
@@ -593,6 +601,7 @@
                     src: srcArray,
                     html5: true,
                     format: fileFormatArray,
+                    preload: true,
                 })
 
                 await addOrRemove(howlerArray, soundObject)
@@ -604,6 +613,8 @@
                     src: srcArray,
                     html5: true,
                     format: fileFormatArray,
+                    preload: true,
+
                 })
 
                 await addOrRemove(howlerArray, soundObject)
@@ -679,6 +690,7 @@
             sound = _.first(howlerArray)
             duration = 0;
             clearInterval(customInterval)
+            await howlerJsPlay()
             const preInputElement = document.querySelector('.pre_input')
             const sliderElement = document.querySelector('#slider_progress')
             const progressElement = document.querySelector('#transparent_slider')
@@ -712,7 +724,7 @@
             const newSongArtistDiv = document.getElementById(newSongArtist)
             const newSongSampleRateDiv = document.getElementById(newSongSampleRate)
 
-            newSongImageDiv.src = previousSongImageDiv.src
+            newSongImageDiv.src = previousSongImageDiv.href
             newSongNameDiv.innerText = previousSongNameDiv.innerText
             newSongArtistDiv.innerText = previousSongArtistDiv.innerText
             newSongSampleRateDiv.innerText = `${previousSongSampleRateDiv.innerText} KHz`
@@ -755,8 +767,28 @@
             updateFooterControl()
         }
         const handleVolumeInputChange = () => {
-            setGlobalVolume()
+            const volumeProgressElement = document.querySelector('.volume_progress')
+            const volumeSliderElement = document.querySelector('.volume_slider')
+            const volume = volumeSliderElement.value
+            volumeProgressElement.value = volume
+            setGlobalVolume(volume)
         }
+    </script>
+    <script async>
+        const watchMediaQueryFunctionVolume = (event) => {
+            if (event.matches) {
+                {# Mobile Version #}
+                setGlobalVolume(100)
+            } else if (!event.matches) {
+                {# Desktop Vesion #}
+                setGlobalVolume(80)
+
+            }
+        }
+        // Init the Function Once
+        watchMediaQueryFunctionVolume(mediaQueryListener)
+        // Add listener
+        mediaQueryListener.addListener(watchMediaQueryFunctionVolume)
     </script>
 {% endblock %}
 
