@@ -29,6 +29,11 @@
             .footer_control_column {
                 margin-right: 1em !important;
             }
+
+            .footer_info {
+                position: absolute;
+                bottom: 10px;
+            }
         }
 
     </style>
@@ -291,6 +296,8 @@
         .disabled_link {
             pointer-events: none;
         }
+
+
     </style>
 {% endblock %}
 
@@ -395,7 +402,7 @@
                     </figure>
                     <div class="media-content">
                         <div class="content">
-                            <p class="is-hidden-mobile">
+                            <p class="footer_info">
                                 <strong id="footer-song-name">Song Name</strong> | <small
                                     id="footer-song-artist">Artist</small> | <small
                                     id="footer-song-sample-rate">
@@ -488,7 +495,8 @@
                     <div class="column ">
                         <div class="volume_anchor">
                             <progress class="progress is-small volume_progress" value="80" max="100"></progress>
-                            <input class="slider volume_slider" onchange="handleVolumeInputChange()" step="1"
+                            <input class="slider volume_slider" oninput="handleVolumeInputChange(this.value)"
+                                   onchange="handleVolumeInputChange(this.value)" step="1"
                                    min="0" max="100" value="80"
                                    type="range">
                         </div>
@@ -534,6 +542,7 @@
         // Event Listeners
         onDomLoadFunction(() => {
             document.getElementById('transparent_slider').addEventListener("change", handleSliderInputChange)
+            document.getElementById('transparent_slider').addEventListener("input", handleSliderInputChange)
         })
 
     </script>
@@ -586,6 +595,9 @@
             /* Handles the play.
                 So if you call sound.play(). This function should handle that
            */
+            // Update Footer Items
+            updateFooterBoilerPlate(id)
+
             const srcArray = [];
             const fileFormatArray = [];
 
@@ -690,14 +702,22 @@
             sound = _.first(howlerArray)
             duration = 0;
             clearInterval(customInterval)
-            await howlerJsPlay()
+
             const preInputElement = document.querySelector('.pre_input')
             const sliderElement = document.querySelector('#slider_progress')
             const progressElement = document.querySelector('#transparent_slider')
+            const totalSong = '{{ musics.count }}'
 
             sliderElement.value = 0
             progressElement.value = 0
             preInputElement.innerText = formatTime(0)
+
+
+            const randomNumber = (min, max) => {
+                return Math.floor(Math.random() * (max - min) + min);
+            }
+
+            await howlerJsPlay(randomNumber(1, parseInt(totalSong)))
         }
     </script>
 
@@ -745,7 +765,7 @@
     <script defer>
         const handleSongItemClick = async (id) => {
             await howlerJsPlay(id)
-            await updateFooterBoilerPlate(id)
+
         }
     </script>
     <script>
@@ -766,10 +786,9 @@
             sound.seek(duration)
             updateFooterControl()
         }
-        const handleVolumeInputChange = () => {
+        const handleVolumeInputChange = (value) => {
             const volumeProgressElement = document.querySelector('.volume_progress')
-            const volumeSliderElement = document.querySelector('.volume_slider')
-            const volume = volumeSliderElement.value
+            const volume = value
             volumeProgressElement.value = volume
             setGlobalVolume(volume)
         }
@@ -791,5 +810,3 @@
         mediaQueryListener.addListener(watchMediaQueryFunctionVolume)
     </script>
 {% endblock %}
-
-
