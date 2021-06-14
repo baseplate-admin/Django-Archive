@@ -249,3 +249,12 @@ async def reset_password_form(request, url: str):
         else:
             raise Http404
     return render(request, "accounts/reset/index.html", {"form": form})
+
+
+@login_required()
+@async_to_sync
+async def user_volume_capture(request):
+    if request.method == "GET":
+        pass
+    elif request.method == "POST":
+        pass

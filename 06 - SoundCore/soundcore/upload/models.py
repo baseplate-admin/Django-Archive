@@ -11,7 +11,7 @@ class MusicList(models.Model):
     artist = models.CharField(max_length=1024, default="", null=True)
     album = models.CharField(max_length=1024, default="", null=True)
     album_art = models.FileField(upload_to="album_arts/")
-    date = models.CharField(max_length=1024, default="", null=True)
+    release_date = models.CharField(max_length=1024, default="", null=True)
     composer = models.CharField(max_length=1024, default="", null=True)
     lyricist = models.CharField(max_length=1024, default="", null=True)
     bitrate = models.IntegerField(default=0, null=True)

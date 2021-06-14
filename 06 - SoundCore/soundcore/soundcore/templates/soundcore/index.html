@@ -1,304 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block fontblock %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/progressive-image.js/dist/progressive-image.css">
+    <link rel="stylesheet" href="{% static 'soundcore/js/vendor/progressive-image/progressive-image.css' %}">
     <!-- Progressive Image Loader for lazy loading images -->
-    <script src="https://cdn.jsdelivr.net/npm/progressive-image.js/dist/progressive-image.js"></script>
-
+    <script src="{% static 'soundcore/js/vendor/progressive-image/progressive-image.js' %}"></script>
 {% endblock %}
 
 {% block head %}
-    <style>
-        @media screen and ( max-width: 767px) {
-            body {
-                position: relative;
-                overscroll-behavior: contain !important;
-            }
-
-            .search_input_wrapper {
-                display: none;
-            }
-
-            .footer_item {
-                position: absolute;
-                bottom: 10px;
-                left: 0;
-                right: 0;
-                height: 120px;
-            }
-
-            .footer_control_column {
-                margin-right: 1em !important;
-            }
-
-            .footer_info {
-                position: absolute;
-                bottom: 10px;
-            }
-        }
-
-    </style>
-    <style>
-        html {
-            background-color: black;
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
-            overflow: hidden;
-            height: 100%;
-        }
-
-        html::-webkit-scrollbar {
-            display: none;
-        }
-
-        body {
-            overflow: hidden;
-            min-height: 100vh;
-        }
-
-        .login_button {
-            color: #eaeaea;
-            background-color: transparent;
-            border-color: #3b3838;
-            border-width: 1px;
-            transition: 0.4s;
-        }
-
-        .login_button:hover {
-            color: #a5a4a4;
-            background-color: #101010;
-            border-color: #3b3838;
-            border-width: 1px;
-        }
-
-        .left_menu_wrapper {
-            transform: translateY(-12px);
-        }
-
-
-        .top-navbar {
-            background-color: #161616;
-            color: white
-        }
-
-        .right-column {
-            background-color: #060606;
-            transform: translateX(-12px);
-            overflow-x: hidden;
-            overflow-y: scroll;
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
-            gap: 1em;
-            padding-top: 1em;
-        }
-
-        .grid-item {
-            font-size: 30px;
-            vertical-align: middle;
-            display: flex;
-            justify-content: center;
-        }
-
-        .grid-box {
-            background-color: transparent;
-            color: white
-        }
-
-        /*
-        For some reason I dont want round items.
-        .song-image {
-            border-radius: 5px;
-        }
-        */
-        .song-description {
-            background-color: transparent;
-        }
-
-        .song-title {
-            white-space: nowrap;
-            width: 8em;
-            height: 1.3em;
-            color: #e0e0ec;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .song-artist {
-            white-space: nowrap;
-            width: 10em;
-            color: #a1a1a2;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .song-image-figure {
-            height: 200px;
-            width: 200px;
-        }
-
-        .login_button_wrapper {
-            transform: translateY(5px) translateX(-5px);
-        }
-
-        .brand_image > img {
-            transform: translateY(.6em) translateX(30px);
-        }
-
-        .user_image {
-            transform: translateY(10px) translateX(-10px);
-        }
-
-        .search_input_div {
-            display: flex;
-            justify-content: center;
-        }
-
-        .search_input_wrapper {
-            flex-grow: .4;
-            transform: translateY(5px);
-        }
-
-        .search_input {
-            background-color: #060606;
-            border: transparent;
-            color: white;
-            border-radius: 0;
-        }
-
-        .search_input::placeholder {
-            color: white;
-            opacity: 0.6;
-        }
-
-        .search_input_box_right {
-            background-color: #323232;
-            border-radius: 0;
-        }
-
-        .search_input_box_right_wrapper {
-            overflow: hidden;
-        }
-
-        /* This is active in outer scope */
-
-
-        .footer_item {
-            background-color: #161616;
-        }
-
-
-        .slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 15px;
-            border-radius: 5px;
-            background: transparent;
-            outline: none;
-        }
-
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #4a4a4a;
-            cursor: pointer;
-        }
-
-        .slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border: black;
-            border-radius: 50%;
-            background: #4a4a4a;
-            cursor: pointer;
-        }
-
-        #slider_progress {
-            width: 99%;
-            transform: translateX(1%);
-        }
-
-        .footer_input_anchor {
-            position: relative;
-        }
-
-        .footer_input_anchor > progress {
-            position: absolute;
-        }
-
-        .footer_input_anchor > input {
-            position: absolute;
-            transform: translateY(-2px);
-        }
-
-
-        .pre_input {
-            transform: translateY(-6.5px);
-            color: white;
-            opacity: .4;
-        }
-
-        .post_input {
-            transform: translateY(-7px);
-            color: white;
-            opacity: .4;
-        }
-
-        .footer_info_column {
-            margin-left: 3vw;
-        }
-
-        .footer_info_column > .media > .media-left > p > img {
-            height: 60px;
-            width: 60px;
-        }
-
-
-        #footer-song-name, #footer-song-artist, #footer-song-sample-rate, .pre_input, .post_input {
-            color: white;
-            opacity: 0.85;
-        }
-
-        .left-menu {
-            height: 105% !important;
-        }
-
-        .volume_anchor {
-            position: relative;
-        }
-
-        .volume_progress {
-            position: absolute;
-            width: 98%;
-            transform: translateX(2%);
-        }
-
-        .volume_slider {
-            position: absolute;
-            transform: translateY(-2px);
-        }
-
-        .volume_anchor > .columns {
-            transform: translateY(40px)
-        }
-
-        .volume_control_column {
-            transform: translateY(40px);
-        }
-
-        .disabled_link {
-            pointer-events: none;
-        }
-
-
-    </style>
+    <link rel="stylesheet" href="{% static 'soundcore/css/responsive.css' %}"/>
+    <link rel="stylesheet" href="{% static 'soundcore/css/main.css' %}"/>
 {% endblock %}
 
 {% block body %}
@@ -511,74 +221,12 @@
 {% endblock %}
 
 {% block afterbody %}
-
+    <!-- Axios for Posting and Getting Data -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"
+            integrity="sha256-JLmknTdUZeZZ267LP9qB+/DT7tvxOOKctSKeUC2KT6E=" crossorigin="anonymous"></script>
     <!-- HowlerJS for Playing cross browser audio -->
-    <script src="https://cdn.jsdelivr.net/npm/howler@2.2.1/dist/howler.min.js"
-            integrity="sha256-Z6YgsC4qiy8o007mNQmCgSXEmS8CGtzwXi6rzyP/ZiE=" crossorigin="anonymous"></script>
+    <script src="{% static 'soundcore/js/vendor/howler/howler.js' %}"></script>
     <script async>
-        // jQuery to modern JS
-
-        const onDomLoadFunction = (fn) => {
-            if (document.readyState != 'loading') {
-                fn();
-            } else {
-                document.addEventListener('DOMContentLoaded', fn);
-            }
-        }
-        const resetValue = () => {
-            const transparentSliderInputDiv = document.getElementById('transparent_slider')
-            document.getElementById('pause_icon').classList.add('is-hidden')
-            transparentSliderInputDiv.value = 0;
-        }
-        const setGlobalVolume = (input) => {
-            Howler.volume(input / 100)
-        }
-        onDomLoadFunction(resetValue)
-        onDomLoadFunction(setGlobalVolume)
-    </script>
-
-
-    <script>
-        // Event Listeners
-        onDomLoadFunction(() => {
-            document.getElementById('transparent_slider').addEventListener("change", handleSliderInputChange)
-            document.getElementById('transparent_slider').addEventListener("input", handleSliderInputChange)
-        })
-
-    </script>
-    <script>
-        // Some useful Lodash scripts
-
-        const addOrRemove = async (arr, val) => {
-            if (!_.includes(arr, val)) {
-                arr.push(val);
-            } else {
-                _.remove(arr, item => item === val);
-            }
-            //  console.log(arr);
-        }
-
-    </script>
-    <script>
-        const formatTime = (duration) => {
-            // Hours, minutes and seconds
-            let hrs = ~~(duration / 3600);
-            let mins = ~~((duration % 3600) / 60);
-            let secs = ~~duration % 60;
-
-            // Output like "1:01" or "4:03:59" or "123:03:59"
-            let ret = "";
-
-            if (hrs > 0) {
-                ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
-            }
-
-            ret += "" + mins + ":" + (secs < 10 ? "0" : "");
-            ret += "" + secs;
-            return ret;
-        }
-    </script>
-    <script>
         /*
             Howler JS functions
             Powered by lodash
@@ -602,7 +250,7 @@
             const fileFormatArray = [];
 
             const url = `{% url 'song_generator' %}?id=${id}`
-            const fileFormat = (document.getElementById(`song-file-format-${id}`).innerText).toLowerCase()
+            const fileFormat = document.getElementById(`song-file-format-${id}`).innerText.toLowerCase()
 
             // Add files to Array for HowlerJS to play
             await addOrRemove(srcArray, url)
@@ -721,53 +369,30 @@
         }
     </script>
 
-    <script>
+    <!-- Handle Volume Slider Change -->
+    <script src="{% static 'soundcore/js/extra/sliderChangeHandlers.js' %}"></script>
 
-        const updateFooterBoilerPlate = async (id) => {
-            const previousSongImage = `song-image-${id}`
-            const previousSongName = `song-name-${id}`
-            const previousSongArtist = `song-artist-${id}`
-            const previousSongSampleRate = `song-sample-rate-${id}`
+    <!-- Jquery to modern JS -->
+    <script src="{% static 'soundcore/js/extra/jqueryToModern.js' %}"></script>
 
-            const previousSongImageDiv = document.getElementById(previousSongImage)
-            const previousSongNameDiv = document.getElementById(previousSongName)
-            const previousSongArtistDiv = document.getElementById(previousSongArtist)
-            const previousSongSampleRateDiv = document.getElementById(previousSongSampleRate)
+    <!-- Some useful lodash Functions -->
+    <script src="{% static 'soundcore/js/extra/lodashFunctions.js' %}"></script>
 
-            const newSongImage = 'footer-song-image'
-            const newSongName = 'footer-song-name'
-            const newSongArtist = 'footer-song-artist'
-            const newSongSampleRate = 'footer-song-sample-rate'
+    <!-- On DOM load execute some functions -->
+    <script src="{% static 'soundcore/js/extra/onDomLoad.js' %}"></script>
+    <script src="{% static 'soundcore/js/extra/onDomLoadEventListeners.js' %}"></script>
+    <script src="{% static 'soundcore/js/extra/onLoadMediaQuery.js' %}"></script>
 
-            const newSongImageDiv = document.getElementById(newSongImage)
-            const newSongNameDiv = document.getElementById(newSongName)
-            const newSongArtistDiv = document.getElementById(newSongArtist)
-            const newSongSampleRateDiv = document.getElementById(newSongSampleRate)
+    <!-- Format Time To H:M:S -->
+    <script src="{% static 'soundcore/js/extra/timeFormatFunction.js' %}"></script>
 
-            newSongImageDiv.src = previousSongImageDiv.href
-            newSongNameDiv.innerText = previousSongNameDiv.innerText
-            newSongArtistDiv.innerText = previousSongArtistDiv.innerText
-            newSongSampleRateDiv.innerText = `${previousSongSampleRateDiv.innerText} KHz`
-        }
-        const updateFooterControl = () => {
-            sound = _.first(howlerArray)
-            duration = sound.seek();
-            const preInputElement = document.querySelector('.pre_input')
-            const sliderElement = document.querySelector('#slider_progress')
-            const progressElement = document.querySelector('#transparent_slider')
-            const convertDurationToHundred = (100 * duration) / sound.duration()
-
-            sliderElement.value = convertDurationToHundred
-            progressElement.value = convertDurationToHundred
-            preInputElement.innerText = formatTime(duration)
-        }
-    </script>
     <script defer>
         const handleSongItemClick = async (id) => {
             await howlerJsPlay(id)
-
         }
     </script>
+    <script src="{% static 'soundcore/js/extra/footerUpdateContent.js' %}"></script>
+
     <script>
         function calcSliderPos(e) {
             return (e.offsetX / e.target.clientWidth) * parseInt(e.target.getAttribute('max'), 10);
@@ -776,37 +401,5 @@
         document.getElementById('transparent_slider').addEventListener('mousemove', function (e) {
             let valueHover = calcSliderPos(e).toFixed(2);
         });
-
-        const handleSliderInputChange = async () => {
-            const transparentSliderInputDiv = document.getElementById('transparent_slider')
-            const sliderProgressBar = document.getElementById('slider_progress')
-            sliderProgressBar.value = transparentSliderInputDiv.value
-            sound = _.first(howlerArray)
-            const duration = (sound.duration() * sliderProgressBar.value) / 100
-            sound.seek(duration)
-            updateFooterControl()
-        }
-        const handleVolumeInputChange = (value) => {
-            const volumeProgressElement = document.querySelector('.volume_progress')
-            const volume = value
-            volumeProgressElement.value = volume
-            setGlobalVolume(volume)
-        }
-    </script>
-    <script async>
-        const watchMediaQueryFunctionVolume = (event) => {
-            if (event.matches) {
-                {# Mobile Version #}
-                setGlobalVolume(100)
-            } else if (!event.matches) {
-                {# Desktop Vesion #}
-                setGlobalVolume(80)
-
-            }
-        }
-        // Init the Function Once
-        watchMediaQueryFunctionVolume(mediaQueryListener)
-        // Add listener
-        mediaQueryListener.addListener(watchMediaQueryFunctionVolume)
     </script>
 {% endblock %}

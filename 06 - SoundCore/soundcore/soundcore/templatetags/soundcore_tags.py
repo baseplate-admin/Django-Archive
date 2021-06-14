@@ -1,5 +1,6 @@
 from django import template
 from soundcore.models import LibraryGenerator
+
 register = template.Library()
 
 

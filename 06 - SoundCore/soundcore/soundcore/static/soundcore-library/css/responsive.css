@@ -1,0 +1,23 @@
+@media screen and ( max-width: 767px) {
+    .search_input_wrapper {
+        display: none;
+    }
+
+
+    .item_image > img {
+        width: 100px;
+        height: 100px
+    }
+
+    .library_hero_right_item {
+        margin-left: 0 !important;
+    }
+
+    .library_item_wrapper {
+        transform: translateX(-12px);
+    }
+
+    .item_subtitle {
+        transform: translateY(5px) !important;
+    }
+}

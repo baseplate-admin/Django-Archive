@@ -23,11 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-4np*o6-m2k-$k*1%941ue$-sbw$gq#t-r0l4+-8n3a-i9r4t(r"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
-ALLOWED_HOSTS.append('zarif-ahnaf.duckdns.org')
-ALLOWED_HOSTS.append('127.0.0.1')
+ALLOWED_HOSTS.append("zarif-ahnaf.duckdns.org")
+ALLOWED_HOSTS.append("127.0.0.1")
 # Application definition
 
 INSTALLED_APPS = [
@@ -124,6 +124,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

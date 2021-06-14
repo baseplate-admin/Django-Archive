@@ -33,9 +33,6 @@ class ShortUrl:
 
 
 # Create your models here.
-class UserInput(models.Model):
-    volume = models.IntegerField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class PasswordResetUrl(models.Model):
@@ -48,3 +45,8 @@ class PasswordResetUrl(models.Model):
     def save(self, *args, **kwargs):
         self.url = ShortUrl().logic()
         super(PasswordResetUrl, self).save(*args, **kwargs)
+
+
+class UserInput(models.Model):
+    volume = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)

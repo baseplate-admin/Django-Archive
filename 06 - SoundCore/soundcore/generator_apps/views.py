@@ -34,6 +34,7 @@ async def get_binary_from_image(path: str):
 # Create your views here.
 
 
+@login_required()
 @async_to_sync
 async def full_image_gen(request):
     if request.method == "GET":
@@ -48,6 +49,7 @@ async def full_image_gen(request):
         raise Http404
 
 
+@login_required()
 @async_to_sync
 async def resized_image_gen(request):
     # Lambda Functions
@@ -97,6 +99,7 @@ async def resized_image_gen(request):
         raise Http404
 
 
+@login_required()
 @async_to_sync
 async def get_song(request):
     @sync_to_async()
