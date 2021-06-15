@@ -210,10 +210,10 @@
                     </div>
                     <div class="column ">
                         <div class="volume_anchor">
-                            <progress class="progress is-small volume_progress" value="80" max="100"></progress>
+                            <progress class="progress is-small volume_progress" value="0" max="100"></progress>
                             <input class="slider volume_slider" oninput="handleVolumeInputChange(this.value)"
                                    onchange="handleVolumeInputChange(this.value)" step="1"
-                                   min="0" max="100" value="80"
+                                   min="0" max="100" value="0"
                                    type="range">
                         </div>
                     </div>
@@ -230,6 +230,7 @@
     <!-- Axios for Posting and Getting Data -->
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"
             integrity="sha256-JLmknTdUZeZZ267LP9qB+/DT7tvxOOKctSKeUC2KT6E=" crossorigin="anonymous"></script>
+    <script src="{% static 'soundcore/js/extra/axiosHelperFunctions.js' %}"></script>
     <!-- HowlerJS for Playing cross browser audio -->
     <script src="{% static 'soundcore/js/vendor/howler/howler.js' %}"></script>
     <script async>
@@ -250,7 +251,7 @@
                 So if you call sound.play(). This function should handle that
            */
             // Update Footer Items
-            updateFooterBoilerPlate(id)
+            await updateFooterBoilerPlate(id)
 
             const srcArray = [];
             const fileFormatArray = [];
@@ -387,7 +388,6 @@
     <!-- On DOM load execute some functions -->
     <script src="{% static 'soundcore/js/extra/onDomLoad.js' %}"></script>
     <script src="{% static 'soundcore/js/extra/onDomLoadEventListeners.js' %}"></script>
-    <script src="{% static 'soundcore/js/extra/onLoadMediaQuery.js' %}"></script>
 
     <!-- Format Time To H:M:S -->
     <script src="{% static 'soundcore/js/extra/timeFormatFunction.js' %}"></script>
@@ -407,5 +407,38 @@
         document.getElementById('transparent_slider').addEventListener('mousemove', function (e) {
             let valueHover = calcSliderPos(e).toFixed(2);
         });
+    </script>
+    <script>
+        const watchMediaQueryFunctionVolume = async (event) => {
+            if (event.matches) {
+                // Mobile Version
+                await handleSliderInputChange(100)
+            } else if (!event.matches) {
+                // Desktop Version
+                const djangoUrl = '{% url 'user_volume_capture' %}'
+                await axiosGetVolumeDataAndMapToVolume(djangoUrl)
+            }
+        }
+        // Init the Function Once
+        watchMediaQueryFunctionVolume(mediaQueryListener)
+        // Add listener
+        mediaQueryListener.addListener(watchMediaQueryFunctionVolume)
+    </script>
+    <script>
+        const handleVolumeInputChange = async (value) => {
+
+            const setGlobalVolume = async (input) => {
+                Howler.volume(input / 100)
+            }
+            const volume = value
+
+            const volumeProgressElement = document.querySelector('.volume_progress')
+            volumeProgressElement.value = volume
+            await setGlobalVolume(volume)
+            {% if user.is_authenticated %}
+                const djangoUrl = '{% url 'user_volume_capture' %}'
+                await axiosPostVolumeData(djangoUrl, value)
+            {% endif %}
+        }
     </script>
 {% endblock %}

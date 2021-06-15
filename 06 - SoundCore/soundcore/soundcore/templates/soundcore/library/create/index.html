@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-{% load humanize soundcore_tags static %}
+{% load humanize soundcore_tags static thumbnail %}
 
 {% block fontblock %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-nunito@1.1.13/index.min.css">
 {% endblock %}
 {% block head %}
-    <link rel="stylesheet" href="{% static 'soundcore_library_create/css/responsive.css' %}" />
-    <link rel="stylesheet" href="{% static 'soundcore_library_create/css/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'soundcore_library_create/css/responsive.css' %}"/>
+    <link rel="stylesheet" href="{% static 'soundcore_library_create/css/main.css' %}"/>
 {% endblock %}
 
 
@@ -91,7 +91,9 @@
                         <div class="columns is-mobile">
                             <div class="column is-one-fifth-desktop is-two-fifths-mobile">
                                 <figure class="image item_image">
-                                    <img alt="" src="{% url 'full_image_generator' %}?id={{ i.id }}">
+                                    {% thumbnail i.album_art "200x200" crop="center" as im %}
+                                        <img alt="" src="{{ im.url }}">
+                                    {% endthumbnail %}
                                 </figure>
                             </div>
                             <div class="column  is-three-fifths-mobile is-four-fifths-desktop">

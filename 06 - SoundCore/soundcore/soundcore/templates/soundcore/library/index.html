@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static thumbnail %}
 
 {% block fontblock %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-nunito@1.1.13/index.min.css">
 {% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'soundcore_library/css/main.css' %}"/>
-<link rel="stylesheet" href="{% static 'soundcore_library/css/responsive.css' %}"/>
+    <link rel="stylesheet" href="{% static 'soundcore_library/css/main.css' %}"/>
+    <link rel="stylesheet" href="{% static 'soundcore_library/css/responsive.css' %}"/>
 {% endblock %}
 
 
@@ -100,8 +100,9 @@
                                             <div class="masonry">
                                                 {% for x in i.musics.all %}
                                                     <div class="masonry_items">
-                                                        <img src="{% url 'full_image_generator' %}?id={{ x.id }}"
-                                                             alt="{{ x.song_name }}"/>
+                                                        {% thumbnail x.album_art "200x200" crop="center" as im %}
+                                                            <img src="{{ im.url }}" alt="{{ x.song_name }}">
+                                                        {% endthumbnail %}
                                                     </div>
                                                 {% endfor %}
                                             </div>
@@ -138,7 +139,7 @@
 {% block afterbody %}
 
     <script src="{% static 'soundcore/js/extra/jqueryToModern.js' %}"></script>
-    <script src="{% static 'soundcore_library/assets/js/extra/lodashFunctions.js' %}"></script>
+    <script src="{% static 'soundcore/js/extra/lodashFunctions.js' %}"></script>
     <script>
         onDomLoadFunction(() => {
             const element = document.querySelectorAll('.masonry_items')

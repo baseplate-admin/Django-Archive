@@ -47,6 +47,9 @@ class PasswordResetUrl(models.Model):
         super(PasswordResetUrl, self).save(*args, **kwargs)
 
 
-class UserInput(models.Model):
-    volume = models.IntegerField()
+class UserVolumeInput(models.Model):
+    volume = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return str(self.user)

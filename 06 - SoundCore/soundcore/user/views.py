@@ -1,22 +1,23 @@
-from django.http import Http404
-from django.shortcuts import render, redirect
-from django.urls import reverse
-
-from django.views.decorators.cache import cache_page
 from django.core.mail import send_mail
+from django.core import serializers
+from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
-
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.http import Http404, JsonResponse, HttpResponse
+from django.shortcuts import render, redirect
+
+from django.urls import reverse
+from django.views.decorators.cache import cache_page
 
 from asgiref.sync import async_to_sync, sync_to_async
 
 from user.forms import LoginForm, RegisterForm, ForgetPasswordForm, ResetPasswordForm
 
-from user.models import PasswordResetUrl
+from user.models import PasswordResetUrl, UserVolumeInput
 
 
 # Create your views here.
@@ -105,11 +106,11 @@ async def register_form(request):
             password_2 = form.cleaned_data["password_2"]
 
             if (
-                (password_1 == password_2)
-                and first_name
-                and last_name
-                and username
-                and email
+                    (password_1 == password_2)
+                    and first_name
+                    and last_name
+                    and username
+                    and email
             ):
                 if await check_if_user(_username=username):
                     return render(request, "accounts/register/user_exists/index.html")
@@ -126,8 +127,7 @@ async def register_form(request):
                 user = await auth_user(request, username, password_1)
                 if user is not None:
                     auth_login(request, user)
-                return redirect(reverse("register_success"))
-
+                return render(request, "accounts/register/successful/index.html")
             else:
                 return redirect(reverse("register_form"))
     elif request.method == "GET":
@@ -135,21 +135,11 @@ async def register_form(request):
     return render(request, "accounts/register/index.html", {"form": form})
 
 
-@login_required()
-@cache_page(300)
-@async_to_sync
-async def register_success(request):
-    if request.method == "GET":
-        return render(request, "accounts/register/successful/index.html")
-    else:
-        raise Http404
-
-
 @async_to_sync
 async def forget_password_form(request):
     @sync_to_async
     def send_mail_function(
-        email_subject, email_reset_message, from_sender, to_receiver
+            email_subject, email_reset_message, from_sender, to_receiver
     ):
         send_mail(
             email_subject,  # subject
@@ -252,9 +242,31 @@ async def reset_password_form(request, url: str):
 
 
 @login_required()
-@async_to_sync
-async def user_volume_capture(request):
+def user_volume_capture(request):
+    """
+    A Simple way to store User Volume
+    """
     if request.method == "GET":
-        pass
+        try:
+            database = UserVolumeInput.objects.filter(user=request.user)
+        except ObjectDoesNotExist:
+            _data = UserVolumeInput.objects.create(user=request.user, volume=50)
+            _data.save()
+            database = UserVolumeInput.objects.filter(user=request.user)
+
+        data = serializers.serialize('json', database, fields=('volume',))
+
+        return JsonResponse(data, safe=False)
     elif request.method == "POST":
-        pass
+        data_dictionary = dict(request.POST.lists())
+
+        for volume in data_dictionary:
+            try:
+                database = UserVolumeInput.objects.get(user=request.user)
+            except ObjectDoesNotExist:
+                _data = UserVolumeInput.objects.create(user=request.user, volume=50)
+                _data.save()
+                database = UserVolumeInput.objects.get(user=request.user)
+            database.volume = volume
+            database.save()
+        return HttpResponse(200)
