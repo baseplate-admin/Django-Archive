@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'soundcore-library/css/main.css' %}"/>
-<link rel="stylesheet" href="{% static 'soundcore-library/css/responsive.css' %}"/>
+<link rel="stylesheet" href="{% static 'soundcore_library/css/main.css' %}"/>
+<link rel="stylesheet" href="{% static 'soundcore_library/css/responsive.css' %}"/>
 {% endblock %}
 
 
@@ -69,7 +69,7 @@
     </div>
     <div class="columns is-mobile ">
         <div class="column is-narrow left_menu_wrapper">
-            {% include 'left-sidebar.html' with active='soundcore-library' %}
+            {% include 'left-sidebar.html' with active='soundcore_library' %}
         </div>
         <div class="column right-column">
             <section class="hero library-hero">
@@ -138,7 +138,7 @@
 {% block afterbody %}
 
     <script src="{% static 'soundcore/js/extra/jqueryToModern.js' %}"></script>
-    <script src="{% static 'soundcore-library/js/extra/lodashFunctions.js' %}"></script>
+    <script src="{% static 'soundcore_library/assets/js/extra/lodashFunctions.js' %}"></script>
     <script>
         onDomLoadFunction(() => {
             const element = document.querySelectorAll('.masonry_items')

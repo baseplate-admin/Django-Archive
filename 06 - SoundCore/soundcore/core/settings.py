@@ -23,11 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-4np*o6-m2k-$k*1%941ue$-sbw$gq#t-r0l4+-8n3a-i9r4t(r"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 ALLOWED_HOSTS.append("zarif-ahnaf.duckdns.org")
 ALLOWED_HOSTS.append("127.0.0.1")
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,6 +47,8 @@ INSTALLED_APPS = [
     "soundcore",
     # Helper Functions
     "generator_apps",
+    # Image Resizer
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE = [
@@ -145,5 +148,5 @@ EMAIL_HOST_USER = "zombieahnaf@gmail.com"
 EMAIL_HOST_PASSWORD = "bmzkixafjegpczfc"
 EMAIL_USE_TLS = True
 
-MEDIA_URL = "/media/"
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

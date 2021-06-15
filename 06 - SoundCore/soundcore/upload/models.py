@@ -1,5 +1,5 @@
 from django.db import models
-
+from upload.helpers import RandomFileName
 
 # Create your models here.
 
@@ -7,11 +7,11 @@ from django.db import models
 class MusicList(models.Model):
     id = models.IntegerField(unique=True, primary_key=True)
     song_name = models.CharField(max_length=1024, default="", unique=True)
-    song_file = models.FileField(upload_to="songs/")
+    song_file = models.FileField(upload_to=RandomFileName('songs/'))
     artist = models.CharField(max_length=1024, default="", null=True)
     album = models.CharField(max_length=1024, default="", null=True)
-    album_art = models.FileField(upload_to="album_arts/")
-    release_date = models.CharField(max_length=1024, default="", null=True)
+    album_art = models.FileField(upload_to=RandomFileName('album_arts/'))
+    date = models.CharField(max_length=1024, default="", null=True)
     composer = models.CharField(max_length=1024, default="", null=True)
     lyricist = models.CharField(max_length=1024, default="", null=True)
     bitrate = models.IntegerField(default=0, null=True)

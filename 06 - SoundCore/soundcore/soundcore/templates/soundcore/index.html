@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static thumbnail %}
 {% block fontblock %}
     <link rel="stylesheet" href="{% static 'soundcore/js/vendor/progressive-image/progressive-image.css' %}">
     <!-- Progressive Image Loader for lazy loading images -->
@@ -76,14 +76,20 @@
                 {% for i in musics %}
                     <div class="grid-item">
                         <div class="box grid-box">
-                            <figure class="image song-image-figure " onclick="handleSongItemClick({{ i.id }})">
-                                <a id="song-image-{{ i.id }}"
-                                   href="{% url 'full_image_generator' %}?id={{ i.id }}"
-                                   class="progressive replace disabled_link">
-                                    <img height="273px" class="song-image preview"
+                            <figure class="image song-image-figure" onclick="handleSongItemClick({{ i.id }})">
+                                {% thumbnail i.album_art "200x200" crop="center" as im %}
+                                    <a id="song-image-{{ i.id }}"
+                                       href="{{ im.url }}"
+                                       class="progressive replace disabled_link">
+                                {% endthumbnail %}
+                                {% thumbnail i.album_art "20x20" crop="center" as im %}
+
+                                    <img height="{{ im.height }}"
+                                         width="{{ im.width }}" class="song-image preview"
                                          alt="song-image"
-                                         src="{% url 'resized_image_generator' %}?id={{ i.id }}&factor=20&ratio=1x1">
-                                </a>
+                                         src="{{ im.url }}">
+                                    </a>
+                                {% endthumbnail %}
                             </figure>
                             <div class="box song-description">
                                 <p class="title is-size-5 song-title"

@@ -140,7 +140,7 @@ async def register_form(request):
 @async_to_sync
 async def register_success(request):
     if request.method == "GET":
-        return render(request, "accounts/register/success/index.html")
+        return render(request, "accounts/register/successful/index.html")
     else:
         raise Http404
 
@@ -194,8 +194,8 @@ async def forget_password_form(request):
                 reset_message = f"""
                 Hello, 
                 This is an automated message. 
-                You are getting this message because someone requested a password reset on your account.
-                Click  https://127.0.0.1/accounts/reset/{password_reset_url}/ to reset your password.
+                You are getting this message because someone requested a password accounts_reset on your account.
+                Click  https://127.0.0.1/accounts/reset/{password_reset_url}/ to accounts_reset your password.
                 """
                 sender_email = settings.EMAIL_HOST_USER
                 receiver_email = user.email

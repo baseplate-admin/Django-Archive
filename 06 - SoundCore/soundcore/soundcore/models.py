@@ -47,7 +47,7 @@ class LibraryGenerator(models.Model):
     @staticmethod
     def count_total_number():
         """
-        Anchored to 'soundcore/soundcore-library/index.html'
+        Anchored to 'soundcore/soundcore_library/index.html'
         """
         import time
 
