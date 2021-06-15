@@ -7,13 +7,13 @@ import upload.helpers
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('upload', '0016_rename_name_musiclist_song_name'),
+        ("upload", "0016_rename_name_musiclist_song_name"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='musiclist',
-            name='song_file',
-            field=models.FileField(upload_to=upload.helpers.RandomFileName('songs')),
+            model_name="musiclist",
+            name="song_file",
+            field=models.FileField(upload_to=upload.helpers.RandomFileName("songs")),
         ),
     ]

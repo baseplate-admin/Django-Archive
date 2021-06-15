@@ -409,6 +409,8 @@
         });
     </script>
     <script>
+        const volumeMediaQueryListener = window.matchMedia('(max-width: 767px)')
+
         const watchMediaQueryFunctionVolume = async (event) => {
             if (event.matches) {
                 // Mobile Version
@@ -420,9 +422,9 @@
             }
         }
         // Init the Function Once
-        watchMediaQueryFunctionVolume(mediaQueryListener)
+        watchMediaQueryFunctionVolume(volumeMediaQueryListener)
         // Add listener
-        mediaQueryListener.addListener(watchMediaQueryFunctionVolume)
+        volumeMediaQueryListener.addListener(watchMediaQueryFunctionVolume)
     </script>
     <script>
         const handleVolumeInputChange = async (value) => {

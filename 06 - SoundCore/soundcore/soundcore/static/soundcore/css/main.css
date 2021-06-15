@@ -195,18 +195,18 @@ For some reason I dont want round soundcore_library_items.
 
 .footer_input_anchor > input {
     position: absolute;
-    transform: translateY(-2px);
+    transform: translateY(-4px);
 }
 
 
 .pre_input {
-    transform: translateY(-6.5px);
+    transform: translateY(-9px);
     color: white;
     opacity: .4;
 }
 
 .post_input {
-    transform: translateY(-7px);
+    transform: translateY(-9px);
     color: white;
     opacity: .4;
 }
@@ -257,3 +257,7 @@ For some reason I dont want round soundcore_library_items.
     pointer-events: none;
 }
 
+.progress.is-small {
+    height: 0.50rem;
+    transform: translateY(2px)
+}

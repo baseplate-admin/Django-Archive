@@ -106,11 +106,11 @@ async def register_form(request):
             password_2 = form.cleaned_data["password_2"]
 
             if (
-                    (password_1 == password_2)
-                    and first_name
-                    and last_name
-                    and username
-                    and email
+                (password_1 == password_2)
+                and first_name
+                and last_name
+                and username
+                and email
             ):
                 if await check_if_user(_username=username):
                     return render(request, "accounts/register/user_exists/index.html")
@@ -139,7 +139,7 @@ async def register_form(request):
 async def forget_password_form(request):
     @sync_to_async
     def send_mail_function(
-            email_subject, email_reset_message, from_sender, to_receiver
+        email_subject, email_reset_message, from_sender, to_receiver
     ):
         send_mail(
             email_subject,  # subject
@@ -254,7 +254,7 @@ def user_volume_capture(request):
             _data.save()
             database = UserVolumeInput.objects.filter(user=request.user)
 
-        data = serializers.serialize('json', database, fields=('volume',))
+        data = serializers.serialize("json", database, fields=("volume",))
 
         return JsonResponse(data, safe=False)
     elif request.method == "POST":

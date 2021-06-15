@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     # Helper Functions
     "generator_apps",
     # Image Resizer
-    'sorl.thumbnail'
+    "sorl.thumbnail",
 ]
 
 MIDDLEWARE = [
@@ -127,7 +127,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "core/static")]
+
+STATICFILES_DIRS = [
+    # We need an import from core folder.
+    os.path.join(BASE_DIR, "core/static"),
+    os.path.join(BASE_DIR, "static"),
+]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
@@ -148,5 +153,5 @@ EMAIL_HOST_USER = "zombieahnaf@gmail.com"
 EMAIL_HOST_PASSWORD = "bmzkixafjegpczfc"
 EMAIL_USE_TLS = True
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

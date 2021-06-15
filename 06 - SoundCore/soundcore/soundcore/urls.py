@@ -7,5 +7,9 @@ urlpatterns = [
     path(
         "libraries/<str:short_url>/", views.library_items_show, name="library_item_show"
     ),
-    path("soundcore_library/generator/", views.library_generator, name="library_generator"),
+    path(
+        "soundcore_library/generator/",
+        views.library_generator,
+        name="library_generator",
+    ),
 ]

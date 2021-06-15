@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user', '0006_rename_userinput_uservolumeinput'),
+        ("user", "0006_rename_userinput_uservolumeinput"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='uservolumeinput',
-            name='volume',
+            model_name="uservolumeinput",
+            name="volume",
             field=models.IntegerField(default=0),
         ),
     ]
