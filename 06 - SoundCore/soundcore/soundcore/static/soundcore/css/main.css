@@ -167,7 +167,7 @@ For some reason I dont want round soundcore_library_items.
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #4a4a4a;
+    background: #485fc7;
     cursor: pointer;
 }
 
@@ -176,12 +176,12 @@ For some reason I dont want round soundcore_library_items.
     height: 20px;
     border: black;
     border-radius: 50%;
-    background: #4a4a4a;
+    background: #485fc7;
     cursor: pointer;
 }
 
 #slider_progress {
-    width: 99%;
+    width: 98%;
     transform: translateX(1%);
 }
 

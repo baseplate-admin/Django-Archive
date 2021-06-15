@@ -77,9 +77,9 @@
                     <div class="title user-name">
                         <div class="columns">
                             <div class="column title_column" style="width:350px;height:100px">
-                                {% if data == None %}
+                                {% if data|length == 0 %}
                                     No libraries for {{ request.user }}
-                                {% elif data|length < 2 %}
+                                {% elif data|length == 1 %}
                                     Showing library for {{ request.user }}
                                 {% elif data|length >= 2 %}
                                     Showing libraries for {{ request.user }}
@@ -90,7 +90,7 @@
                 </div>
             </section>
             <div class="box library_item_wrapper">
-                {% if data != None %}
+                {% if  data|length > 0 %}
                     {% for i in data %}
                         <a href="{% url 'library_item_show' short_url=i.short_form %}">
                             <div>
@@ -125,10 +125,11 @@
                             </div>
                         </a>
                     {% endfor %}
-                {% elif data == None %}
+                {% elif data|length == 0 %}
                     <div>
                         <section class="hero has-text-centered" style="color:white">
-                            Its Lonely Here. Click <a href="{% url 'library_generator' %}">here</a> to create a library.
+                            <p class="has-text-centered">Its Lonely Here. Click <a href="{% url 'library_generator' %}">here</a> to create a
+                                library.</p>
                         </section>
                     </div>
                 {% endif %}

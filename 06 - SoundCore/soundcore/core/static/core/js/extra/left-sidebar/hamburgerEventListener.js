@@ -6,7 +6,6 @@ const hamburgerElement = document.getElementById('hamburger_icon_wrapper_id')
 */
 hamburgerElement.addEventListener('click', () => {
     const leftMenuElement = document.getElementsByClassName('left-menu')[0]
-
     /*
         This statement checks if classlist contains Left-Menu-Hidden.
         Then if it doesn't have the class.
@@ -31,7 +30,6 @@ hamburgerElement.addEventListener('click', () => {
         })
 
     }
-
         /*
             This statement checks if classlist contains Left-Menu-Hidden.
             This it does have the class.

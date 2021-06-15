@@ -83,13 +83,14 @@ async def register_form(request):
 
     @sync_to_async
     def create_user(__username, __email, __first_name, __last_name, __password):
-        User.objects.create(
+        database = User.objects.create_user(
             username=__username,
             email=__email,
-            first_name=__first_name,
-            last_name=__last_name,
             password=__password,
-        ).save()
+        )
+        database.first_name = __first_name
+        database.last_name = __last_name
+        database.save()
 
     @sync_to_async
     def check_if_user(_username):
@@ -106,27 +107,29 @@ async def register_form(request):
             password_2 = form.cleaned_data["password_2"]
 
             if (
-                (password_1 == password_2)
-                and first_name
-                and last_name
-                and username
-                and email
+                    (password_1 == password_2)
+                    and first_name
+                    and last_name
+                    and username
+                    and email
             ):
                 if await check_if_user(_username=username):
                     return render(request, "accounts/register/user_exists/index.html")
+
                 await create_user(
                     __username=username,
                     __email=email,
                     __first_name=first_name,
                     __last_name=last_name,
-                    __password=[password_1 if password_1 == password_2 else "12345678"][
-                        0
-                    ],
+                    __password=[password_1 if password_1 == password_2 else None][0],
                 )
-
-                user = await auth_user(request, username, password_1)
-                if user is not None:
-                    auth_login(request, user)
+                try:
+                    user = await auth_user(request, username, password_1)
+                    if user is not None:
+                        return reverse('home')
+                except Exception as e:
+                    print(e)
+                    pass
                 return render(request, "accounts/register/successful/index.html")
             else:
                 return redirect(reverse("register_form"))
@@ -139,7 +142,7 @@ async def register_form(request):
 async def forget_password_form(request):
     @sync_to_async
     def send_mail_function(
-        email_subject, email_reset_message, from_sender, to_receiver
+            email_subject, email_reset_message, from_sender, to_receiver
     ):
         send_mail(
             email_subject,  # subject
@@ -247,11 +250,10 @@ def user_volume_capture(request):
     A Simple way to store User Volume
     """
     if request.method == "GET":
-        try:
-            database = UserVolumeInput.objects.filter(user=request.user)
-        except ObjectDoesNotExist:
-            _data = UserVolumeInput.objects.create(user=request.user, volume=50)
-            _data.save()
+        database = UserVolumeInput.objects.filter(user=request.user)
+        if not database.exists():
+            # If the user visits the site for first time set volume to 50
+            UserVolumeInput.objects.create(user=request.user, volume=50).save()
             database = UserVolumeInput.objects.filter(user=request.user)
 
         data = serializers.serialize("json", database, fields=("volume",))
@@ -269,4 +271,4 @@ def user_volume_capture(request):
                 database = UserVolumeInput.objects.get(user=request.user)
             database.volume = volume
             database.save()
-        return HttpResponse(200)
+        return HttpResponse(status=200)

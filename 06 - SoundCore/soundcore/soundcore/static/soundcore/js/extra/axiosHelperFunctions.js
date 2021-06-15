@@ -21,12 +21,7 @@ const axiosGetVolumeDataAndMapToVolume = async (url) => {
         const volumeField = _.map(dataField, "volume")
         await updateVolumeSlider(volumeField)
     } catch (e) {
-        if (e instanceof SyntaxError) {
-            await updateVolumeSlider(100)
-        } else {
-            console.error(e)
-        }
-
+        await updateVolumeSlider(100)
     }
 }
 const axiosPostVolumeData = async (url, volume) => {
@@ -53,5 +48,5 @@ const axiosPostVolumeData = async (url, volume) => {
             'X-CSRFToken': csrftoken
         }
     }
-    const res = await axios.post(url, volume, config)
+    await axios.post(url, volume, config)
 }
