@@ -15,6 +15,10 @@ body {
     min-height: 100vh;
 }
 
+ion-icon {
+    pointer-events: none;
+}
+
 .login_button {
     color: #eaeaea;
     background-color: transparent;
@@ -260,4 +264,9 @@ For some reason I dont want round soundcore_library_items.
 .progress.is-small {
     height: 0.50rem;
     transform: translateY(2px)
+}
+
+
+.play_pause_wrapper_anchor {
+    padding-bottom:0;
 }

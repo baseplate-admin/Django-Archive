@@ -132,7 +132,7 @@
             </div>
             <div class="column footer_control_column">
                 <div class="columns is-mobile is-centered">
-                    <div class="column is-2 has-text-centered">
+                    <div class="column is-1 has-text-centered">
                         <ion-icon class="previous_icon" name="play-skip-back-circle-outline"></ion-icon>
                         <script async>
                             anime({
@@ -140,15 +140,15 @@
                                 scale: 2,
                                 color: "#FFFFFF",
                                 duration: 1,
-                                translateY: 5,
+                                translateY: 2,
                                 easing: 'linear',
                             })
                         </script>
                     </div>
-                    <div class="column is-2 has-text-centered">
-                        <ion-icon class="play_icon" onclick="howlerJsPause()" id="play_icon"
+                    <div class="column is-1 is-offset-1 has-text-centered play_pause_wrapper">
+                        <ion-icon class="play_icon" id="play_icon"
                                   name="play-circle-outline"></ion-icon>
-                        <ion-icon name="pause-circle-outline" onclick="howlerJsPause()" id="pause_icon"
+                        <ion-icon name="pause-circle-outline" id="pause_icon"
                                   class="pause_icon"></ion-icon>
                         <script async>
                             anime({
@@ -156,12 +156,12 @@
                                 scale: 2,
                                 color: "#FFFFFF",
                                 duration: 1,
-                                translateY: 5,
+                                translateY: 2,
                                 easing: 'linear',
                             })
                         </script>
                     </div>
-                    <div class="column is-2 has-text-centered">
+                    <div class="column is-1 is-offset-1 has-text-centered">
                         <ion-icon class="skip_icon" name="play-skip-forward-circle-outline"></ion-icon>
                         <script async>
                             anime({
@@ -169,7 +169,7 @@
                                 scale: 2,
                                 color: "#FFFFFF",
                                 duration: 1,
-                                translateY: 5,
+                                translateY: 2,
                                 easing: 'linear',
                             })
                         </script>
@@ -227,10 +227,16 @@
 {% endblock %}
 
 {% block afterbody %}
+    <!-- TippyJS Production -->
+    <script src="{% static 'soundcore/js/vendor/popper/popper.js' %}"></script>
+    <script src="{% static 'soundcore/js/vendor/tippy/tippy.js' %}"></script>
+    <link href="{% static 'soundcore/js/vendor/tippy/backdrop.css' %}" rel="stylesheet"/>
+    <link href="{% static 'soundcore/js/vendor/tippy/shift_away.css' %}" rel="stylesheet"/>
     <!-- Axios for Posting and Getting Data -->
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"
             integrity="sha256-JLmknTdUZeZZ267LP9qB+/DT7tvxOOKctSKeUC2KT6E=" crossorigin="anonymous"></script>
     <script src="{% static 'soundcore/js/extra/axiosHelperFunctions.js' %}"></script>
+
     <!-- HowlerJS for Playing cross browser audio -->
     <script src="{% static 'soundcore/js/vendor/howler/howler.js' %}"></script>
     <script async>
@@ -313,7 +319,7 @@
             sound.play()
         }
 
-        const howlerJsPause = async () => {
+        const howlerJsPlayPause = async () => {
             if (_.size(howlerArray) >= 1) {
                 sound = _.first(howlerArray)
                 if (sound.playing()) {
@@ -338,6 +344,8 @@
             sound = _.first(howlerArray)
             const element = document.getElementById('total_duration');
             element.innerText = formatTime(sound.duration())
+            await mainProgressTippy(sound)
+
         }
 
         const howlerJsPlayInterval = async () => {
@@ -399,15 +407,7 @@
     </script>
     <script src="{% static 'soundcore/js/extra/footerUpdateContent.js' %}"></script>
 
-    <script>
-        function calcSliderPos(e) {
-            return (e.offsetX / e.target.clientWidth) * parseInt(e.target.getAttribute('max'), 10);
-        }
 
-        document.getElementById('transparent_slider').addEventListener('mousemove', function (e) {
-            let valueHover = calcSliderPos(e).toFixed(2);
-        });
-    </script>
     <script>
         const volumeMediaQueryListener = window.matchMedia('(max-width: 767px)')
 
@@ -443,4 +443,6 @@
             {% endif %}
         }
     </script>
+    <script src="{% static 'soundcore/js/extra/tippyHelperFunctions.js' %}"></script>
+
 {% endblock %}
