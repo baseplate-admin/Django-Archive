@@ -375,9 +375,9 @@
             sliderElement.value = 0
             progressElement.value = 0
             preInputElement.innerText = formatTime(0)
-
+            const url = '{% url 'random_song_generator' %}'
             // Call a random song from the model.
-            await howlerJsPlay(parseInt({% get_random_song %}))
+            await axiosGetRandomSong(url)
         }
     </script>
     <!-- Handle Volume Slider Change -->

@@ -1,17 +1,10 @@
 import time
 
 from django import template
-from upload.models import MusicList
 from soundcore.models import LibraryGenerator
 from core.middlewares.request import RequestMiddleware
 
 register = template.Library()
-
-
-@register.simple_tag()
-def get_random_song():
-    # This Function is called by 'soundcore/index.html'
-    return MusicList.objects.order_by("?").first().id
 
 
 @register.inclusion_tag("tags/playlist.html")

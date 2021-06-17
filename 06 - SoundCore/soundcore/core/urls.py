@@ -23,7 +23,7 @@ urlpatterns = [
     path("accounts/", include("user.urls")),
     path("upload/", include("upload.urls")),
     path("soundcore/", include("soundcore.urls")),
-    path("helper/", include("generator_apps.urls")),
+    path("helper/", include("utility.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

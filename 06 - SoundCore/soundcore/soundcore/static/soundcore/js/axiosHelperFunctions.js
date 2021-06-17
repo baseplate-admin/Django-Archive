@@ -1,3 +1,20 @@
+const getCookie = async (name) => {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
 const axiosGetVolumeDataAndMapToVolume = async (url) => {
     const updateVolumeSlider = async (volume) => {
         const setGlobalVolume = async (input) => {
@@ -26,22 +43,6 @@ const axiosGetVolumeDataAndMapToVolume = async (url) => {
     }
 }
 const axiosPostVolumeData = async (url, volume) => {
-    const getCookie = async (name) => {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
     const csrftoken = await getCookie('csrftoken');
 
     const config = {
@@ -50,4 +51,18 @@ const axiosPostVolumeData = async (url, volume) => {
         }
     }
     await axios.post(url, volume, config)
+}
+const axiosGetRandomSong = async (url) => {
+    const csrftoken = await getCookie('csrftoken');
+
+    const config = {
+        headers: {
+            'X-CSRFToken': csrftoken
+        }
+    }
+
+    await axios.post(url, {}, config).then(res=>{
+        howlerJsPlay(JSON.parse(res.data).id)
+    })
+
 }

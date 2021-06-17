@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     "upload",
     "soundcore",
     # Helper Functions
-    "generator_apps",
+    "utility",
     # Image Resizer
     "sorl.thumbnail",
 ]
