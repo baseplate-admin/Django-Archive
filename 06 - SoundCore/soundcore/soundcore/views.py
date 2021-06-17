@@ -3,11 +3,9 @@ import json
 from django.shortcuts import render
 from upload.models import MusicList
 from django.http import Http404, HttpResponse
-from django.contrib.auth.decorators import login_required
-
 from soundcore.models import LibraryGenerator
-
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.

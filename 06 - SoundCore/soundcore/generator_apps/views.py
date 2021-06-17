@@ -1,13 +1,10 @@
 import io
-
 from django.http import Http404
-from django.http import HttpResponse
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
-
-from asgiref.sync import async_to_sync, sync_to_async
-
 from upload.models import MusicList
+from django.http import HttpResponse
+from asgiref.sync import async_to_sync, sync_to_async
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -40,13 +37,13 @@ async def get_song(request):
         if _mime_type == "flac":
             if not settings.DEBUG:
                 response = HttpResponse()
-                response['X-Sendfile'] = _data
-                del response['content-type']
+                response["X-Sendfile"] = _data
+                del response["content-type"]
                 return response
             else:
-                with open(_data, 'rb') as f:
+                with open(_data, "rb") as f:
                     data = io.BytesIO(f.read())
-                    return HttpResponse(data, content_type='audio/flac')
+                    return HttpResponse(data, content_type="audio/flac")
         else:
             raise Http404
     else:

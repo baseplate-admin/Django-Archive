@@ -1,10 +1,9 @@
 import time
 
 from django import template
+from upload.models import MusicList
 from soundcore.models import LibraryGenerator
 from core.middlewares.request import RequestMiddleware
-
-from upload.models import MusicList
 
 register = template.Library()
 
@@ -32,7 +31,7 @@ def get_total_playlist():
     return {"data": playlist, "request": request}
 
 
-@register.filter(name='format_seconds')
+@register.filter(name="format_seconds")
 def convert(seconds):
     ty_res = time.gmtime(seconds)
     if 3600 <= seconds:

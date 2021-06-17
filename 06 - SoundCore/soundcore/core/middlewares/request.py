@@ -8,6 +8,7 @@ class RequestMiddleware(object):
         request = RequestMiddleware(get_response=None)
         request = request.thread_local.current_request
     """
+
     def __init__(self, get_response, thread_local=threading.local()):
         self.get_response = get_response
         self.thread_local = thread_local

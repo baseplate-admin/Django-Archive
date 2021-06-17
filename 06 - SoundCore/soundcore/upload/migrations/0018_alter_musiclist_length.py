@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('upload', '0017_rename_release_date_musiclist_date'),
+        ("upload", "0017_rename_release_date_musiclist_date"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='musiclist',
-            name='length',
+            model_name="musiclist",
+            name="length",
             field=models.FloatField(),
         ),
     ]

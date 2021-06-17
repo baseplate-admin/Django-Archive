@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-
 from upload.forms import FileFieldForm
 from upload.utils import flac_upload_handler
+from django.contrib.auth.decorators import login_required
 
 
 # Create Your Views Here

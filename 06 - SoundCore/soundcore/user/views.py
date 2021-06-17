@@ -1,23 +1,21 @@
-from django.core.mail import send_mail
-from django.core import serializers
-from django.core.exceptions import ObjectDoesNotExist
+from django.urls import reverse
 from django.conf import settings
+from django.core import serializers
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.shortcuts import render, redirect
+from django.views.decorators.cache import cache_page
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from asgiref.sync import async_to_sync, sync_to_async
 from django.contrib.auth.decorators import login_required
+from user.models import PasswordResetUrl, UserVolumeInput
 from django.http import Http404, JsonResponse, HttpResponse
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import ensure_csrf_cookie
 
-from asgiref.sync import async_to_sync, sync_to_async
-
 from user.forms import LoginForm, RegisterForm, ForgetPasswordForm, ResetPasswordForm
-
-from user.models import PasswordResetUrl, UserVolumeInput
 
 
 # Create your views here.
@@ -107,11 +105,11 @@ async def register_form(request):
             password_2 = form.cleaned_data["password_2"]
 
             if (
-                    (password_1 == password_2)
-                    and first_name
-                    and last_name
-                    and username
-                    and email
+                (password_1 == password_2)
+                and first_name
+                and last_name
+                and username
+                and email
             ):
                 if await check_if_user(_username=username):
                     return render(request, "accounts/register/user_exists/index.html")
@@ -126,7 +124,7 @@ async def register_form(request):
                 try:
                     user = await auth_user(request, username, password_1)
                     if user is not None:
-                        return reverse('home')
+                        return reverse("home")
                 except Exception as e:
                     print(e)
                     pass
@@ -142,7 +140,7 @@ async def register_form(request):
 async def forget_password_form(request):
     @sync_to_async
     def send_mail_function(
-            email_subject, email_reset_message, from_sender, to_receiver
+        email_subject, email_reset_message, from_sender, to_receiver
     ):
         send_mail(
             email_subject,  # subject

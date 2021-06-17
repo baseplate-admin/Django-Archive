@@ -1,5 +1,5 @@
-from django.urls import path
 from soundcore import views
+from django.urls import path
 
 urlpatterns = [
     path("home/", views.soundcore_home, name="home"),

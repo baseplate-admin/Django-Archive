@@ -19,9 +19,8 @@ class MusicList(models.Model):
     sample_rate = models.IntegerField(default=0, null=False)
     mime_type = models.CharField(max_length=15, default="", null=False)
 
-
     def __str__(self) -> str:
         return str(self.song_name)
 
     class Meta:
-        ordering = ('song_name',)
+        ordering = ("song_name",)

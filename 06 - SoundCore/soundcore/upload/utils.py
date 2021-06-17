@@ -48,7 +48,7 @@ def flac_upload_handler(file):
     if type(composer) is list:
         composer = composer[0]
 
-    genre = flac_dict.get('genre', None)
+    genre = flac_dict.get("genre", None)
 
     if type(genre) is list:
         genre = genre[0]
