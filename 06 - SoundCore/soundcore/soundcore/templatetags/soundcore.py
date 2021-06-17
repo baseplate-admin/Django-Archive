@@ -16,11 +16,10 @@ def get_total_playlist():
     request = request.thread_local.current_request
 
     # Check if user is Authenticated or return No Playlist.
-    try:
+    if request.user:
         playlist = LibraryGenerator.objects.filter(owner=request.user)
-    except TypeError:
+    else:
         playlist = None
-
     return {"data": playlist, "request": request}
 
 

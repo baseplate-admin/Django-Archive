@@ -1,12 +1,13 @@
 import io
-import json
+from django.core import serializers
 from django.http import Http404
 from django.conf import settings
 from upload.models import MusicList
+from soundcore.models import LibraryGenerator
 from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_protect
 from asgiref.sync import async_to_sync, sync_to_async
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_protect
 
 
 # Create your views here.
@@ -52,9 +53,13 @@ async def get_song(request):
 @csrf_protect
 def get_random_songs(request):
     if request.method == "POST":
-        database = MusicList.objects.order_by("?").first().id
-        data = {
-            'id': database
-        }
-        data = json.dumps(data)
+        # This will be powered by an AI.
+        database = MusicList.objects.order_by("?").first()
+        data = serializers.serialize('json', [database])
         return JsonResponse(data, safe=False)
+
+
+@csrf_protect
+def get_four_random_images(request, pk):
+    if request.method == "POST":
+        database = LibraryGenerator.objects.get(id=pk).prefetch_related('musics').order_by('?')[:4]

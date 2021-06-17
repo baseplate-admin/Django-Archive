@@ -40,7 +40,7 @@ class ShortUrl:
 
 class LibraryGenerator(models.Model):
     name = models.CharField(max_length=50)
-    musics = models.ManyToManyField(MusicList)
+    musics = models.ManyToManyField(MusicList,related_name='musics')
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     short_form = models.CharField(max_length=16)
 

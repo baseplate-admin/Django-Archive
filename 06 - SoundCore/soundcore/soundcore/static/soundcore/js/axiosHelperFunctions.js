@@ -62,7 +62,7 @@ const axiosGetRandomSong = async (url) => {
     }
 
     await axios.post(url, {}, config).then(res=>{
-        howlerJsPlay(JSON.parse(res.data).id)
+        howlerJsPlay((_.first(JSON.parse(res.data)).pk))
     })
 
 }

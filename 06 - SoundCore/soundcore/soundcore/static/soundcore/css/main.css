@@ -80,7 +80,7 @@ For some reason I dont want round soundcore_library_items.
 
 .song-title {
     white-space: nowrap;
-    width: 10em;
+    width: 8em;
     height: 1.3em;
     color: #e0e0ec;
     overflow: hidden;
@@ -89,7 +89,7 @@ For some reason I dont want round soundcore_library_items.
 
 .song-artist {
     white-space: nowrap;
-    width: 10em;
+    width: 8em;
     height: 1.3em;
     color: #a1a1a2;
     overflow: hidden;
