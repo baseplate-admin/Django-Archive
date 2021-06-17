@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load static thumbnail %}
 {% block fontblock %}
-    <link rel="stylesheet" href="{% static 'soundcore/js/vendor/progressive-image/progressive-image.css' %}">
+    <link rel="stylesheet" href="{% static 'soundcore/vendor/progressive-image/progressive-image.css' %}">
     <!-- Progressive Image Loader for lazy loading images -->
-    <script src="{% static 'soundcore/js/vendor/progressive-image/progressive-image.js' %}"></script>
+    <script src="{% static 'soundcore/vendor/progressive-image/progressive-image.js' %}"></script>
 {% endblock %}
 
 {% block head %}
@@ -13,7 +13,7 @@
 
 {% block body %}
     <div class="columns is-mobile top-navbar">
-        <div id="hamburger_icon_wrapper_id" class="column is-narrow">
+        <div id="hamburger_icon_wrapper_id" class="column is-1">
             <ion-icon class="hamburger_icon" name="menu-sharp"></ion-icon>
             <script async>
                 anime({
@@ -145,7 +145,8 @@
                             })
                         </script>
                     </div>
-                    <div class="column is-1 is-offset-1 has-text-centered play_pause_wrapper">
+                    <div class="column is-1 is-offset-1 has-text-centered play_pause_wrapper"
+                         onclick="howlerJsPlayPause()">
                         <ion-icon class="play_icon" id="play_icon"
                                   name="play-circle-outline"></ion-icon>
                         <ion-icon name="pause-circle-outline" id="pause_icon"
@@ -228,17 +229,17 @@
 
 {% block afterbody %}
     <!-- TippyJS Production -->
-    <script src="{% static 'soundcore/js/vendor/popper/popper.js' %}"></script>
-    <script src="{% static 'soundcore/js/vendor/tippy/tippy.js' %}"></script>
-    <link href="{% static 'soundcore/js/vendor/tippy/backdrop.css' %}" rel="stylesheet"/>
-    <link href="{% static 'soundcore/js/vendor/tippy/shift_away.css' %}" rel="stylesheet"/>
+    <script src="{% static 'soundcore/vendor/popper/popper.js' %}"></script>
+    <script src="{% static 'soundcore/vendor/tippy/tippy.js' %}"></script>
+    <link href="{% static 'soundcore/vendor/tippy/backdrop.css' %}" rel="stylesheet"/>
+    <link href="{% static 'soundcore/vendor/tippy/shift_away.css' %}" rel="stylesheet"/>
     <!-- Axios for Posting and Getting Data -->
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"
             integrity="sha256-JLmknTdUZeZZ267LP9qB+/DT7tvxOOKctSKeUC2KT6E=" crossorigin="anonymous"></script>
     <script src="{% static 'soundcore/js/extra/axiosHelperFunctions.js' %}"></script>
 
     <!-- HowlerJS for Playing cross browser audio -->
-    <script src="{% static 'soundcore/js/vendor/howler/howler.js' %}"></script>
+    <script src="{% static 'soundcore/vendor/howler/howler.js' %}"></script>
     <script async>
         /*
             Howler JS functions
@@ -443,6 +444,6 @@
             {% endif %}
         }
     </script>
-    <script src="{% static 'soundcore/js/extra/tippyHelperFunctions.js' %}"></script>
 
+    <script src="{% static 'soundcore/js/extra/tippyHelperFunctions.js' %}"></script>
 {% endblock %}

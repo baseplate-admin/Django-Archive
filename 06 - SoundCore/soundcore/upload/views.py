@@ -17,7 +17,6 @@ def file_upload_form(request):
             for file in files:
                 if file.name.endswith(".flac"):
                     flac_upload_handler(file)
-
                 elif file.name.endswith("mp3"):
                     pass
         return render(request, "upload/successful/index.html")

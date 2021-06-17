@@ -1,3 +1,5 @@
+import time
+
 from django import template
 from soundcore.models import LibraryGenerator
 
@@ -19,6 +21,15 @@ def get_total_playlist(context):
     return {"data": playlist, "request": request}
 
 
-@register.filter(name="to_two_decimal")
-def to_two_decimal(number):
-    return round(float(number), 2)
+@register.filter(name='format_seconds')
+def convert(seconds):
+    ty_res = time.gmtime(seconds)
+    if 3600 <= seconds:
+        res = time.strftime("%H:%M:%S", ty_res)
+    elif 3600 > seconds >= 60:
+        res = time.strftime("%M:%S", ty_res)
+    elif 60 > seconds >= 0:
+        res = time.strftime("%Ss", ty_res)
+    else:
+        res = 0
+    return res

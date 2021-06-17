@@ -4,7 +4,6 @@ from io import BytesIO
 from mutagen.flac import FLAC
 
 from django.core.files.base import ContentFile
-from django.db import IntegrityError
 
 from upload.models import MusicList
 from django.http import Http404
@@ -49,6 +48,11 @@ def flac_upload_handler(file):
     if type(composer) is list:
         composer = composer[0]
 
+    genre = flac_dict.get('genre', None)
+
+    if type(genre) is list:
+        genre = genre[0]
+
     try:
         picture = flac_dict.pictures[0]
         im = Image.open(BytesIO(picture.data))
@@ -62,21 +66,20 @@ def flac_upload_handler(file):
     bitrate = flac_dict.info.bitrate
     length = flac_dict.info.length
     sample_rate = flac_dict.info.sample_rate
-    try:
-        MusicList.objects.create(
-            song_name=title,
-            song_file=file,
-            artist=artist,
-            album=album,
-            album_art=image,
-            date=date,
-            lyricist=lyricist,
-            composer=composer,
-            bitrate=bitrate,
-            length=length,
-            sample_rate=sample_rate,
-            mime_type="flac",
-        ).save()
-    except IntegrityError:
-        # Prevent the save of Same Object Multiple times.
-        pass
+
+    database = MusicList.objects.create(
+        song_name=title,
+        song_file=file,
+        artist=artist,
+        album=album,
+        album_art=image,
+        date=date,
+        lyricist=lyricist,
+        composer=composer,
+        genre=genre,
+        bitrate=bitrate,
+        length=length,
+        sample_rate=sample_rate,
+        mime_type="flac",
+    )
+    database.save()

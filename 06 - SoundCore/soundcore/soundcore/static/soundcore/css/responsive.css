@@ -24,4 +24,9 @@
         position: absolute;
         bottom: 10px;
     }
+
+    .brand_image > img {
+        transform: translateY(.6em) translateX(20px) !important;
+    }
+
 }

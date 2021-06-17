@@ -1,9 +1,11 @@
+// TippyJS Powering Soundcore.
+
 const calcSliderPos = (e) => {
     return (e.offsetX / e.target.clientWidth) * parseInt(e.target.getAttribute('max'), 10);
 }
 
 const mainProgressTippy = async (sound) => {
-
+    // Gets called by an callback from howler.on('load')
     const sliderTippyElement = document.querySelector('#transparent_slider')
     tippy(sliderTippyElement, {
         theme: 'material',
@@ -39,7 +41,6 @@ const playPauseTippy = () => {
         arrow: true,
     })
     playPauseTippyElement.addEventListener('mouseover', () => {
-
         if (sound.playing()) {
             playPauseTippyElement._tippy.setContent('Pause')
         } else if (!sound.playing()) {

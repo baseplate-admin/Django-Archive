@@ -103,7 +103,7 @@
                                 <div class="item_subtitle">
                                     <strong>{{ i.artist }}</strong> | <small
                                         class="sample_rate">{{ i.sample_rate|intcomma }}KHz</small> |
-                                    <small>{{ i.length|to_two_decimal }}</small>
+                                    <small>{{ i.length|format_seconds }}</small>
                                 </div>
                             </div>
                         </div>

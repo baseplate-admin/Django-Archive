@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static thumbnail %}
+{% load static thumbnail soundcore_tags  %}
 
 {% block fontblock %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-nunito@1.1.13/index.min.css">
@@ -77,11 +77,11 @@
                     <div class="title user-name">
                         <div class="columns">
                             <div class="column title_column" style="width:350px;height:100px">
-                                {% if data|length == 0 %}
+                                {% if data.count == 0 %}
                                     No libraries for {{ request.user }}
-                                {% elif data|length == 1 %}
+                                {% elif data.count == 1 %}
                                     Showing library for {{ request.user }}
-                                {% elif data|length >= 2 %}
+                                {% elif data.count >= 2 %}
                                     Showing libraries for {{ request.user }}
                                 {% endif %}
                             </div>
@@ -90,7 +90,7 @@
                 </div>
             </section>
             <div class="box library_item_wrapper">
-                {% if  data|length > 0 %}
+                {% if  data.count > 0 %}
                     {% for i in data %}
                         <a href="{% url 'library_item_show' short_url=i.short_form %}">
                             <div>
@@ -115,7 +115,7 @@
                                                     <small>{{ i.musics.all.count }}</small>
                                                     |
                                                     <strong>Time: </strong>
-                                                    <small>{{ i.count_total_number }}</small>
+                                                    <small>{{ i.count_total_number|format_seconds }}</small>
                                                 </p>
                                             </div>
                                         </div>
@@ -125,10 +125,11 @@
                             </div>
                         </a>
                     {% endfor %}
-                {% elif data|length == 0 %}
+                {% elif data.count == 0 %}
                     <div>
                         <section class="hero has-text-centered" style="color:white">
-                            <p class="has-text-centered">Its Lonely Here. Click <a href="{% url 'library_generator' %}">here</a> to create a
+                            <p class="has-text-centered">Its Lonely Here. Click <a href="{% url 'library_generator' %}">here</a>
+                                to create a
                                 library.</p>
                         </section>
                     </div>

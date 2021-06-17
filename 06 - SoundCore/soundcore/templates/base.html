@@ -8,12 +8,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Icon Import Before Everything -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@5.5.1/dist/ionicons/ionicons.esm.js"></script>
+    <!-- Disable Ionicons Pointer -->
+    <link rel="stylesheet" href="{% static 'core/css/disable-ionicons-pointer.css' %}" />
     <!-- AnimeJS import for resizing Everything :) -->
-    <script src="{% static 'core/js/vendor/anime/anime.min.js' %}"></script>
+    <script src="{% static 'core/vendor/anime/anime.min.js' %}"></script>
     <!-- We need Bulma For Everything. So a global import is good -->
-    <link rel="stylesheet" href="{% static 'core/css/vendor/bulma/bulma.css' %}">
+    <link rel="stylesheet" href="{% static 'core/vendor/bulma/bulma.css' %}">
     <!-- Lodash for state management and superpower -->
-    <script src="{% static 'core/js/vendor/lodash/lodash.js' %}"></script>
+    <script src="{% static 'core/vendor/lodash/lodash.js' %}"></script>
+
     {% block head %}{% endblock %}
     <title>
         {% block title %}{% endblock %}

@@ -1,17 +1,13 @@
 {% load soundcore_tags static %}
-<link rel="stylesheet" href="{% static 'core/css/extra/left-sidebar.css' %}"/>
+<link rel="stylesheet" href="{% static 'core/css/left-sidebar.css' %}"/>
 
 <aside class="menu left-menu">
     <div class="icons">
         <a href="{% url 'home' %}">
             {% if active == 'home' %}
-
                 <div class="box icon_box is_icon_active">
-
             {% else %}
-
                 <div class="box icon_box">
-
             {% endif %}
             <div class="columns is-mobile icon_box_column">
                 <div class="column is-2 is-offset-1">

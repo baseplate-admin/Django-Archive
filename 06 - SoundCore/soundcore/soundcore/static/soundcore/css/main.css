@@ -2,7 +2,7 @@ html {
     background-color: black;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
-    overflow: hidden;
+    overscroll-behavior: none; /* Disable Stupid pull to refresh */
     height: 100%;
 }
 
@@ -13,10 +13,6 @@ html::-webkit-scrollbar {
 body {
     overflow: hidden;
     min-height: 100vh;
-}
-
-ion-icon {
-    pointer-events: none;
 }
 
 .login_button {
@@ -84,7 +80,7 @@ For some reason I dont want round soundcore_library_items.
 
 .song-title {
     white-space: nowrap;
-    width: 8em;
+    width: 10em;
     height: 1.3em;
     color: #e0e0ec;
     overflow: hidden;
@@ -94,6 +90,7 @@ For some reason I dont want round soundcore_library_items.
 .song-artist {
     white-space: nowrap;
     width: 10em;
+    height: 1.3em;
     color: #a1a1a2;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -109,7 +106,7 @@ For some reason I dont want round soundcore_library_items.
 }
 
 .brand_image > img {
-    transform: translateY(.6em) translateX(30px);
+    transform: translateY(.6em) translateX(-45px)
 }
 
 .user_image {
@@ -268,5 +265,5 @@ For some reason I dont want round soundcore_library_items.
 
 
 .play_pause_wrapper_anchor {
-    padding-bottom:0;
+    padding-bottom: 0;
 }

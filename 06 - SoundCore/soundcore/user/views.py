@@ -9,9 +9,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
-
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from asgiref.sync import async_to_sync, sync_to_async
 
@@ -245,6 +245,7 @@ async def reset_password_form(request, url: str):
 
 
 @login_required()
+@ensure_csrf_cookie
 def user_volume_capture(request):
     """
     A Simple way to store User Volume
