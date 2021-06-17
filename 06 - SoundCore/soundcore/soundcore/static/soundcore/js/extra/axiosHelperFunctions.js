@@ -3,6 +3,7 @@ const axiosGetVolumeDataAndMapToVolume = async (url) => {
         const setGlobalVolume = async (input) => {
             Howler.volume(input / 100)
         }
+
         const volumeSliderElement = document.querySelector('.volume_slider')
         const volumeProgressElement = document.querySelector('.volume_progress')
 

@@ -2,7 +2,6 @@ zarif-ahnaf.duckdns.org {
     handle_path /media/* {
         file_server {
             root C:/Programming/soundcore/media
-            precompressed br
         }
     }
 

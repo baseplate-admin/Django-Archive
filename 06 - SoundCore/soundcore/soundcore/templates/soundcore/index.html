@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static thumbnail %}
+{% load static thumbnail soundcore_tags %}
 {% block fontblock %}
     <link rel="stylesheet" href="{% static 'soundcore/vendor/progressive-image/progressive-image.css' %}">
     <!-- Progressive Image Loader for lazy loading images -->
@@ -370,21 +370,16 @@
             const preInputElement = document.querySelector('.pre_input')
             const sliderElement = document.querySelector('#slider_progress')
             const progressElement = document.querySelector('#transparent_slider')
-            const totalSong = '{{ musics.count }}'
+
 
             sliderElement.value = 0
             progressElement.value = 0
             preInputElement.innerText = formatTime(0)
 
-
-            const randomNumber = (min, max) => {
-                return Math.floor(Math.random() * (max - min) + min);
-            }
-
-            await howlerJsPlay(randomNumber(1, parseInt(totalSong)))
+            // Call a random song from the model.
+            await howlerJsPlay(parseInt({% get_random_song %}))
         }
     </script>
-
     <!-- Handle Volume Slider Change -->
     <script src="{% static 'soundcore/js/extra/sliderChangeHandlers.js' %}"></script>
 

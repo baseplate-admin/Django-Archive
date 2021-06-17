@@ -1,7 +1,6 @@
 import string
 import random
 import functools
-import time
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -45,23 +44,20 @@ class LibraryGenerator(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     short_form = models.CharField(max_length=16)
 
-
     def count_total_number(self):
-        """
-        Anchored to 'soundcore/soundcore_library/index.html'
-        """
+        # Anchored to 'soundcore/library/index.html'
 
-        _data = LibraryGenerator.objects.values_list("musics__length")
-        _total_number = 0
+        data = LibraryGenerator.objects.values_list("musics__length")
+        total_number = 0
 
-        for i in _data:
+        for i in data:
             try:
                 __res = functools.reduce(lambda sub, ele: sub * 10 + ele, i)
-                _total_number += round(float(__res), 2)
+                total_number += round(float(__res), 2)
             except TypeError:
                 pass
 
-        return _total_number
+        return total_number
 
     # Modify the save option
     def save(self, *args, **kwargs) -> None:
