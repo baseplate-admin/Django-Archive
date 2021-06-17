@@ -8,8 +8,8 @@ urlpatterns = [
         "libraries/<str:short_url>/", views.library_items_show, name="library_item_show"
     ),
     path(
-        "library/generator/",
-        views.library_generator,
+        "library/create/",
+        views.library_create,
         name="library_generator",
     ),
 ]

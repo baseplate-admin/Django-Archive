@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 
 class LoginForm(forms.Form):
@@ -57,6 +58,12 @@ class RegisterForm(forms.Form):
             attrs={"class": "input", "placeholder": "Confirm Password"}
         ),
     )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        # Checks if passwords are same
+        if cleaned_data.get('password_1') != cleaned_data.get('password_1'):
+            raise ValidationError("Passwords are not same")
 
 
 class ForgetPasswordForm(forms.Form):

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static thumbnail soundcore_tags  %}
+{% load static thumbnail soundcore %}
 
 {% block fontblock %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-nunito@1.1.13/index.min.css">
@@ -69,7 +69,7 @@
     </div>
     <div class="columns is-mobile ">
         <div class="column is-narrow left_menu_wrapper">
-            {% include 'left-sidebar.html' with active='soundcore_library' %}
+            {% include 'components/left_sidebar.html' with active='soundcore_library' %}
         </div>
         <div class="column right-column">
             <section class="hero library-hero">
@@ -140,8 +140,8 @@
 {% endblock %}
 {% block afterbody %}
 
-    <script src="{% static 'soundcore/js/extra/jqueryToModern.js' %}"></script>
-    <script src="{% static 'soundcore/js/extra/lodashFunctions.js' %}"></script>
+    <script src="{% static 'soundcore/js/extra/../../../static/soundcore/js/jqueryToModern.js' %}"></script>
+    <script src="{% static 'soundcore/js/extra/../../../static/soundcore/js/lodashFunctions.js' %}"></script>
     <script>
         onDomLoadFunction(() => {
             const element = document.querySelectorAll('.masonry_items')

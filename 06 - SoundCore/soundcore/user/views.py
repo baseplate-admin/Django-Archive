@@ -1,7 +1,11 @@
 from django.urls import reverse
 from django.conf import settings
+from user.forms import LoginForm
+from user.forms import RegisterForm
 from django.core import serializers
 from django.core.mail import send_mail
+from user.forms import ResetPasswordForm
+from user.forms import ForgetPasswordForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
@@ -15,34 +19,25 @@ from user.models import PasswordResetUrl, UserVolumeInput
 from django.http import Http404, JsonResponse, HttpResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 
-from user.forms import LoginForm, RegisterForm, ForgetPasswordForm, ResetPasswordForm
-
 
 # Create your views here.
-async def login_form(request):
+def login_form(request):
     """
     A Simple Login Form to authenticate users.
     """
-
-    @sync_to_async()
-    def auth_user(_username, _password):
-        return authenticate(request, username=_username, password=_password)
-
-    @sync_to_async()
-    def login_user(_user):
-        auth_login(request, user=_user)
 
     form = LoginForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
-            user = await auth_user(_username=username, _password=password)
-            if user is not None:
-                await login_user(_user=user)
+            user = authenticate(request, username, password)
+            if user:
+                auth_login(request, user)
 
                 next_url = request.GET.get("next", None)
 
+                # If theres next url redirect there
                 if next_url:
                     return redirect(next_url)
 
@@ -69,31 +64,10 @@ async def logout(request):
         raise Http404
 
 
-@async_to_sync
-async def register_form(request):
+def register_form(request):
     """
     A Simple User Register Form
     """
-
-    @sync_to_async
-    def auth_user(_request, _username, _password):
-        return authenticate(request=_request, username=_username, password=_password)
-
-    @sync_to_async
-    def create_user(__username, __email, __first_name, __last_name, __password):
-        database = User.objects.create_user(
-            username=__username,
-            email=__email,
-            password=__password,
-        )
-        database.first_name = __first_name
-        database.last_name = __last_name
-        database.save()
-
-    @sync_to_async
-    def check_if_user(_username):
-        return bool(User.objects.filter(username=username).exists())
-
     form = RegisterForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
@@ -101,36 +75,20 @@ async def register_form(request):
             last_name = form.cleaned_data["last_name"]
             username = form.cleaned_data["username"]
             email = form.cleaned_data["email"]
-            password_1 = form.cleaned_data["password_1"]
-            password_2 = form.cleaned_data["password_2"]
+            password = form.cleaned_data["password_1"]
 
-            if (
-                (password_1 == password_2)
-                and first_name
-                and last_name
-                and username
-                and email
-            ):
-                if await check_if_user(_username=username):
-                    return render(request, "accounts/register/user_exists/index.html")
+            if bool(User.objects.filter(username=username).exists()):
+                return render(request, "accounts/register/user_exists/index.html")
 
-                await create_user(
-                    __username=username,
-                    __email=email,
-                    __first_name=first_name,
-                    __last_name=last_name,
-                    __password=[password_1 if password_1 == password_2 else None][0],
-                )
-                try:
-                    user = await auth_user(request, username, password_1)
-                    if user is not None:
-                        return reverse("home")
-                except Exception as e:
-                    print(e)
-                    pass
-                return render(request, "accounts/register/successful/index.html")
-            else:
-                return redirect(reverse("register_form"))
+            database = User.objects.create_user(
+                username,
+                email,
+                password,
+            )
+            database.first_name = first_name
+            database.last_name = last_name
+            database.save()
+            return render(request, "accounts/register/successful/index.html")
     elif request.method == "GET":
         form = RegisterForm()
     return render(request, "accounts/register/index.html", {"form": form})
@@ -140,7 +98,7 @@ async def register_form(request):
 async def forget_password_form(request):
     @sync_to_async
     def send_mail_function(
-        email_subject, email_reset_message, from_sender, to_receiver
+            email_subject, email_reset_message, from_sender, to_receiver
     ):
         send_mail(
             email_subject,  # subject
@@ -260,13 +218,12 @@ def user_volume_capture(request):
         return JsonResponse(data, safe=False)
     elif request.method == "POST":
         data_dictionary = dict(request.POST.lists())
-
         for volume in data_dictionary:
             try:
                 database = UserVolumeInput.objects.get(user=request.user)
             except ObjectDoesNotExist:
-                _data = UserVolumeInput.objects.create(user=request.user, volume=50)
-                _data.save()
+                data = UserVolumeInput.objects.create(user=request.user, volume=50)
+                data.save()
                 database = UserVolumeInput.objects.get(user=request.user)
             database.volume = volume
             database.save()

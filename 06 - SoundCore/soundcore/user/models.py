@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from core.middlewares.request import RequestMiddleware
 
 import string
 import random

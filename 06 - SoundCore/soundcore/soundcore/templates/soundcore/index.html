@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-{% load static thumbnail soundcore_tags %}
+{% load static thumbnail soundcore %}
 {% block fontblock %}
-    <link rel="stylesheet" href="{% static 'soundcore/vendor/progressive-image/progressive-image.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/progressive-image/progressive-image.css' %}">
     <!-- Progressive Image Loader for lazy loading images -->
-    <script src="{% static 'soundcore/vendor/progressive-image/progressive-image.js' %}"></script>
+    <script src="{% static 'vendor/progressive-image/progressive-image.js' %}"></script>
 {% endblock %}
 
 {% block head %}
@@ -69,7 +69,7 @@
     </div>
     <div class="columns is-mobile" style="min-height:calc(100vh - 140px); margin-bottom: 0;max-height: 1vh">
         <div class="column is-narrow left_menu_wrapper">
-            {% include 'left-sidebar.html' with active="home" %}
+            {% include 'components/left_sidebar.html' with active="home" %}
         </div>
         <div class="column right-column">
             <div class="grid-container">
@@ -229,17 +229,17 @@
 
 {% block afterbody %}
     <!-- TippyJS Production -->
-    <script src="{% static 'soundcore/vendor/popper/popper.js' %}"></script>
-    <script src="{% static 'soundcore/vendor/tippy/tippy.js' %}"></script>
-    <link href="{% static 'soundcore/vendor/tippy/backdrop.css' %}" rel="stylesheet"/>
-    <link href="{% static 'soundcore/vendor/tippy/shift_away.css' %}" rel="stylesheet"/>
+    <script src="{% static 'vendor/popper/popper.js' %}"></script>
+    <script src="{% static 'vendor/tippy/tippy.js' %}"></script>
+    <link href="{% static 'vendor/tippy/backdrop.css' %}" rel="stylesheet"/>
+    <link href="{% static 'vendor/tippy/shift_away.css' %}" rel="stylesheet"/>
     <!-- Axios for Posting and Getting Data -->
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"
             integrity="sha256-JLmknTdUZeZZ267LP9qB+/DT7tvxOOKctSKeUC2KT6E=" crossorigin="anonymous"></script>
-    <script src="{% static 'soundcore/js/extra/axiosHelperFunctions.js' %}"></script>
+    <script src="{% static 'soundcore/js/axiosHelperFunctions.js' %}"></script>
 
     <!-- HowlerJS for Playing cross browser audio -->
-    <script src="{% static 'soundcore/vendor/howler/howler.js' %}"></script>
+    <script src="{% static 'vendor/howler/howler.js' %}"></script>
     <script async>
         /*
             Howler JS functions
@@ -381,27 +381,27 @@
         }
     </script>
     <!-- Handle Volume Slider Change -->
-    <script src="{% static 'soundcore/js/extra/sliderChangeHandlers.js' %}"></script>
+    <script src="{% static 'soundcore/js/sliderChangeHandlers.js' %}"></script>
 
     <!-- Jquery to modern JS -->
-    <script src="{% static 'soundcore/js/extra/jqueryToModern.js' %}"></script>
+    <script src="{% static 'soundcore/js/jqueryToModern.js' %}"></script>
 
     <!-- Some useful lodash Functions -->
-    <script src="{% static 'soundcore/js/extra/lodashFunctions.js' %}"></script>
+    <script src="{% static 'soundcore/js/lodashFunctions.js' %}"></script>
 
     <!-- On DOM load execute some functions -->
-    <script src="{% static 'soundcore/js/extra/onDomLoad.js' %}"></script>
-    <script src="{% static 'soundcore/js/extra/onDomLoadEventListeners.js' %}"></script>
+    <script src="{% static 'soundcore/js/onDomLoad.js' %}"></script>
+    <script src="{% static 'soundcore/js/onDomLoadEventListeners.js' %}"></script>
 
     <!-- Format Time To H:M:S -->
-    <script src="{% static 'soundcore/js/extra/timeFormatFunction.js' %}"></script>
+    <script src="{% static 'soundcore/js/timeFormatFunction.js' %}"></script>
 
     <script defer>
         const handleSongItemClick = async (id) => {
             await howlerJsPlay(id)
         }
     </script>
-    <script src="{% static 'soundcore/js/extra/footerUpdateContent.js' %}"></script>
+    <script src="{% static 'soundcore/js/footerUpdateContent.js' %}"></script>
 
 
     <script>
@@ -440,5 +440,5 @@
         }
     </script>
 
-    <script src="{% static 'soundcore/js/extra/tippyHelperFunctions.js' %}"></script>
+    <script src="{% static 'soundcore/js/tippyHelperFunctions.js' %}"></script>
 {% endblock %}

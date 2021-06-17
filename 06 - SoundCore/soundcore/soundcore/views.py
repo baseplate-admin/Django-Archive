@@ -47,7 +47,7 @@ def library_items_show(request, short_url: str):
 
 
 @login_required()
-def library_generator(request):
+def library_create(request):
     if request.method == "POST":
         database = LibraryGenerator(owner=request.user)
         database.save()
