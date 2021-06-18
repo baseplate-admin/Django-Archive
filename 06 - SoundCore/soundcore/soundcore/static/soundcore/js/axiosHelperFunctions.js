@@ -1,19 +1,4 @@
-
-const getCookie = async (name) => {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
+const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
 
 const axiosGetVolumeDataAndMapToVolume = async (url) => {
@@ -44,8 +29,6 @@ const axiosGetVolumeDataAndMapToVolume = async (url) => {
     }
 }
 const axiosPostVolumeData = async (url, volume) => {
-    const csrftoken = await getCookie('csrftoken');
-
     const config = {
         headers: {
             'X-CSRFToken': csrftoken
@@ -56,8 +39,6 @@ const axiosPostVolumeData = async (url, volume) => {
     })
 }
 const axiosGetRandomSong = async (url) => {
-    const csrftoken = await getCookie('csrftoken');
-
     const config = {
         headers: {
             'X-CSRFToken': csrftoken
@@ -70,8 +51,6 @@ const axiosGetRandomSong = async (url) => {
     await howlerJsPlay((_.first(JSON.parse(res.data)).pk))
 }
 const axiosPostPreviousSong = async (url, id) => {
-    const csrftoken = await getCookie('csrftoken');
-
     const config = {
         headers: {
             'X-CSRFToken': csrftoken
@@ -81,4 +60,7 @@ const axiosPostPreviousSong = async (url, id) => {
     await axios.post(url, JSON.stringify({pk: id}), config).catch(e => {
         console.log(`Cant Post Song:${id} to ${url}`)
     })
+}
+const axiosGetPreviousSong = async (url, id) => {
+
 }

@@ -6,11 +6,11 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user', '0007_alter_uservolumeinput_volume'),
+        ("user", "0007_alter_uservolumeinput_volume"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='UserVolumeInput',
+            name="UserVolumeInput",
         ),
     ]

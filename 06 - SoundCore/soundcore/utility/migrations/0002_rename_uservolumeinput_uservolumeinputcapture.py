@@ -8,12 +8,12 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('utility', '0001_initial'),
+        ("utility", "0001_initial"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='UserVolumeInput',
-            new_name='UserVolumeInputCapture',
+            old_name="UserVolumeInput",
+            new_name="UserVolumeInputCapture",
         ),
     ]

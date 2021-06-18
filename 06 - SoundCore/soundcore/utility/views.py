@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+
 @login_required()
 def get_song(request):
     if request.method == "GET":
@@ -45,15 +46,19 @@ def get_random_songs(request):
     if request.method == "POST":
         # This will be powered by an AI.
         database = MusicList.objects.order_by("?").first()
-        data = serializers.serialize('json', [database])
+        data = serializers.serialize("json", [database])
         return JsonResponse(data, safe=False)
 
 
 @csrf_protect
 def get_four_random_images(request, pk):
     if request.method == "POST":
-        database = LibraryGenerator.objects.get(id=pk).prefetch_related('musics').order_by('?')[:4]
-        data = serializers.serialize('json', [database])
+        database = (
+            LibraryGenerator.objects.get(id=pk)
+            .prefetch_related("musics")
+            .order_by("?")[:4]
+        )
+        data = serializers.serialize("json", [database])
         return JsonResponse(data, safe=False)
 
 
@@ -79,7 +84,9 @@ def user_volume_capture(request):
             try:
                 database = UserVolumeInputCapture.objects.get(user=request.user)
             except ObjectDoesNotExist:
-                data = UserVolumeInputCapture.objects.create(user=request.user, volume=50)
+                data = UserVolumeInputCapture.objects.create(
+                    user=request.user, volume=50
+                )
                 data.save()
                 database = UserVolumeInputCapture.objects.get(user=request.user)
             database.volume = volume
@@ -90,12 +97,17 @@ def user_volume_capture(request):
 @login_required()
 @csrf_protect
 def user_previous_song_capture(request):
-    if request.method == "POST":
+    if request.method == "GET":
+        database = UserPreviousSongCapture.objects.filter(user=request.user).last()
+        data = serializers.serialize("json", [database], fields=("previous_song",))
+        return JsonResponse(data, safe=False)
+
+    elif request.method == "POST":
         request_data = request.POST
         for item in request_data:
-            data = json.loads(item)['pk']
-            if UserPreviousSongCapture.objects.count() >= 5:
-                UserPreviousSongCapture.objects.first().delete()
-            UserPreviousSongCapture.objects.create(previous_song=MusicList.objects.get(id=data),
-                                                   user=request.user).save()
+            data = json.loads(item)["pk"]
+            if not (UserPreviousSongCapture.objects.last().previous_song.id == data):
+                UserPreviousSongCapture.objects.create(
+                    previous_song=MusicList.objects.get(id=data), user=request.user
+                ).save()
             return HttpResponse(status=200)

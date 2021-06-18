@@ -20,3 +20,8 @@ class UserPreviousSongCapture(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user} | {self.previous_song}"
+
+    def save(self, *args, **kwargs):
+        if UserPreviousSongCapture.objects.count() >= 5:
+            UserPreviousSongCapture.objects.first().delete()
+        super().save(*args, **kwargs)

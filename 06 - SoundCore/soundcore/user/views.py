@@ -95,7 +95,7 @@ def register_form(request):
 async def forget_password_form(request):
     @sync_to_async
     def send_mail_function(
-            email_subject, email_reset_message, from_sender, to_receiver
+        email_subject, email_reset_message, from_sender, to_receiver
     ):
         send_mail(
             email_subject,  # subject
@@ -195,4 +195,3 @@ async def reset_password_form(request, url: str):
         else:
             raise Http404
     return render(request, "accounts/reset/index.html", {"form": form})
-

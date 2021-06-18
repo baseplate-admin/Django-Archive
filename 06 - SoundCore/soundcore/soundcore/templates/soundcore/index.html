@@ -12,6 +12,8 @@
 {% endblock %}
 
 {% block body %}
+    <!-- This CSRF Token will be called by HowlerJS -->
+    {% csrf_token %}
     <div class="columns is-mobile top-navbar">
         <div id="hamburger_icon_wrapper_id" class="column is-1">
             <ion-icon class="hamburger_icon" name="menu-sharp"></ion-icon>
@@ -408,7 +410,7 @@
     <script src="{% static 'soundcore/js/footerUpdateContent.js' %}"></script>
 
 
-    <script>
+    <script async>
         const volumeMediaQueryListener = window.matchMedia('(max-width: 767px)')
 
         const watchMediaQueryFunctionVolume = async (event) => {

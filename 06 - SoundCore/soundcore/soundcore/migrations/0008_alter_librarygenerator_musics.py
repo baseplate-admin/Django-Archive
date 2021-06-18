@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('upload', '0021_alter_musiclist_genre'),
-        ('soundcore', '0007_auto_20210519_1928'),
+        ("upload", "0021_alter_musiclist_genre"),
+        ("soundcore", "0007_auto_20210519_1928"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='librarygenerator',
-            name='musics',
-            field=models.ManyToManyField(related_name='musics', to='upload.MusicList'),
+            model_name="librarygenerator",
+            name="musics",
+            field=models.ManyToManyField(related_name="musics", to="upload.MusicList"),
         ),
     ]

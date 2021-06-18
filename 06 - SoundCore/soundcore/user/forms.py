@@ -62,7 +62,7 @@ class RegisterForm(forms.Form):
     def clean(self):
         cleaned_data = super().clean()
         # Checks if passwords are same
-        if cleaned_data.get('password_1') != cleaned_data.get('password_1'):
+        if cleaned_data.get("password_1") != cleaned_data.get("password_1"):
             raise ValidationError("Passwords are not same")
 
 
