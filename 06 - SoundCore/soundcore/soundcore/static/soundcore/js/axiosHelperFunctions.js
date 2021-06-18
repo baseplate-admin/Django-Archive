@@ -1,6 +1,5 @@
 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-
 const axiosGetVolumeDataAndMapToVolume = async (url) => {
     const updateVolumeSlider = async (volume) => {
         const setGlobalVolume = async (input) => {
@@ -61,6 +60,11 @@ const axiosPostPreviousSong = async (url, id) => {
         console.log(`Cant Post Song:${id} to ${url}`)
     })
 }
-const axiosGetPreviousSong = async (url, id) => {
+const axiosGetPreviousSong = async (url) => {
+    await axios.get(url).then(res => {
+        howlerJsPlay((_.first(JSON.parse(res.data)).fields.previous_song))
+    }).catch(e => {
+        console.log("No Previous Song.")
+    })
 
 }

@@ -140,14 +140,12 @@
 {% endblock %}
 {% block afterbody %}
 
-    <script src="{% static 'soundcore/js/extra/../../../static/soundcore/js/jqueryToModern.js' %}"></script>
-    <script src="{% static 'soundcore/js/extra/../../../static/soundcore/js/lodashFunctions.js' %}"></script>
+    <script src="{% static 'soundcore/js/jqueryToModern.js' %}"></script>
+    <script src="{% static 'soundcore/js/lodashFunctions.js' %}"></script>
     <script>
         onDomLoadFunction(() => {
             const element = document.querySelectorAll('.masonry_items')
-            if (_.size(element) >= 4) {
-                const fourElementArray = firstN(element, 2)
-            }
+
         })
     </script>
 {% endblock %}

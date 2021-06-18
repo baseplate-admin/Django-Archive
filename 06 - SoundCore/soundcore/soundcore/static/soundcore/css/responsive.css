@@ -20,9 +20,14 @@
         margin-right: 1em !important;
     }
 
+    .footer_control_column_items {
+        width: 50px !important;
+    }
+
     .footer_info {
         position: absolute;
         bottom: 10px;
+        max-height: 3em;
     }
 
     .brand_image > img {

@@ -22,6 +22,7 @@ class UserPreviousSongCapture(models.Model):
         return f"{self.user} | {self.previous_song}"
 
     def save(self, *args, **kwargs):
-        if UserPreviousSongCapture.objects.count() >= 5:
+        # Allow 1/4 th Saving.
+        if UserPreviousSongCapture.objects.count() >= (MusicList.objects.count() / 4):
             UserPreviousSongCapture.objects.first().delete()
         super().save(*args, **kwargs)

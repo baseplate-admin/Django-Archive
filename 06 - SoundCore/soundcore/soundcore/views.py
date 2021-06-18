@@ -23,12 +23,7 @@ def soundcore_home(request):
 @login_required()
 def library_show(request):
     if request.method == "GET":
-        try:
-            data = LibraryGenerator.objects.filter(owner=request.user)
-
-        except ObjectDoesNotExist:
-            data = None
-
+        data = LibraryGenerator.objects.filter(owner=request.user)
         return render(request, "soundcore/library/index.html", {"data": data})
     elif request.method == "POST":
         raise Http404
@@ -58,15 +53,12 @@ def library_create(request):
             post_data_json = json.loads(_)
             post_data_array = post_data_json["array"]
             post_data_name = post_data_json["name"]
+            database.name = post_data_name
 
-        database.name = post_data_name
-        database.save()
-
-        for __ in post_data_array:
-            database.musics.add(MusicList.objects.get(id=__))
-
-        database.save()
-        return HttpResponse(status=200)
+            for __ in post_data_array:
+                database.musics.add(MusicList.objects.get(id=__))
+                database.save()
+                return HttpResponse(status=200)
     elif request.method == "GET":
         musics = MusicList.objects.all()
         return render(

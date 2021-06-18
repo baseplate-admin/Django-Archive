@@ -106,7 +106,7 @@ For some reason I dont want round soundcore_library_items.
 }
 
 .brand_image > img {
-    transform: translateY(.6em) translateX(-45px)
+    transform: translateY(.6em) translateX(30px);
 }
 
 .user_image {

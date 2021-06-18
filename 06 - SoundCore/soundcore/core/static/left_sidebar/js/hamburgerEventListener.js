@@ -3,7 +3,7 @@
     !left-menu-hidden = Sidebar is shown
 
 */
-const hamburgerElement = document.getElementById('hamburger_icon_wrapper_id')
+const hamburgerElement = document.querySelector('.hamburger_icon ')
 
 hamburgerElement.addEventListener('click', () => {
     const leftMenuElement = document.getElementsByClassName('left-menu')[0]

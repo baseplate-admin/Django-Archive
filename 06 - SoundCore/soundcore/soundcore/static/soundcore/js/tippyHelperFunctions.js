@@ -1,5 +1,4 @@
 // TippyJS Powering Soundcore.
-
 const calcSliderPos = (e) => {
     return (e.offsetX / e.target.clientWidth) * parseInt(e.target.getAttribute('max'), 10);
 }
@@ -49,6 +48,35 @@ const playPauseTippy = () => {
         }
     })
 }
+const previousTippy = () => {
 
+    const previousTippyElement = document.querySelector('.previous_song_wrapper ')
+    tippy(previousTippyElement, {
+        theme: 'material',
+        interactive: true,
+        animateFill: true,
+        offset: [0, -10],
+        arrow: true,
+    })
+    previousTippyElement.addEventListener('mouseover', () => {
+        previousTippyElement._tippy.setContent('Previous Song')
+    })
+}
+const nextTippy = () => {
+
+    const nextTippyElement = document.querySelector('.next_song_wrapper')
+    tippy(nextTippyElement, {
+        theme: 'material',
+        interactive: true,
+        animateFill: true,
+        offset: [0, -10],
+        arrow: true,
+    })
+    nextTippyElement.addEventListener('mouseover', () => {
+        nextTippyElement._tippy.setContent("Next Song")
+    })
+}
+onDomLoadFunction(previousTippy)
+onDomLoadFunction(nextTippy)
 onDomLoadFunction(volumeTippy)
 onDomLoadFunction(playPauseTippy)

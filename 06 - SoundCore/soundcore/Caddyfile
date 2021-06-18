@@ -1,6 +1,7 @@
 zarif-ahnaf.duckdns.org {
     handle_path /media/* {
-        file_server {
+        file_server browse {
+            hide songs
             root C:/Programming/soundcore/media
         }
     }

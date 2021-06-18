@@ -98,6 +98,7 @@ def user_volume_capture(request):
 @csrf_protect
 def user_previous_song_capture(request):
     if request.method == "GET":
+        UserPreviousSongCapture.objects.filter(user=request.user).last().delete()
         database = UserPreviousSongCapture.objects.filter(user=request.user).last()
         data = serializers.serialize("json", [database], fields=("previous_song",))
         return JsonResponse(data, safe=False)
@@ -106,7 +107,14 @@ def user_previous_song_capture(request):
         request_data = request.POST
         for item in request_data:
             data = json.loads(item)["pk"]
-            if not (UserPreviousSongCapture.objects.last().previous_song.id == data):
+            try:
+                if not (
+                    UserPreviousSongCapture.objects.last().previous_song.id == data
+                ):
+                    UserPreviousSongCapture.objects.create(
+                        previous_song=MusicList.objects.get(id=data), user=request.user
+                    ).save()
+            except AttributeError:
                 UserPreviousSongCapture.objects.create(
                     previous_song=MusicList.objects.get(id=data), user=request.user
                 ).save()

@@ -15,7 +15,7 @@
     <!-- This CSRF Token will be called by HowlerJS -->
     {% csrf_token %}
     <div class="columns is-mobile top-navbar">
-        <div id="hamburger_icon_wrapper_id" class="column is-1">
+        <div id="hamburger_icon_wrapper_id" class="column is-narrow">
             <ion-icon class="hamburger_icon" name="menu-sharp"></ion-icon>
             <script async>
                 anime({
@@ -38,17 +38,17 @@
                 <div class="control has-icons-right search_input_wrapper">
                     <input class="input search_input" type="text" placeholder="Search">
                     <span class="icon is-small is-right search_input_box_right_wrapper">
-                            <div class="box search_input_box_right">
-                                <ion-icon class="search_icon" name="search-outline"></ion-icon>
-                                <script async>
-                                    anime({
-                                        targets: '.search_icon',
-                                        color: '#FFFFFF',
-                                        scale: 1.4
-                                    })
-                                </script>
-                            </div>
-                        </span>
+                        <div class="box search_input_box_right">
+                            <ion-icon class="search_icon" name="search-outline"></ion-icon>
+                            <script async>
+                                anime({
+                                    targets: '.search_icon',
+                                    color: '#FFFFFF',
+                                    scale: 1.4
+                                })
+                            </script>
+                        </div>
+                    </span>
                 </div>
             </div>
         </div>
@@ -133,8 +133,9 @@
 
             </div>
             <div class="column footer_control_column">
-                <div class="columns is-mobile is-centered">
-                    <div class="column is-1 has-text-centered">
+                <div class="columns is-mobile is-centered footer_control_column_wrapper">
+                    <div class="column is-1 has-text-centered previous_song_wrapper footer_control_column_items"
+                         onclick="axiosGetPreviousSong('{% url 'user_previous_song_capture' %}')">
                         <ion-icon class="previous_icon" name="play-skip-back-circle-outline"></ion-icon>
                         <script async>
                             anime({
@@ -147,7 +148,7 @@
                             })
                         </script>
                     </div>
-                    <div class="column is-1 is-offset-1 has-text-centered play_pause_wrapper"
+                    <div class="column is-1 is-offset-1 has-text-centered play_pause_wrapper footer_control_column_items"
                          onclick="howlerJsPlayPause()">
                         <ion-icon class="play_icon" id="play_icon"
                                   name="play-circle-outline"></ion-icon>
@@ -164,7 +165,8 @@
                             })
                         </script>
                     </div>
-                    <div class="column is-1 is-offset-1 has-text-centered">
+                    <div class="column is-1 is-offset-1 next_song_wrapper has-text-centered footer_control_column_items"
+                         onclick="axiosGetRandomSong('{% url 'random_song_generator' %}')">
                         <ion-icon class="skip_icon" name="play-skip-forward-circle-outline"></ion-icon>
                         <script async>
                             anime({
