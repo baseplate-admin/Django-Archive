@@ -260,6 +260,10 @@
             // Update Footer Items
             await updateFooterBoilerPlate(id)
 
+            // Add songs to previous list
+            const previousUrl = '{% url 'user_previous_song_capture' %}'
+            await axiosPostPreviousSong(previousUrl, id)
+
             const srcArray = [];
             const fileFormatArray = [];
 
@@ -297,7 +301,7 @@
 
             // Set duration
             sound.on('load', () => {
-                howlerJsDuration()
+                howlerJsOnLoad()
             })
             // Set Play Speed
             sound.on('play', () => {
@@ -341,7 +345,7 @@
             }
         }
 
-        const howlerJsDuration = async () => {
+        const howlerJsOnLoad = async () => {
             sound = _.first(howlerArray)
             const element = document.getElementById('total_duration');
             element.innerText = formatTime(sound.duration())
@@ -375,9 +379,9 @@
             sliderElement.value = 0
             progressElement.value = 0
             preInputElement.innerText = formatTime(0)
-            const url = '{% url 'random_song_generator' %}'
+            const djangoUrl = '{% url 'random_song_generator' %}'
             // Call a random song from the model.
-            await axiosGetRandomSong(url)
+            await axiosGetRandomSong(djangoUrl)
         }
     </script>
     <!-- Handle Volume Slider Change -->
@@ -413,6 +417,13 @@
                 await handleSliderInputChange(100)
             } else if (!event.matches) {
                 // Desktop Version
+                // Sets Volume to zero.
+                const setHowlerVolumeToZero = () => {
+                    // Sets the volume to 0 on load
+                    Howler.volume(0.00)
+                }
+                onDomLoadFunction(setHowlerVolumeToZero)
+
                 const djangoUrl = '{% url 'user_volume_capture' %}'
                 await axiosGetVolumeDataAndMapToVolume(djangoUrl)
             }

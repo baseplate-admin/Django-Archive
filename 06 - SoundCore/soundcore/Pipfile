@@ -8,10 +8,10 @@ pillow = "*"
 django = "*"
 mutagen = "*"
 asgiref = "*"
+psycopg2 = "*"
 sorl-thumbnail = "*"
 uvicorn = { extras = ["standard"], version = "*" }
 whitenoise = {extras = ["brotli"], version = "*"}
-psycopg2 = "*"
 
 [dev-packages]
 black = "==21.5b2"

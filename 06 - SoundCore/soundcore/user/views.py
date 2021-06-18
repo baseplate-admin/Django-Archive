@@ -1,9 +1,10 @@
 from django.urls import reverse
+from django.http import Http404
 from django.conf import settings
 from user.forms import LoginForm
 from user.forms import RegisterForm
-from django.core import serializers
 from django.core.mail import send_mail
+from user.models import PasswordResetUrl
 from user.forms import ResetPasswordForm
 from user.forms import ForgetPasswordForm
 from django.contrib.auth.models import User
@@ -12,12 +13,8 @@ from django.shortcuts import render, redirect
 from django.views.decorators.cache import cache_page
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from django.core.exceptions import ObjectDoesNotExist
 from asgiref.sync import async_to_sync, sync_to_async
 from django.contrib.auth.decorators import login_required
-from user.models import PasswordResetUrl, UserVolumeInput
-from django.http import Http404, JsonResponse, HttpResponse
-from django.views.decorators.csrf import ensure_csrf_cookie
 
 
 # Create your views here.
@@ -31,7 +28,7 @@ def login_form(request):
         if form.is_valid():
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
-            user = authenticate(request, username, password)
+            user = authenticate(username=username, password=password)
             if user:
                 auth_login(request, user)
 
@@ -199,32 +196,3 @@ async def reset_password_form(request, url: str):
             raise Http404
     return render(request, "accounts/reset/index.html", {"form": form})
 
-
-@login_required()
-@ensure_csrf_cookie
-def user_volume_capture(request):
-    """
-    A Simple way to store User Volume
-    """
-    if request.method == "GET":
-        database = UserVolumeInput.objects.filter(user=request.user)
-        if not database.exists():
-            # If the user visits the site for first time set volume to 50
-            UserVolumeInput.objects.create(user=request.user, volume=50).save()
-            database = UserVolumeInput.objects.filter(user=request.user)
-
-        data = serializers.serialize("json", database, fields=("volume",))
-
-        return JsonResponse(data, safe=False)
-    elif request.method == "POST":
-        data_dictionary = dict(request.POST.lists())
-        for volume in data_dictionary:
-            try:
-                database = UserVolumeInput.objects.get(user=request.user)
-            except ObjectDoesNotExist:
-                data = UserVolumeInput.objects.create(user=request.user, volume=50)
-                data.save()
-                database = UserVolumeInput.objects.get(user=request.user)
-            database.volume = volume
-            database.save()
-        return HttpResponse(status=200)

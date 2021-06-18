@@ -1,3 +1,4 @@
+
 const getCookie = async (name) => {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -50,7 +51,9 @@ const axiosPostVolumeData = async (url, volume) => {
             'X-CSRFToken': csrftoken
         }
     }
-    await axios.post(url, volume, config)
+    await axios.post(url, volume, config).catch(e => {
+        console.log(`Cant post volume:${volume} to Url:${url}`)
+    })
 }
 const axiosGetRandomSong = async (url) => {
     const csrftoken = await getCookie('csrftoken');
@@ -61,8 +64,21 @@ const axiosGetRandomSong = async (url) => {
         }
     }
 
-    await axios.post(url, {}, config).then(res=>{
-        howlerJsPlay((_.first(JSON.parse(res.data)).pk))
+    const res = await axios.post(url, {}, config).catch(e => {
+        console.log(`Cant get random song from ${url}`)
     })
+    await howlerJsPlay((_.first(JSON.parse(res.data)).pk))
+}
+const axiosPostPreviousSong = async (url, id) => {
+    const csrftoken = await getCookie('csrftoken');
 
+    const config = {
+        headers: {
+            'X-CSRFToken': csrftoken
+        }
+    }
+
+    await axios.post(url, JSON.stringify({pk: id}), config).catch(e => {
+        console.log(`Cant Post Song:${id} to ${url}`)
+    })
 }
