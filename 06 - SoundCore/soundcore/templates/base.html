@@ -24,6 +24,8 @@
     </title>
 </head>
 <body>
+<!-- This CSRF Token will be called by Axios -->
+{% csrf_token %}
 {% block body %} {% endblock %}
 {% block afterbody %} {% endblock %}
 </body>

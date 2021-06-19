@@ -1,34 +1,33 @@
 import string
 import random
-import functools
-
-from django.contrib.auth.models import User
+import datetime
 from django.db import models
-
 from upload.models import MusicList
+from django.contrib.auth.models import User
 
 
 # Create your models here.
 
 
-class ShortUrl:
+class ShortUrl(object):
     def __init__(self):
         self.short_letter = self.__short_letter()
 
-    def __short_letter(self) -> str:
+    @staticmethod
+    def __short_letter() -> str:
         letters = string.ascii_lowercase + string.ascii_uppercase
         rand_letters = random.choices(letters, k=16)
         rand_letters = "".join(rand_letters)
-        self.short_letter = rand_letters
-        return self.short_letter
+        return rand_letters
 
     def __does_short_exists(self) -> bool:
-        is_true_or_false = LibraryGenerator.objects.filter(
-            short_form=self.short_letter
-        ).exists()
-        if is_true_or_false:
+        if LibraryGenerator.objects.filter(
+                short_form=self.short_letter
+        ).exists():
             return True
-        elif not is_true_or_false:
+        elif not LibraryGenerator.objects.filter(
+                short_form=self.short_letter
+        ).exists():
             return False
 
     def logic(self) -> str:
@@ -39,24 +38,31 @@ class ShortUrl:
 
 
 class LibraryGenerator(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True, null=False)
     musics = models.ManyToManyField(MusicList, related_name="musics")
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     short_form = models.CharField(max_length=16)
+    last_modified = models.DateTimeField(default=datetime.datetime.now())
 
-    def count_total_number(self):
+    class Meta:
+        ordering = ("name",)
+
+    def return_four_image(self):
         # Anchored to 'soundcore/library/index.html'
+        data = LibraryGenerator.objects.get(id=self.id)
+        return random.sample(list(data.musics.all()), 4)
 
-        data = LibraryGenerator.objects.values_list("musics__length")
+    def count_total_length(self):
+        # Anchored to 'soundcore/library/index.html'
+        data = LibraryGenerator.objects.get(id=self.id)
         total_number = 0
 
-        for i in data:
+        for i in data.musics.all():
             try:
-                __res = functools.reduce(lambda sub, ele: sub * 10 + ele, i)
-                total_number += round(float(__res), 2)
+                total_number += round(float(i.length), 2)
             except TypeError:
+                # No song doesn't have length.
                 pass
-
         return total_number
 
     # Modify the save option

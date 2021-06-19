@@ -50,18 +50,6 @@ def get_random_songs(request):
         return JsonResponse(data, safe=False)
 
 
-@csrf_protect
-def get_four_random_images(request, pk):
-    if request.method == "POST":
-        database = (
-            LibraryGenerator.objects.get(id=pk)
-            .prefetch_related("musics")
-            .order_by("?")[:4]
-        )
-        data = serializers.serialize("json", [database])
-        return JsonResponse(data, safe=False)
-
-
 @login_required()
 @csrf_protect
 def user_volume_capture(request):

@@ -13,9 +13,7 @@
         margin-left: 0 !important;
     }
 
-    .library_item_wrapper {
-        transform: translateX(-12px);
-    }
+   
 
     .item_subtitle {
         transform: translateY(5px) !important;

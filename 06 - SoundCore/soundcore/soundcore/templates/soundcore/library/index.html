@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static thumbnail soundcore %}
+{% load static thumbnail soundcore humanize %}
 
 {% block fontblock %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-nunito@1.1.13/index.min.css">
@@ -98,7 +98,7 @@
                                     <div class="columns is-mobile">
                                         <div class="column is-narrow is-offset-1">
                                             <div class="masonry">
-                                                {% for x in i.musics.all %}
+                                                {% for x in i.return_four_image %}
                                                     <div class="masonry_items">
                                                         {% thumbnail x.album_art "200x200" crop="center" as im %}
                                                             <img src="{{ im.url }}" alt="{{ x.song_name }}">
@@ -115,7 +115,10 @@
                                                     <small>{{ i.musics.all.count }}</small>
                                                     |
                                                     <strong>Time: </strong>
-                                                    <small>{{ i.count_total_number|format_seconds }}</small>
+                                                    <small>{{ i.count_total_length|format_seconds }}</small>
+                                                    |
+                                                    <strong>Last Modified: </strong>
+                                                    <small>{{ i.last_modified | naturaltime }}</small>
                                                 </p>
                                             </div>
                                         </div>
@@ -141,11 +144,5 @@
 {% block afterbody %}
 
     <script src="{% static 'soundcore/js/jqueryToModern.js' %}"></script>
-    <script src="{% static 'soundcore/js/lodashFunctions.js' %}"></script>
-    <script>
-        onDomLoadFunction(() => {
-            const element = document.querySelectorAll('.masonry_items')
-
-        })
-    </script>
+    <script src="{% static 'soundcore_library/js/lodashFunctions.js' %}"></script>
 {% endblock %}

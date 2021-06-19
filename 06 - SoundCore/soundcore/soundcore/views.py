@@ -1,10 +1,9 @@
 import json
-
+import datetime
 from django.shortcuts import render
 from upload.models import MusicList
 from django.http import Http404, HttpResponse
 from soundcore.models import LibraryGenerator
-from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 
 
@@ -45,20 +44,21 @@ def library_items_show(request, short_url: str):
 def library_create(request):
     if request.method == "POST":
         database = LibraryGenerator(owner=request.user)
+        database.last_modified = datetime.datetime.now()
         database.save()
 
         post_data = dict(request.POST.lists())
 
         for _ in post_data:
             post_data_json = json.loads(_)
-            post_data_array = post_data_json["array"]
-            post_data_name = post_data_json["name"]
-            database.name = post_data_name
+            post_data_song_array = post_data_json["array"]
+            post_data_library_name = post_data_json["name"]
+            database.name = post_data_library_name
 
-            for __ in post_data_array:
+            for __ in post_data_song_array:
                 database.musics.add(MusicList.objects.get(id=__))
                 database.save()
-                return HttpResponse(status=200)
+            return HttpResponse(status=200)
     elif request.method == "GET":
         musics = MusicList.objects.all()
         return render(

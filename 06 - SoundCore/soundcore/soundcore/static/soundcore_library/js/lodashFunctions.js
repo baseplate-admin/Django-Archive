@@ -9,3 +9,6 @@ const firstN = (obj, n) => {
         }, {})
         .value();
 }
+const diff_arr = (arr1, arr2) => {
+    return arr1.filter(a => !arr2.find(e => e.every((v, i) => v == a[i])))
+}
