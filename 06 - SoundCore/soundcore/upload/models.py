@@ -20,7 +20,7 @@ class MusicList(models.Model):
     mime_type = models.CharField(max_length=15, default="", null=False)
 
     def __str__(self) -> str:
-        return str(self.song_name)
+        return str(f"Name : {self.song_name}  |  Artist : {self.artist}  |  Genre : {self.genre}")
 
     class Meta:
         ordering = ("song_name",)

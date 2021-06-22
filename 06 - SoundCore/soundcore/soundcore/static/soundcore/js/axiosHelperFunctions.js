@@ -61,10 +61,45 @@ const axiosPostPreviousSong = async (url, id) => {
     })
 }
 const axiosGetPreviousSong = async (url) => {
-    await axios.get(url).then(res => {
-        howlerJsPlay((_.first(JSON.parse(res.data)).fields.previous_song))
-    }).catch(e => {
+    const res = await axios.get(url).catch(e => {
         console.log("No Previous Song.")
     })
+    const jsonData = _.first(JSON.parse(res.data)).fields
+    await howlerJsPlay(jsonData.previous_song)
+}
 
+const axiosGetLastSong = async (url) => {
+    const res = await axios.get(url)
+    const jsonData = _.first(JSON.parse(res.data)).fields
+
+    await howlerJsPlay(parseInt(jsonData.last_song))
+
+    // Revert the changes made by HowlerJS
+    document.getElementById('play_icon').classList.remove('is-hidden')
+    document.getElementById('pause_icon').classList.add('is-hidden')
+
+    await handleSliderInputChange(100 * parseFloat(jsonData.timestamp) / parseFloat(jsonData.song_duration))
+
+    const sliderElement = document.querySelector('#transparent_slider')
+    const preInputElement = document.querySelector('.pre_input')
+
+
+    preInputElement.innerText = formatTime(parseFloat(jsonData.timestamp))
+    sliderElement.value = 100 * parseFloat(jsonData.timestamp) / parseFloat(jsonData.song_duration)
+}
+
+const axiosPostLastSong = async (url, songId, timestamp, songDuration) => {
+    const config = {
+        headers: {
+            'X-CSRFToken': csrftoken
+        }
+    }
+
+    await axios.post(url, JSON.stringify({
+        song: songId,
+        timestamp: timestamp,
+        song_duration: songDuration
+    }), config).catch(e => {
+        console.log(`Cant Post to: ${url}`)
+    })
 }

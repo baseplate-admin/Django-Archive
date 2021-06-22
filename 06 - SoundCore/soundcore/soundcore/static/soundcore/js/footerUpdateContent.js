@@ -31,13 +31,14 @@ const updateFooterBoilerPlate = async (id) => {
 }
 const updateFooterControl = () => {
     sound = _.first(howlerArray)
-    duration = sound.seek();
+    let seekDuration = sound.seek();
+
     const preInputElement = document.querySelector('.pre_input')
     const sliderElement = document.querySelector('#slider_progress')
     const progressElement = document.querySelector('#transparent_slider')
-    const convertDurationToHundred = (100 * duration) / sound.duration()
+    const convertDurationToHundred = (100 * seekDuration) / sound.duration()
 
     sliderElement.value = convertDurationToHundred
     progressElement.value = convertDurationToHundred
-    preInputElement.innerText = formatTime(duration)
+    preInputElement.innerText = formatTime(seekDuration)
 }

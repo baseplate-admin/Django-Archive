@@ -10,4 +10,5 @@ urlpatterns = [
         views.user_previous_song_capture,
         name="user_previous_song_capture",
     ),
+    path('capture/last_song', views.user_last_song_capture,name='user_last_song_capture')
 ]

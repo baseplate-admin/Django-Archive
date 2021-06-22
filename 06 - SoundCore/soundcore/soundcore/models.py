@@ -39,10 +39,10 @@ class ShortUrl(object):
 
 class LibraryGenerator(models.Model):
     name = models.CharField(max_length=50, unique=True, null=False)
-    musics = models.ManyToManyField(MusicList, related_name="musics")
+    musics = models.ManyToManyField(MusicList, related_name="musics",)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     short_form = models.CharField(max_length=16)
-    last_modified = models.DateTimeField(default=datetime.datetime.now())
+    last_modified = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ("name",)

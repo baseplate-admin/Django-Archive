@@ -9,6 +9,8 @@ const mainProgressTippy = async (sound) => {
     tippy(sliderTippyElement, {
         theme: 'material',
         followCursor: 'horizontal',
+        animateFill: true,
+
     })
 
     sliderTippyElement.addEventListener('mousemove', (e) => {
@@ -23,6 +25,7 @@ const volumeTippy = () => {
     tippy(volumeSliderTippyElement, {
         theme: 'material',
         followCursor: 'horizontal',
+        animateFill: true,
     })
     volumeSliderTippyElement.addEventListener('mousemove', (e) => {
         let valueHover = calcSliderPos(e).toFixed(2);
@@ -76,6 +79,16 @@ const nextTippy = () => {
         nextTippyElement._tippy.setContent("Next Song")
     })
 }
+
+const handleTippyDropdownClick = (id) => {
+    console.log(id)
+    const dropdownElement = document.querySelector(`.dropdown__icon__${id}`)
+    tippy(dropdownElement, {
+        content: '<strong>Bolded content</strong>',
+        allowHTML: true,
+    })
+}
+
 onDomLoadFunction(previousTippy)
 onDomLoadFunction(nextTippy)
 onDomLoadFunction(volumeTippy)

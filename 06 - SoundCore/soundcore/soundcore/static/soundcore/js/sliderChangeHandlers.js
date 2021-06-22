@@ -1,8 +1,7 @@
-const handleSliderInputChange = async () => {
+const handleSliderInputChange = async (value) => {
     try {
-        const transparentSliderInputDiv = document.getElementById('transparent_slider')
         const sliderProgressBar = document.getElementById('slider_progress')
-        sliderProgressBar.value = transparentSliderInputDiv.value
+        sliderProgressBar.value = value
         sound = _.first(howlerArray)
         const duration = (sound.duration() * sliderProgressBar.value) / 100
         sound.seek(duration)

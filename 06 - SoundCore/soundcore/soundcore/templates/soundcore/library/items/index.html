@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load soundcore humanize static thumbnail %}
 {% block fontblock %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-nunito@1.1.13/index.min.css">
+    <link rel="stylesheet" href="{% static 'vendor/typeface-nunito/index.css' %}">
 {% endblock %}
 
 {% block head %}
@@ -111,7 +111,6 @@
                 <hr class="item_hr"/>
             </div>
         {% endfor %}
-        {#<hr style="	background-color: #32363e"/>#}
     </div>
 
 {% endblock %}

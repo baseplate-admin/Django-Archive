@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static thumbnail soundcore %}
+
 {% block fontblock %}
     <link rel="stylesheet" href="{% static 'vendor/progressive-image/progressive-image.css' %}">
     <!-- Progressive Image Loader for lazy loading images -->
@@ -92,11 +93,36 @@
                                     </a>
                                 {% endthumbnail %}
                             </figure>
-                            <div class="box song-description">
-                                <p class="title is-size-5 song-title"
-                                   id="song-name-{{ i.id }}">{{ i.song_name }}</p>
-                                <p class="subtitle is-size-6 song-artist"
-                                   id="song-artist-{{ i.id }}">{{ i.artist }}</p>
+                            <div class="song-description">
+                                <div class="columns is-mobile" style="width: 200px">
+                                    <div class="column is-10">
+                                        <div class="box"
+                                             style="background-color: transparent;padding-left:0;padding-right:0">
+                                            <p class="title is-size-5 song-title"
+                                               id="song-name-{{ i.id }}">{{ i.song_name }}</p>
+                                            <p class="subtitle is-size-6 song-artist"
+                                               id="song-artist-{{ i.id }}">{{ i.artist }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="column is-1">
+                                        <ion-icon
+                                            style="pointer-events: none"
+                                            class="dropdown__icon__{{ i.id }}"
+                                            name="ellipsis-vertical"
+                                            onclick="handleTippyDropdownClick({{ i.id }})"
+                                        ></ion-icon>
+
+                                        <script async>
+                                            anime({
+                                                targets: `.dropdown__icon__{{ i.id }}`,
+                                                color: '#e0e0ec',
+                                                scale: 0.7,
+                                                paddingTop: 30,
+
+                                            })
+                                        </script>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -104,6 +130,7 @@
                     <div class="is-hidden" id="song-sample-rate-{{ i.id }}">{{ i.sample_rate }}</div>
                     <div class="is-hidden" id="song-file-format-{{ i.id }}">{{ i.mime_type }}</div>
                 {% endfor %}
+
             </div>
         </div>
     </div>
@@ -188,6 +215,8 @@
                             <progress id='slider_progress' class="progress is-small is-info" value="0"
                                       max="100"></progress>
                             <input id="transparent_slider"
+                                   onchange="handleSliderInputChange(this.value)"
+                                   oninput="handleSliderInputChange(this.value)"
                                    class="slider" step=".01"
                                    min="0" max="100" value="0"
                                    type="range">
@@ -231,14 +260,9 @@
 {% endblock %}
 
 {% block afterbody %}
-    <!-- TippyJS Production -->
-    <script src="{% static 'vendor/popper/popper.js' %}"></script>
-    <script src="{% static 'vendor/tippy/tippy.js' %}"></script>
-    <link href="{% static 'vendor/tippy/backdrop.css' %}" rel="stylesheet"/>
-    <link href="{% static 'vendor/tippy/shift_away.css' %}" rel="stylesheet"/>
+
     <!-- Axios for Posting and Getting Data -->
-    <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"
-            integrity="sha256-JLmknTdUZeZZ267LP9qB+/DT7tvxOOKctSKeUC2KT6E=" crossorigin="anonymous"></script>
+    <script src="{% static 'vendor/axios/dist/axios.min.js' %}"></script>
     <script src="{% static 'soundcore/js/axiosHelperFunctions.js' %}"></script>
 
     <!-- HowlerJS for Playing cross browser audio -->
@@ -263,10 +287,11 @@
             // Update Footer Items
             await updateFooterBoilerPlate(id)
 
-            // Add songs to previous list
-            const previousUrl = '{% url 'user_previous_song_capture' %}'
-            await axiosPostPreviousSong(previousUrl, id)
-
+            {% if user.is_authenticated %}
+                // Add songs to previous list
+                const previousUrl = '{% url 'user_previous_song_capture' %}'
+                await axiosPostPreviousSong(previousUrl, id)
+            {% endif %}
             const srcArray = [];
             const fileFormatArray = [];
 
@@ -283,6 +308,7 @@
                     html5: true,
                     format: fileFormatArray,
                     preload: true,
+                    autoplay: false,
                 })
 
                 await addOrRemove(howlerArray, soundObject)
@@ -295,7 +321,7 @@
                     html5: true,
                     format: fileFormatArray,
                     preload: true,
-
+                    autoplay: false,
                 })
 
                 await addOrRemove(howlerArray, soundObject)
@@ -303,20 +329,20 @@
             sound = _.first(howlerArray)
 
             // Set duration
-            sound.on('load', () => {
-                howlerJsOnLoad()
+            sound.on('load', async () => {
+                await howlerJsOnLoad()
             })
             // Set Play Speed
-            sound.on('play', () => {
-                howlerJsPlayInterval()
+            sound.on('play', async () => {
+                await howlerJsPlayInterval(id)
             })
             // Set Player End Event
-            sound.on('end', () => {
-                howlerJsOnFinish()
+            sound.on('end', async () => {
+                await howlerJsOnFinish()
             })
             // Play Exception Handler
             sound.on('loaderror', () => {
-                sound.once('unlock', function () {
+                sound.once('unlock', () => {
                     sound.play();
                 });
             })
@@ -327,9 +353,13 @@
             sound.play()
         }
 
+        // Global Variable for executing a function once
+        let onceFunctionBoolean = false;
+
         const howlerJsPlayPause = async () => {
             if (_.size(howlerArray) >= 1) {
                 sound = _.first(howlerArray)
+
                 if (sound.playing()) {
                     // Song is playing
                     document.getElementById('play_icon').classList.remove('is-hidden')
@@ -340,8 +370,24 @@
                     // Song is not playing
                     document.getElementById('play_icon').classList.add('is-hidden')
                     document.getElementById('pause_icon').classList.remove('is-hidden')
-
-                    sound.play()
+                    {%  if user.is_authenticated %}
+                        // Execute the function only once
+                        const onceFunction = () => {
+                            if (!onceFunctionBoolean) {
+                                // Get sound duration from progress element
+                                const progressElement = document.querySelector('#transparent_slider')
+                                const math = sound.duration() / 100 * progressElement.value
+                                sound.play()
+                                sound.seek(math)
+                            } else if (onceFunctionBoolean) {
+                                sound.play()
+                            }
+                        }
+                        onceFunction()
+                        onceFunctionBoolean = true
+                    {% else %}
+                        sound.play()
+                    {% endif %}
                 }
             } else if (_.size(howlerArray) < 1) {
                 console.log("No Song Playing")
@@ -356,12 +402,16 @@
 
         }
 
-        const howlerJsPlayInterval = async () => {
+        const howlerJsPlayInterval = async (id) => {
             const startInterval = async () => {
                 sound = _.first(howlerArray)
-                customInterval = setInterval(() => {
+                customInterval = setInterval(async () => {
                     if (sound.playing()) {
                         updateFooterControl()
+                        {% if user.is_authenticated %}
+                            const djangoUrl = '{% url 'user_last_song_capture' %}'
+                            await axiosPostLastSong(djangoUrl, id, sound.seek(), sound.duration())
+                        {% endif %}
                     }
                 }, 1000)
             }
@@ -398,7 +448,6 @@
 
     <!-- On DOM load execute some functions -->
     <script src="{% static 'soundcore/js/onDomLoad.js' %}"></script>
-    <script src="{% static 'soundcore/js/onDomLoadEventListeners.js' %}"></script>
 
     <!-- Format Time To H:M:S -->
     <script src="{% static 'soundcore/js/timeFormatFunction.js' %}"></script>
@@ -410,6 +459,12 @@
     </script>
     <script src="{% static 'soundcore/js/footerUpdateContent.js' %}"></script>
 
+    <!-- TippyJS Production -->
+    <script src="{% static 'vendor/popper/popper.js' %}"></script>
+    <script src="{% static 'vendor/tippy/tippy-bundle.umd.min.js' %}"></script>
+    <link href="{% static 'vendor/tippy/backdrop.css' %}" rel="stylesheet"/>
+    <link href="{% static 'vendor/tippy/shift_away.css' %}" rel="stylesheet"/>
+    <script src="{% static 'soundcore/js/tippyHelperFunctions.js' %}"></script>
 
     <script async>
         const volumeMediaQueryListener = window.matchMedia('(max-width: 767px)')
@@ -421,14 +476,16 @@
             } else if (!event.matches) {
                 // Desktop Version
                 // Sets Volume to zero.
-                const setHowlerVolumeToZero = () => {
-                    // Sets the volume to 0 on load
-                    Howler.volume(0.00)
-                }
-                onDomLoadFunction(setHowlerVolumeToZero)
+                {% if user.is_authenticated %}
+                    const setHowlerVolumeToZero = () => {
+                        // Sets the volume to 0 on load
+                        Howler.volume(0.00)
+                    }
+                    onDomLoadFunction(setHowlerVolumeToZero)
 
-                const djangoUrl = '{% url 'user_volume_capture' %}'
-                await axiosGetVolumeDataAndMapToVolume(djangoUrl)
+                    const djangoUrl = '{% url 'user_volume_capture' %}'
+                    await axiosGetVolumeDataAndMapToVolume(djangoUrl)
+                {% endif %}
             }
         }
         // Init the Function Once
@@ -453,6 +510,12 @@
             {% endif %}
         }
     </script>
-
-    <script src="{% static 'soundcore/js/tippyHelperFunctions.js' %}"></script>
+    <script>
+        {% if user.is_authenticated %}
+            onDomLoadFunction(() => {
+                const djangoUrl = '{% url 'user_last_song_capture' %}'
+                axiosGetLastSong(djangoUrl)
+            })
+        {% endif %}
+    </script>
 {% endblock %}

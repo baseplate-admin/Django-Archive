@@ -17,41 +17,45 @@ def flac_upload_handler(file):
         raise Http404
 
     flac_dict = FLAC(file)
+    try:
+        artist = flac_dict.get("artist", None)
+        artist = ",".join(map(str, artist))
+    except TypeError:
+        artist = None
+    try:
+        title = flac_dict.get("title", None)
+        title = ','.join(map(str, title))
+    except TypeError:
+        title = None
 
-    artist = flac_dict.get("artist", None)
+    try:
+        album = flac_dict.get("album", None)
+        album = ','.join(map(str, album))
+    except TypeError:
+        album = None
 
-    if type(artist) is list:
-        artist = artist[0]
+    try:
+        date = flac_dict.get("date", None)
+        date = ','.join(map(str, date))
+    except TypeError:
+        date = None
 
-    title = flac_dict.get("title", None)
+    try:
+        lyricist = flac_dict.get("lyricist", None)
+        lyricist = ','.join(map(str, lyricist))
+    except TypeError:
+        lyricist = None
+    try:
+        composer = flac_dict.get("composer", None)
+        composer = ','.join(map(str, composer))
+    except TypeError:
+        composer = None
 
-    if type(title) is list:
-        title = title[0]
-
-    album = flac_dict.get("album", None)
-
-    if type(album) is list:
-        album = album[0]
-
-    date = flac_dict.get("date", None)
-
-    if type(date) is list:
-        date = date[0]
-
-    lyricist = flac_dict.get("lyricist", None)
-
-    if type(lyricist) is list:
-        lyricist = lyricist[0]
-
-    composer = flac_dict.get("composer", None)
-
-    if type(composer) is list:
-        composer = composer[0]
-
-    genre = flac_dict.get("genre", None)
-
-    if type(genre) is list:
-        genre = genre[0]
+    try:
+        genre = flac_dict.get("genre", None)
+        genre = ','.join(map(str, genre))
+    except TypeError:
+        genre = None
 
     try:
         picture = flac_dict.pictures[0]

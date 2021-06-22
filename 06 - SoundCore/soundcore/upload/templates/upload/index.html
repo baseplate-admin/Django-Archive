@@ -6,7 +6,7 @@
 {% endblock %}
 <!-- We import Font CSS here. -->
 {% block fontblock %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-nunito@1.1.13/index.min.css">
+    <link rel="stylesheet" href="{% static 'vendor/typeface-nunito/index.css' %}">
 {% endblock %}
 <!-- We import CSS from CDN here. -->
 {% block head %}
@@ -47,7 +47,9 @@
                                                             anime({
                                                                 targets: '.upload__icon',
                                                                 scale: 1.8,
-                                                                color: '#FFFFFF'
+                                                                color: '#FFFFFF',
+                                                                easing: 'linear',
+                                                                duration: 1
                                                             })
                                                         </script>
                                                       <span class="file-label">
@@ -79,6 +81,7 @@
         </div>
     </section>
 {% endblock %}
+
 <!-- We import javascript here -->
 {% block afterbody %}
     <script>
@@ -94,6 +97,5 @@
                 upload_box.appendChild(item)
             }
         })
-
     </script>
 {% endblock %}

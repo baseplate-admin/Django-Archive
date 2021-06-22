@@ -38,18 +38,28 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+
+    # On Development serve static
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
+
     # Extra import
     "django.contrib.humanize",
+
     # Compress Assets
     "whitenoise",
+
     # Main apps
     "user",
     "upload",
     "soundcore",
+
     # Helper Functions
     "utility",
+
+    # Analytics for machine learning
+    'analytics',
+
     # Image Resizer
     "sorl.thumbnail",
 ]
@@ -92,25 +102,24 @@ ASGI_APPLICATION = "core.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-"""
-Sqlite Database
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
-"""
+# Sqlite Database
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "django",
-        "USER": "postgres",
-        "PASSWORD": "supersecretpassword",
-        "HOST": "localhost",
-        "PORT": "",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+# Postgres Database
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": "django",
+#         "USER": "postgres",
+#         "PASSWORD": "supersecretpassword",
+#         "HOST": "localhost",
+#         "PORT": "",
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -148,9 +157,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
-    # We need an import from core folder.
-    os.path.join(BASE_DIR, "core/static"),
-    # os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "static"),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

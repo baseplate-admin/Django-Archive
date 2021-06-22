@@ -2,7 +2,7 @@
 {% load humanize soundcore static thumbnail %}
 
 {% block fontblock %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-nunito@1.1.13/index.min.css">
+    <link rel="stylesheet" href="{% static 'vendor/typeface-nunito/index.css' %}">
 {% endblock %}
 {% block head %}
     <link rel="stylesheet" href="{% static 'soundcore_library_create/css/responsive.css' %}"/>
@@ -129,8 +129,7 @@
 
 {% endblock %}
 {% block afterbody %}
-    <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"
-            integrity="sha256-JLmknTdUZeZZ267LP9qB+/DT7tvxOOKctSKeUC2KT6E=" crossorigin="anonymous"></script>
+    <script src="{% static 'vendor/axios/dist/axios.min.js' %}"></script>
     <script>
         const arr = []
 
