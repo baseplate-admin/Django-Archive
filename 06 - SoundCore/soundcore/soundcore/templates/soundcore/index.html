@@ -13,62 +13,7 @@
 {% endblock %}
 
 {% block body %}
-
-    <div class="columns is-mobile top-navbar">
-        <div id="hamburger_icon_wrapper_id" class="column is-narrow">
-            <ion-icon class="hamburger_icon" name="menu-sharp"></ion-icon>
-            <script async>
-                anime({
-                    targets: '.hamburger_icon',
-                    scale: 1.6,
-                    translateY: 10,
-                    translateX: 15,
-                    color: '#FFFFFF',
-                    duration: 0,
-                    easing: 'linear'
-                })
-            </script>
-        </div>
-        <div class="column is-narrow brand_image">
-            <img src="https://cdn.emk.dev/templates/bulma-logo-light.png" width="120"
-                 height="40">
-        </div>
-        <div class="column">
-            <div class="field search_input_div">
-                <div class="control has-icons-right search_input_wrapper">
-                    <input class="input search_input" type="text" placeholder="Search">
-                    <span class="icon is-small is-right search_input_box_right_wrapper">
-                        <div class="box search_input_box_right">
-                            <ion-icon class="search_icon" name="search-outline"></ion-icon>
-                            <script async>
-                                anime({
-                                    targets: '.search_icon',
-                                    color: '#FFFFFF',
-                                    scale: 1.4
-                                })
-                            </script>
-                        </div>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="column is-narrow ">
-            {% if not user.is_authenticated %}
-                <div class="login_button_wrapper">
-                    <a class="button is-rounded login_button"
-                       href="{% url 'login_form' %}?next={{ request.get_full_path }}">
-                        <p style="margin-bottom:5px">Login</p>
-                    </a>
-                </div>
-            {% elif user.is_authenticated %}
-                <figure class="image is-32x32 user_image">
-                    <img alt=""
-                         src="https://bulma.io/images/placeholders/128x128.png"
-                         class="is-rounded"/>
-                </figure>
-            {% endif %}
-        </div>
-    </div>
+    {% include 'components/top_navbar.html' %}
     <div class="columns is-mobile" style="min-height:calc(100vh - 140px); margin-bottom: 0;max-height: 1vh">
         <div class="column is-narrow left_menu_wrapper">
             {% include 'components/left_sidebar.html' with active="home" %}
@@ -77,7 +22,9 @@
             <div class="grid-container">
                 {% for i in musics %}
                     <div class="grid-item">
-                        <div class="box grid-box">
+                        <div class="box grid-box" onmouseleave="handleDropdownHide({{ i.id }})"
+                             onmouseenter="handleDropdownShow({{ i.id }})">
+
                             <figure class="image song-image-figure" onclick="handleSongItemClick({{ i.id }})">
                                 {% thumbnail i.album_art "200x200" crop="center" as im %}
                                     <a id="song-image-{{ i.id }}"
@@ -95,22 +42,37 @@
                             </figure>
                             <div class="song-description">
                                 <div class="columns is-mobile" style="width: 200px">
-                                    <div class="column is-10">
+                                    <div class="column is-11 ">
                                         <div class="box"
-                                             style="background-color: transparent;padding-left:0;padding-right:0">
+                                             style="background-color: transparent;padding-right:0">
                                             <p class="title is-size-5 song-title"
                                                id="song-name-{{ i.id }}">{{ i.song_name }}</p>
                                             <p class="subtitle is-size-6 song-artist"
                                                id="song-artist-{{ i.id }}">{{ i.artist }}</p>
                                         </div>
                                     </div>
-                                    <div class="column is-1">
-                                        <ion-icon
-                                            style="pointer-events: none"
-                                            class="dropdown__icon__{{ i.id }}"
-                                            name="ellipsis-vertical"
-                                            onclick="handleTippyDropdownClick({{ i.id }})"
-                                        ></ion-icon>
+                                    <div class="column is-1 is-hidden dropdown-icon-wrapper-{{ i.id }}">
+                                        <div class="dropdown is-right song-dropdown-{{ i.id }}">
+                                            <div class="dropdown-trigger">
+                                                <span id="dropdown-icon-wrapper-{{ i.id }}"
+                                                      onclick="handleDropdownClick({{ i.id }})">
+                                                    <ion-icon
+                                                            style="pointer-events: none"
+                                                            class="dropdown__icon__{{ i.id }}"
+                                                            name="ellipsis-vertical"
+                                                    ></ion-icon>
+                                                </span>
+                                            </div>
+                                            <div class="dropdown-menu" role="menu">
+                                                <div class="dropdown-content"
+                                                     style="background-color: #161616 ">
+                                                    <div class="dropdown-item" style="color:#e0e0ec"></div>
+                                                    <div class="dropdown-item" style="color:#e0e0ec"></div>
+
+                                                    <!--<hr class="dropdown-divider">-->
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <script async>
                                             anime({
@@ -508,6 +470,25 @@
                 const djangoUrl = '{% url 'user_volume_capture' %}'
                 await axiosPostVolumeData(djangoUrl, value)
             {% endif %}
+        }
+    </script>
+    <script>
+        const handleDropdownShow = (id) => {
+            const element = `.dropdown-icon-wrapper-${id}`
+            document.querySelector(element).classList.remove('is-hidden')
+        }
+        const handleDropdownHide = (id) => {
+            const element = `.dropdown-icon-wrapper-${id}`
+            document.querySelector(element).classList.add('is-hidden')
+            const dropdownElement = `.song-dropdown-${id}`
+
+            document.querySelector(dropdownElement).classList.remove('is-active')
+        }
+
+        const handleDropdownClick = (id) => {
+            const element = `.song-dropdown-${id}`
+
+            document.querySelector(element).classList.add('is-active')
         }
     </script>
     <script>

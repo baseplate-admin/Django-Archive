@@ -81,11 +81,20 @@ const nextTippy = () => {
 }
 
 const handleTippyDropdownClick = (id) => {
-    console.log(id)
-    const dropdownElement = document.querySelector(`.dropdown__icon__${id}`)
+    let isHidden = false;
+    const dropdownElement = document.querySelector(`.dropdown-icon-wrapper-${id}`)
     tippy(dropdownElement, {
+        arrow: true,
+        animateFill: true,
         content: '<strong>Bolded content</strong>',
         allowHTML: true,
+    })
+    dropdownElement.addEventListener('click',()=>{
+        if (isHidden){
+
+        } else if (!isHidden){
+
+        }
     })
 }
 
