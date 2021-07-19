@@ -1,19 +1,28 @@
+// React Import
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MusicHome from './MusicApp/Home';
-import "./bulma.css";
 
+// Main app import
+import { App } from './Views';
 
+// Redux import
+import { Provider } from 'react-redux';
 
-let url = "http://127.0.0.1:8000"
+// Store import
+import { store } from './Store/Store';
 
 ReactDOM.render(
-  <React.StrictMode>
-        <MusicHome url={url} />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+
+// import reportWebVitals from './reportWebVitals';
+// reportWebVitals();
